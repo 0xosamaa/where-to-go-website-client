@@ -61,6 +61,9 @@ const theme = createTheme({
             fontSize: 16,
         },
     },
+    shape: {
+        borderRadius: 4,
+    }
 });
 
 function App() {
