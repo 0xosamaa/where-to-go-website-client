@@ -18,3 +18,9 @@
     margin: auto;
   }
 }
+
+@media screen and (max-width: 432px) {
+  .search-results, .filter-menu {
+    width: 100%;
+  }
+}

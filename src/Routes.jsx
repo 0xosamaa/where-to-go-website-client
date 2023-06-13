@@ -4,7 +4,7 @@ import Home from './Pages/Home/Home';
 import Profile from "./Pages/Profile/Profile.jsx";
 import SearchResults from './Pages/SearchResults/SearchResults'
 import React from 'react';
-import VendorDetails from './Pages/VendorDetails/VendorDetails';
+import PlaceDetails from './Pages/PlaceDetails/PlaceDetails';
 
 const AppRoutes = () => {
     return (
@@ -13,7 +13,7 @@ const AppRoutes = () => {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="/search" element={<SearchResults />} />
-                    <Route path="/vendor" element={<VendorDetails />} />
+                    <Route path="/place" element={<PlaceDetails />} />
                 </Route>
                 <Route path="/profile" element={<Layout />}>
                     <Route index element={<Profile />} />
