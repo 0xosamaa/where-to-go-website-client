@@ -21,8 +21,8 @@ const Footer = () => {
                 <div className="row text-center">
                     <div className="col-12 col-lg-4">
                         <div className="row">
-                            <div className="col-6">About</div>
-                            <div className="col-6">Contact</div>
+                            <div className="col-12 col-lg-6">About</div>
+                            <div className="col-12 col-lg-6">Contact</div>
                         </div>
                     </div>
                     <div className="col-12 col-lg-4 d-flex justify-content-center align-items-center">
@@ -53,8 +53,8 @@ const Footer = () => {
                     </div>
                     <div className="col-12 col-lg-4">
                         <div className="row">
-                            <div className="col-6">About</div>
-                            <div className="col-6">Contact</div>
+                            <div className="col-12 col-lg-6">About</div>
+                            <div className="col-12 col-lg-6">Contact</div>
                         </div>
                     </div>
                 </div>
