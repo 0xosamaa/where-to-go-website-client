@@ -1,13 +1,11 @@
 .card-image {
-    width: 400px;
     height: 200px;
+    object-fit: cover;
     border-radius: 8px;
 }
 
 .card-body {
     margin-left: 16px;
-    display: flex;
-    justify-content: space-between;
 }
 
 .card-text {

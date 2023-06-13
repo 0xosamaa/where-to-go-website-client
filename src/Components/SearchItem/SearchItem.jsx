@@ -5,9 +5,9 @@ import StarIcon from '@mui/icons-material/Star';
 
 const SearchItem = () => {
     return (
-        <div className="d-flex">
-            <img className="card-image" src="https://picsum.photos/600/300" alt="demo" />
-            <div className="card-body">
+        <div className="d-flex flex-column flex-lg-row">
+            <img className="card-image flex-fill" src="https://picsum.photos/600/400" alt="demo" />
+            <div className="card-body d-flex flex-fill justify-content-between mt-3 mt-lg-0">
                 <div className="content d-flex flex-column justify-content-between">
                     <div className="card-details">
                         <Typography className="card-text" variant="body">Restaurant in Cairo, New Cairo</Typography>
