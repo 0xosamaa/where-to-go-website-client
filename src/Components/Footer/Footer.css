@@ -1,0 +1,12 @@
+footer {
+    background-color: #f8f9fa;
+}
+footer .container {
+    padding: 2rem 0;
+}
+
+.copyrights {
+    text-align: center;
+    width: 100%;
+    padding: 1rem 0;
+}

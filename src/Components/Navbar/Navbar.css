@@ -1,0 +1,9 @@
+.nav-item .nav-link.active {
+    color: #00bbaa !important;
+    font-weight: bold;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: #00bbaa;
+}

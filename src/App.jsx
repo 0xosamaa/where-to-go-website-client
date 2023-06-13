@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -47,6 +48,14 @@ function App() {
       </p>
     </>
   )
+=======
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import AppRoutes from './Routes';
+
+function App() {
+    return <AppRoutes />;
+>>>>>>> dev
 }
 
-export default App
+export default App;
