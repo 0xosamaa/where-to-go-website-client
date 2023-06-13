@@ -29,21 +29,25 @@ const theme = createTheme({
             fontFamily: 'Dosis, sans-serif',
             fontWeight: 700,
             fontSize: 40,
+            padding: '20px 0',
         },
         h2: {
             fontFamily: 'Dosis, sans-serif',
             fontWeight: 700,
             fontSize: 32,
+            padding: '16px 0',
         },
         h3: {
             fontFamily: 'Dosis, sans-serif',
             fontWeight: 700,
             fontSize: 24,
+            padding: '12px 0',
         },
         h4: {
             fontFamily: 'Dosis, sans-serif',
             fontWeight: 700,
             fontSize: 20,
+            padding: '10px 0',
         },
         h5: {
             fontFamily: 'Dosis, sans-serif',

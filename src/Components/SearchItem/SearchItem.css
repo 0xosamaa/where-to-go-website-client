@@ -1,0 +1,15 @@
+.card-image {
+    width: 400px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.card-body {
+    margin-left: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-text {
+    color: #565E6C;
+}
