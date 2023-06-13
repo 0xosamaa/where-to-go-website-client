@@ -6,7 +6,7 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { FormControlLabel } from "@mui/material";
 import CustomizedCheckbox from "../CustomizedCheckbox/CustomizedCheckbox";
 
 const Accordion = styled((props) => (
