@@ -1,7 +1,14 @@
 .filter-menu {
-    width: 280px;
-    min-height: 700px;
-    border-radius: 6px;
-    padding: 26px 12px;
-    box-shadow: 0px 0px 3px #eee, 0px 0px 6px #eee;
+  width: 280px;
+  min-height: 700px;
+  border-radius: 6px;
+  padding: 26px 12px;
+  margin: 40px;
+  margin-left: 0;
+  box-shadow: 0px 0px 3px #eee, 0px 0px 6px #eee;
+
+  @media (max-width: 600px) {
+    width: 100%; /* Set width to 100% for screens smaller than 600px */
+    margin: 10px; /* Adjust margin as per your requirements */
+  }
 }

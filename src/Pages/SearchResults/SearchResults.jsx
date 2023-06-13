@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import './SearchResults.css'
 import FilterMenu from "../../Components/FilterMenu/FilterMenu";
 
@@ -8,17 +7,14 @@ const SearchResults = () => {
     const Tags = ['Air Conditioner', 'Wifi', 'Kitchen'];
 
     return (
-        <>
-        <Typography variant="h1">Search Results</Typography>
         <div className="container d-flex column">
-            <div className="filter-menu">
+            <div className="filter-menu d-none d-lg-block">
                 <FilterMenu title="Rating" options={Rating} />
                 <FilterMenu title="Categories" options={Categories} />
                 <FilterMenu title="Tags" options={Tags} />
             </div>
-            <div style={{width: 1000, height: '100px', backgroundColor: '#00BBAA' }}></div>
+            <div style={{width: '100%', height: '100px', backgroundColor: '#00BBAA' }}></div>
         </div>
-        </>
     )
 };
 

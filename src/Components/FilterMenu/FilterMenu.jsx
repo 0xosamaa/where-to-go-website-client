@@ -6,6 +6,8 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
+import { Checkbox, FormControlLabel } from "@mui/material";
+import CustomizedCheckbox from "../CustomizedCheckbox/CustomizedCheckbox";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -45,6 +47,7 @@ const AccordionSummary = styled((props) => (
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
+  paddingTop: 0,
 }));
 
 const FilterMenu = (props) => {
@@ -66,7 +69,9 @@ const FilterMenu = (props) => {
         <AccordionDetails>
           <Typography>
             {props.options.map((option, index) => (
-              <Typography key={index}>{option}</Typography>
+                <div className="d-block" key={index}>
+                    <FormControlLabel control={<CustomizedCheckbox />} label={option} />
+                </div>
             ))}
           </Typography>
         </AccordionDetails>
