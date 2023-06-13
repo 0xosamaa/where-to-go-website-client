@@ -19,7 +19,7 @@ const BpIcon = styled('span')(({ theme }) => ({
     outlineOffset: 2,
   },
   'input:hover ~ &': {
-    backgroundColor: theme.palette.mode === 'dark' ? '#30404d' : '#ebf1f5',
+    backgroundColor: theme.palette.mode === 'dark' ? '#30404d' : '#f8f9fa',
   },
   'input:disabled ~ &': {
     boxShadow: 'none',
