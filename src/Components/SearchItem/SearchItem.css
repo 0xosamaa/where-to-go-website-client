@@ -1,0 +1,15 @@
+.card-image {
+    max-width: 400px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: flex;
+}
+
+.card-body {
+    margin-left: 16px;
+}
+
+.card-text {
+    color: #565E6C;
+}

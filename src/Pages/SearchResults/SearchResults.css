@@ -1,0 +1,26 @@
+.filter-menu {
+  min-width: 260px;
+  min-height: 500px;
+  border-radius: 6px;
+  padding: 26px 12px;
+  margin: 0;
+  box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.09),0px 0px 5px 0px rgba(0,0,0,0.07),0px 0px 10px 0px rgba(0,0,0,0.05);
+}
+
+.search-results {
+  width: 100%;
+  min-height: 500px;
+}
+
+@media screen and (max-width: 768px) {
+  .search-results, .filter-menu {
+    width: 400px;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 432px) {
+  .search-results, .filter-menu {
+    width: 100%;
+  }
+}
