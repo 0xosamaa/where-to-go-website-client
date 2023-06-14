@@ -1,23 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-const URL = 'http://localhost:8001/api/v1/customer'
+const URL = 'http://localhost:8001/api/v1/customers'
 //import axios from './../../Axios'
 //const URL = '/api/v1/employees'
 
 const initialState = {
     customer: {},
     loading: false,
-    error: 'null',
+    error: null,
 }
 
 
 export const getCustomer = createAsyncThunk('profile/getCustomer', async (id, thunkAPI) => {
     try {
-        const token = localStorage.getItem('token')
-        const response = await axios.get(`${URL}/${id}`, {
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODhlOTEzN2RjZWQxN2ZmNzRmMDU3ZSIsInJvbGUiOiJDdXN0b21lciIsImlhdCI6MTY4NjczNzM2MiwiZXhwIjoxNjk0NTEzMzYyfQ.u0bD8-QNb0ZYGKKI2eOofLkTcgT7tXgTy9y-RBRB-zg'
+        const response = await axios.get(`${URL}/getMe`, {
             headers: { Authorization: `Bearer ${token}` },
         })
-        return response.data
+        return response.data.data
     } catch (error) {
         if (error.response.data.message === 'UnAuthorized..!') {
             localStorage.clear()
@@ -32,11 +32,11 @@ export const updateCustomer = createAsyncThunk(
     'profile/updateCustomer',
     async (customer, thunkAPI) => {
         try {
-            const token = localStorage.getItem('token')
-            const response = await axios.put(`${URL}/${customer.get('_id')}`, customer, {
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODhlOTEzN2RjZWQxN2ZmNzRmMDU3ZSIsInJvbGUiOiJDdXN0b21lciIsImlhdCI6MTY4NjczNzM2MiwiZXhwIjoxNjk0NTEzMzYyfQ.u0bD8-QNb0ZYGKKI2eOofLkTcgT7tXgTy9y-RBRB-zg'
+            const response = await axios.put(`${URL}/updateMe`, customer, {
                 headers: { Authorization: `Bearer ${token}` },
             })
-            return response.data
+            return response.data.data
         } catch (error) {
             if (error.response.data.message === 'UnAuthorized..!') {
                 localStorage.clear()
@@ -49,18 +49,16 @@ export const updateCustomer = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
     'profile/changePassword',
-    async (data, thunkAPI) => {
+    async (passwords, thunkAPI) => {
         try {
-            const token = localStorage.getItem('token')
-            const response = await axios.put(`${URL}/change-password/${data.get('_id')}`, data, {
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODhlOTEzN2RjZWQxN2ZmNzRmMDU3ZSIsInJvbGUiOiJDdXN0b21lciIsImlhdCI6MTY4NjczNzM2MiwiZXhwIjoxNjk0NTEzMzYyfQ.u0bD8-QNb0ZYGKKI2eOofLkTcgT7tXgTy9y-RBRB-zg'
+            const response = await axios.put(`${URL}/changeMyPassaowrd`, passwords, {
                 headers: { Authorization: `Bearer ${token}` },
             })
+            console.log(response.data)
             return response.data
         } catch (error) {
-            if (error.response.data.message === 'UnAuthorized..!') {
-                localStorage.clear()
-                window.location.href = '/login'
-            }
+            console.log(error.response.data)
             return thunkAPI.rejectWithValue(error.response.data)
         }
     },
@@ -78,7 +76,7 @@ const profileSlice = createSlice({
             state.loading = true
         },
         [getCustomer.fulfilled]: (state, action) => {
-            state.employee = action.payload
+            state.customer = action.payload
             state.loading = false
         },
         [getCustomer.rejected]: (state, action) => {
@@ -89,9 +87,7 @@ const profileSlice = createSlice({
             state.loading = true
         },
         [updateCustomer.fulfilled]: (state, action) => {
-            state.employees = state.employees.map((employee) =>
-                employee._id === action.payload._id ? action.payload : employee,
-            )
+            state.customer = action.payload
             state.loading = false
         },
         [updateCustomer.rejected]: (state, action) => {
@@ -103,6 +99,7 @@ const profileSlice = createSlice({
         },
         [changePassword.fulfilled]: (state, action) => {
             state.loading = false
+            state.error = null
         },
         [changePassword.rejected]: (state, action) => {
             state.error = action.payload

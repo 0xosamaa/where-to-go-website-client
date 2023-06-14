@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLock, faStar, faUserTie} from "@fortawesome/free-solid-svg-icons";
 import {Typography} from "@mui/material";
@@ -6,11 +6,22 @@ import Info from "./Info/Info.jsx";
 import Security from "./Security/Security.jsx";
 import Edit from "./Edit/Edit.jsx";
 import "./profile.css";
+import {useSelector, useDispatch} from "react-redux";
+import {getCustomer} from "../../Redux/Slices/profileSlice.js";
 
 const Profile = () => {
+    const dispatch = useDispatch();
     const [active,setActive] = useState('Info');
 
     const [open, setOpen] = React.useState(false);
+
+    const customer = useSelector(state => state.profile.customer);
+
+    useEffect(() => {
+        dispatch(getCustomer()).then((res) => {
+            console.log(res);
+        });
+    },[])
 
     const handleClickOpen = () => {
         setOpen(true);
