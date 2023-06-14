@@ -25,3 +25,7 @@
 .card-text {
     color: #565E6C;
 }
+
+.clickable:hover {
+    cursor: pointer;
+}

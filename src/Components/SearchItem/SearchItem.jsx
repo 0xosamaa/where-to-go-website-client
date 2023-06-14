@@ -5,14 +5,14 @@ import StarIcon from '@mui/icons-material/Star';
 import FavouriteIcon from "../FavouriteIcon/FavouriteIcon"
 import './SearchItem.css'
 
-const SearchItem = ({ place }) => {
+const SearchItem = ({ place, onClick }) => {
     return (
         <div className="d-flex flex-column flex-lg-row">
-            <img className="card-image" src={`http://localhost:8001/api/v1/images/vendors/${place.thumbnail}`} alt="demo" />
+            <img onClick={onClick} className="card-image clickable" src={`http://localhost:8001/api/v1/images/vendors/${place.thumbnail}`} alt="demo" />
             <div className="card-body d-flex flex-fill justify-content-between mt-3 mt-lg-0">
-                <div className="content d-flex flex-column justify-content-between">
+                <div onClick={onClick} className="content clickable d-flex flex-column justify-content-between">
                     <div className="card-details">
-                        <Typography className="card-text" variant="body">{place.category[0].name} in Cairo, New Cairo</Typography>
+                        <Typography className="card-text" variant="body">{place.category.length ? place.category[0].name : 'Place'} in Cairo, New Cairo</Typography>
                         <Typography variant="h4">{place.placeName}</Typography>
                         <hr style={{ width: 56, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>
                         <Typography className="card-text" variant="body">Amet enim fugiat la</Typography>
@@ -34,6 +34,7 @@ const SearchItem = ({ place }) => {
 
 SearchItem.propTypes = {
     place: PropTypes.object.isRequired,
+    onClick: PropTypes.func,
 };
 
 export default SearchItem

@@ -4,24 +4,22 @@ const URL = '/api/v1'
 
 const initialState = {
     result: [],
-    pagination: {},
     location: {
         country: '',
         state: '',
         city: '',
     },
     categories: [],
-    selectedCategories: [],
     tags: [],
-    selectedTags: [],
     rating: [],
     loading: false,
     error: 'null',
 };
 
-export const vendorSearch = createAsyncThunk('search/vendorSearch', async (thunkAPI) => {
+export const vendorSearch = createAsyncThunk('search/vendorSearch', async (queryString, thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`${URL}/vendors?filters[isApproved]=false`)
+        // In production, change false to true
+        const response = await axiosInstance.get(`${URL}/vendors?filters[isApproved]=false&${queryString}`)
         return response.data
     } catch (error) {
         if (error.response.data.message === 'UnAuthorized..!') {
