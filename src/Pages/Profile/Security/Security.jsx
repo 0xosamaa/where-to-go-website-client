@@ -1,14 +1,34 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBan, faLock, faPenToSquare} from "@fortawesome/free-solid-svg-icons";
-import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Typography} from "@mui/material";
+import {
+    Alert,
+    FormControl,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    Snackbar,
+    Typography
+} from "@mui/material";
 import {useState} from "react";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {useDispatch, useSelector} from "react-redux";
+import {changePassword} from "../../../Redux/Slices/profileSlice.js";
 
 const Security = () => {
+    const dispatch = useDispatch();
     const [oldPassword, setOldPassword] = useState(false);
     const [newPassword, setNewPassword] = useState(false);
     const [conPassword, setConPassword] = useState(false);
+    const error = useSelector(state => state.profile.error);
+    const [data, setData] = useState({
+        currentPassword:'',
+        password:'',
+        passwordConfirm:''
+    });
+    const [open, setOpen] = useState(false);
+
     const handleClickOldPassword = () => setOldPassword((show) => !show);
     const handleClickNewPassword = () => setNewPassword((show) => !show);
     const handleClickConPassword = () => setConPassword((show) => !show);
@@ -21,6 +41,31 @@ const Security = () => {
     };
     const handleMouseDownConPassword = (event) => {
         event.preventDefault();
+    };
+
+    const handleChangePassword = () => {
+        dispatch(changePassword(data)).then((res) => {
+            if(res.payload.token !== undefined){
+                setData({
+                    currentPassword:'',
+                    password:'',
+                    passwordConfirm:''
+                })
+            }
+            handleClick();
+        });
+    }
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
     };
 
     return (
@@ -38,9 +83,10 @@ const Security = () => {
                     <FormControl sx={{ m: 1, width: '80%' }} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Old Password</InputLabel>
                         <OutlinedInput
+                            value={data.currentPassword}
                             id="outlined-adornment-password"
                             type={oldPassword ? 'text' : 'password'}
-                            onChange={(e) => console.log(e.target.value)}
+                            onChange={(e) => setData({...data,currentPassword:e.target.value})}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -60,8 +106,9 @@ const Security = () => {
                         <InputLabel htmlFor="outlined-adornment-password">New Password</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-password"
+                            value={data.password}
                             type={newPassword ? 'text' : 'password'}
-                            onChange={(e) => console.log(e.target.value)}
+                            onChange={(e) => setData({...data,password:e.target.value})}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -81,8 +128,9 @@ const Security = () => {
                         <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-password"
+                            value={data.passwordConfirm}
                             type={conPassword ? 'text' : 'password'}
-                            onChange={(e) => console.log(e.target.value)}
+                            onChange={(e) => setData({...data,passwordConfirm:e.target.value})}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -98,7 +146,7 @@ const Security = () => {
                             label="Confirm Password"
                         />
                     </FormControl>
-                    <button className="btn btn-outline-primary w-50">Change Password</button>
+                    <button onClick={handleChangePassword} className="btn btn-outline-primary w-50">Change Password</button>
                 </div>
             </div>
             <div className="info-container w-100 d-flex align-items-start flex-wrap">
@@ -112,6 +160,11 @@ const Security = () => {
                     <button className="btn btn-outline-danger w-50">Deactivate</button>
                 </div>
             </div>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={error === null? "success" : "error"} sx={{ width: '100%' }}>
+                    {error === null ? "Password Changed Successfully" : error.errors[0].msg}
+                </Alert>
+            </Snackbar>
         </>
     )
 }

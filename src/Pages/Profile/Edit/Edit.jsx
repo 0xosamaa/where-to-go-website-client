@@ -7,11 +7,14 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import {TextField} from "@mui/material";
+import {Alert, Snackbar, TextField} from "@mui/material";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
+import {useDispatch, useSelector} from "react-redux";
+import {updateCustomer} from "../../../Redux/Slices/profileSlice.js";
+import dayjs from "dayjs";
+import {useState} from "react";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -28,22 +31,33 @@ const genders = [
     }
 ]
 
-const Edit = ({handleClickOpen, handleClose, open}) => {
-    const [dateOfBirth, setDateOfBirth] = React.useState({});
+const Edit = ({handleClickOpen, handleClose, open, handleOpens}) => {
+    const dispatch = useDispatch();
+    const customer = useSelector(state => state.profile.customer);
+    const [dateOfBirth, setDateOfBirth] = React.useState(dayjs(customer.dateOfBirth));
+    const error = useSelector(state => state.profile.error);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let date = new Date(dateOfBirth).toLocaleDateString();
-        date = date.split('/');
-        date = date[2] + '-' + date[0] + '-' + date[1];
+        let date = new Date(dateOfBirth)
         let data = new FormData(e.target);
         data.set('dateOfBirth', date);
-        console.log(data.get('image'));
+
+        dispatch(updateCustomer(data)).then((res) => {
+            if (res.payload._id !== undefined) {
+                handleClose();
+            }
+            handleOpens();
+            console.log(res);
+        });
     }
 
     const handleDateChange = (date) => {
         setDateOfBirth(date);
     }
+
+
 
     return (
         <div>
@@ -74,28 +88,28 @@ const Edit = ({handleClickOpen, handleClose, open}) => {
                 <div className="container d-flex justify-content-center w-100 mt-5 p-5 align-items-center">
                     <form onSubmit={handleSubmit} className="w-100 d-flex justify-content-center flex-column gap-5 align-items-center" action="">
                         <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
-                            <TextField className="col-11 col-lg-5" id="outlined-basic" name="firstName" label="First Name" variant="outlined" />
-                            <TextField className="col-11 col-lg-6" id="outlined-basic" name="lastName" label="Last Name" variant="outlined" />
+                            <TextField className="col-11 col-lg-5" id="outlined-basic" defaultValue={customer.firstName} name="firstName" label="First Name" variant="outlined" />
+                            <TextField className="col-11 col-lg-6" id="outlined-basic" defaultValue={customer.lastName} name="lastName" label="Last Name" variant="outlined" />
                         </div>
                         <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
-                            <TextField className="col-11 col-lg-7" id="outlined-basic" name="email" label="Email" variant="outlined" />
-                            <TextField className="col-11 col-lg-4" id="outlined-basic" name="phoneNumber" label="Phone" variant="outlined" />
+                            <TextField className="col-11 col-lg-7" id="outlined-basic" defaultValue={customer.email} name="email" label="Email" variant="outlined" />
+                            <TextField className="col-11 col-lg-4" id="outlined-basic" defaultValue={customer.phoneNumber} name="phoneNumber" label="Phone" variant="outlined" />
                         </div>
                         <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
-                            <TextField className="col-5 col-lg-4" id="outlined-basic" name="country" label="Country" variant="outlined" />
-                            <TextField className="col-5 col-lg-3" id="outlined-basic" name="city" label="City" variant="outlined" />
-                            <TextField className="col-5 col-lg-4" id="outlined-basic" name="street" label="Street" variant="outlined" />
+                            <TextField className="col-5 col-lg-4" id="outlined-basic" defaultValue={customer.address?.country} name="country" label="Country" variant="outlined" />
+                            <TextField className="col-5 col-lg-3" id="outlined-basic" defaultValue={customer.address?.city} name="city" label="City" variant="outlined" />
+                            <TextField className="col-5 col-lg-4" id="outlined-basic" defaultValue={customer.address?.street} name="street" label="Street" variant="outlined" />
                         </div>
                         <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
-                            <TextField className="col-5 col-lg-4" id="outlined-basic" name="State" label="State" variant="outlined" />
-                            <TextField className="col-5 col-lg-3" id="outlined-basic" type="number" name="zip" label="Zip" variant="outlined" />
+                            <TextField className="col-5 col-lg-4" id="outlined-basic" defaultValue={customer.address?.state} name="state" label="State" variant="outlined" />
+                            <TextField className="col-5 col-lg-3" id="outlined-basic" defaultValue={customer.address?.zip} name="zip" label="Zip" variant="outlined" />
                             <TextField
                                 className="col-11 col-lg-4"
                                 id="outlined-select-currency-native"
                                 select
                                 label="Gender"
                                 name="gender"
-                                defaultValue="Male"
+                                defaultValue={customer.gender || 'Male'}
                                 SelectProps={{
                                     native: true,
                                 }}
@@ -110,7 +124,7 @@ const Edit = ({handleClickOpen, handleClose, open}) => {
                         </div>
                         <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
                             <LocalizationProvider name="dateOfBirth" dateAdapter={AdapterDayjs}>
-                                <DatePicker onChange={(e)=> handleDateChange(e)} className="col-11 col-lg-5" />
+                                <DatePicker defaultValue={dayjs(customer.dateOfBirth)} onChange={(e)=> handleDateChange(e)} className="col-11 col-lg-5" />
                             </LocalizationProvider>
                             <TextField className="col-11 col-lg-5" id="outlined-basic" type="file" name="image" variant="outlined" />
                         </div>
@@ -125,6 +139,7 @@ const Edit = ({handleClickOpen, handleClose, open}) => {
                 </div>
 
             </Dialog>
+
         </div>
     );
 }
