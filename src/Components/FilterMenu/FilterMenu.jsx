@@ -64,13 +64,13 @@ const FilterMenu = (props) => {
         onChange={handleChange("panel")}
       >
         <AccordionSummary aria-controls="paneld-content" id="paneld-header">
-          <Typography>{props.title}</Typography>
+          <Typography variant="h6">{props.title}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            {props.options.map((option, index) => (
-                <div className="d-block" key={index}>
-                    <FormControlLabel control={<CustomizedCheckbox />} label={option} />
+            {props.options.map((option) => (
+                <div className="d-block" key={option.id}>
+                    <FormControlLabel control={<CustomizedCheckbox />} label={<Typography variant="body">{option.name}</Typography>} />
                 </div>
             ))}
           </Typography>
