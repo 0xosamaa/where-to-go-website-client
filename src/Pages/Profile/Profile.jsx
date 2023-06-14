@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLock, faStar, faUserTie} from "@fortawesome/free-solid-svg-icons";
-import {Typography} from "@mui/material";
+import {Alert, Snackbar, Typography} from "@mui/material";
 import Info from "./Info/Info.jsx";
 import Security from "./Security/Security.jsx";
 import Edit from "./Edit/Edit.jsx";
@@ -12,8 +12,9 @@ import {getCustomer} from "../../Redux/Slices/profileSlice.js";
 const Profile = () => {
     const dispatch = useDispatch();
     const [active,setActive] = useState('Info');
-
+    const [opens, setOpens] = useState(false);
     const [open, setOpen] = React.useState(false);
+    const error = useSelector(state => state.profile.error);
 
     const customer = useSelector(state => state.profile.customer);
 
@@ -29,6 +30,18 @@ const Profile = () => {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleClick = () => {
+        setOpens(true);
+    };
+
+    const handleCloseA = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpens(false);
     };
 
     return (
@@ -67,7 +80,12 @@ const Profile = () => {
                     active === 'Info' ? <Info handleClickOpen={handleClickOpen} /> : active === 'Security' ? <Security /> : <div>Preference</div>
                 }
             </div>
-            <Edit open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} />
+            <Edit open={open} handleOpens={handleClick} handleClickOpen={handleClickOpen} handleClose={handleClose} />
+            <Snackbar open={opens} autoHideDuration={6000} onClose={handleCloseA}>
+                <Alert onClose={handleCloseA} severity={error === null? "success" : "error"} sx={{ width: '100%' }}>
+                    {error === null ? "Data Updated Successfully" : error.message}
+                </Alert>
+            </Snackbar>
         </div>
     )
 }

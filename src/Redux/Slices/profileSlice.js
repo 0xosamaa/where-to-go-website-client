@@ -32,7 +32,7 @@ export const updateCustomer = createAsyncThunk(
     'profile/updateCustomer',
     async (customer, thunkAPI) => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODhlOTEzN2RjZWQxN2ZmNzRmMDU3ZSIsInJvbGUiOiJDdXN0b21lciIsImlhdCI6MTY4NjczNzM2MiwiZXhwIjoxNjk0NTEzMzYyfQ.u0bD8-QNb0ZYGKKI2eOofLkTcgT7tXgTy9y-RBRB-zg'
+            const token = 'yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODhlOTEzN2RjZWQxN2ZmNzRmMDU3ZSIsInJvbGUiOiJDdXN0b21lciIsImlhdCI6MTY4NjczNzM2MiwiZXhwIjoxNjk0NTEzMzYyfQ.u0bD8-QNb0ZYGKKI2eOofLkTcgT7tXgTy9y-RBRB-zg'
             const response = await axios.put(`${URL}/updateMe`, customer, {
                 headers: { Authorization: `Bearer ${token}` },
             })

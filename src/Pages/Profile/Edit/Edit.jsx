@@ -7,13 +7,14 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import {TextField} from "@mui/material";
+import {Alert, Snackbar, TextField} from "@mui/material";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import {useDispatch, useSelector} from "react-redux";
 import {updateCustomer} from "../../../Redux/Slices/profileSlice.js";
 import dayjs from "dayjs";
+import {useState} from "react";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -30,10 +31,12 @@ const genders = [
     }
 ]
 
-const Edit = ({handleClickOpen, handleClose, open}) => {
+const Edit = ({handleClickOpen, handleClose, open, handleOpens}) => {
     const dispatch = useDispatch();
     const customer = useSelector(state => state.profile.customer);
     const [dateOfBirth, setDateOfBirth] = React.useState(dayjs(customer.dateOfBirth));
+    const error = useSelector(state => state.profile.error);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -42,7 +45,10 @@ const Edit = ({handleClickOpen, handleClose, open}) => {
         data.set('dateOfBirth', date);
 
         dispatch(updateCustomer(data)).then((res) => {
-            handleClose();
+            if (res.payload._id !== undefined) {
+                handleClose();
+            }
+            handleOpens();
             console.log(res);
         });
     }
@@ -50,6 +56,8 @@ const Edit = ({handleClickOpen, handleClose, open}) => {
     const handleDateChange = (date) => {
         setDateOfBirth(date);
     }
+
+
 
     return (
         <div>
@@ -131,6 +139,7 @@ const Edit = ({handleClickOpen, handleClose, open}) => {
                 </div>
 
             </Dialog>
+
         </div>
     );
 }
