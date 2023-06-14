@@ -6,6 +6,7 @@ const URL = 'http://localhost:8001/api/v1/customers'
 
 const initialState = {
     customer: {},
+    favoriteVendors: [],
     loading: false,
     error: null,
 }
@@ -26,6 +27,45 @@ export const getCustomer = createAsyncThunk('profile/getCustomer', async (id, th
         return thunkAPI.rejectWithValue(error.response.data)
     }
 })
+
+export const getFavoriteVendors = createAsyncThunk(
+    'profile/getFavoriteVendors',
+    async (id, thunkAPI) => {
+        try {
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODhlOTEzN2RjZWQxN2ZmNzRmMDU3ZSIsInJvbGUiOiJDdXN0b21lciIsImlhdCI6MTY4NjczNzM2MiwiZXhwIjoxNjk0NTEzMzYyfQ.u0bD8-QNb0ZYGKKI2eOofLkTcgT7tXgTy9y-RBRB-zg'
+            const response = await axios.get(`${URL}/myFavorites`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            return response.data.data
+        } catch (error) {
+            if (error.response.data.message === 'UnAuthorized..!') {
+                localStorage.clear()
+                window.location.href = '/login'
+            }
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
+
+export const deleteFavoriteVendor = createAsyncThunk(
+    'profile/deleteFavoriteVendor',
+    async (data, thunkAPI) => {
+        try {
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODhlOTEzN2RjZWQxN2ZmNzRmMDU3ZSIsInJvbGUiOiJDdXN0b21lciIsImlhdCI6MTY4Njc0ODIzMiwiZXhwIjoxNjk0NTI0MjMyfQ.BYwzt5rWp6gEyGmkOIXJzPLdMUKBhbXzBWwgZXXZdh4'
+            const response = await axios.delete(`${URL}/favorites`, {
+                headers: { Authorization: `Bearer ${token}` },
+                data: data,
+            })
+            return response.data
+        } catch (error) {
+            if (error.response.data.message === 'UnAuthorized..!') {
+                localStorage.clear()
+                window.location.href = '/login'
+            }
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
 
 
 export const updateCustomer = createAsyncThunk(
@@ -102,6 +142,17 @@ const profileSlice = createSlice({
             state.error = null
         },
         [changePassword.rejected]: (state, action) => {
+            state.error = action.payload
+            state.loading = false
+        },
+        [getFavoriteVendors.pending]: (state, action) => {
+            state.loading = true
+        },
+        [getFavoriteVendors.fulfilled]: (state, action) => {
+            state.favoriteVendors = action.payload
+            state.loading = false
+        },
+        [getFavoriteVendors.rejected]: (state, action) => {
             state.error = action.payload
             state.loading = false
         }

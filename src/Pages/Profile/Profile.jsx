@@ -8,6 +8,7 @@ import Edit from "./Edit/Edit.jsx";
 import "./profile.css";
 import {useSelector, useDispatch} from "react-redux";
 import {getCustomer} from "../../Redux/Slices/profileSlice.js";
+import Preference from "./preference/Preference.jsx";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const Profile = () => {
     };
 
     return (
-        <div className="container gap-5 pt-5 min-vh-100 d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-baseline justify-content-sm-center align-items-sm-center">
+        <div style={{paddingTop:"70px"}} className="container gap-5 pt-5 min-vh-100 d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start justify-content-sm-center align-items-sm-center">
             <div className="sidebar pt-5 d-flex flex-column align-items-center gap-5 col-12 col-md-6 col-lg-3">
                 <Typography variant="h1" className="text-center">Account Settings</Typography>
                 <div style={{border:'solid 1px #999', borderRadius:'10px'}} className="controls p-3 d-flex flex-column gap-5 w-100">
@@ -77,7 +78,7 @@ const Profile = () => {
             </div>
             <div className="main pt-5 d-flex flex-column ps-lg-5 ms-5 align-items-start gap-5 w-75">
                 {
-                    active === 'Info' ? <Info handleClickOpen={handleClickOpen} /> : active === 'Security' ? <Security /> : <div>Preference</div>
+                    active === 'Info' ? <Info handleClickOpen={handleClickOpen} /> : active === 'Security' ? <Security /> : <Preference />
                 }
             </div>
             <Edit open={open} handleOpens={handleClick} handleClickOpen={handleClickOpen} handleClose={handleClose} />
