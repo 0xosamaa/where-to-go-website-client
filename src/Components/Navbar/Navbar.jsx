@@ -98,9 +98,11 @@ import MenuItem from '@mui/material/MenuItem';
 const pages = ['Places to go', 'Experiences', 'Discover'];
 const settings = [
     { name: 'Profile', path: '/profile' },
-    { name: 'Login', path: '/login' },
     { name: 'Register', path: '/register' },
+    { name: 'Login', path: '/login' },
     { name: 'Logout', path: '/logout' },
+    { name: 'Search', path: '/search' },
+    { name: 'Contact', path: '/contactus' },
 ];
 
 function Navbar() {
