@@ -2,9 +2,8 @@ import { Button, Pagination, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-import SearchItem from "../../Components/SearchItem/SearchItem";
-import FilterMenu from "../../Components/FilterMenu/FilterMenu";
 import {
   getCategories,
   getTags,
@@ -154,6 +153,20 @@ const SearchResults = () => {
             </div>
             </>
           )}
+          <div className="d-flex flex-column flex-md-row">
+            <div className="overview flex-grow-1">
+              <Typography variant="h2" className="mt-4 mb-3">Overview</Typography>
+              <div className="d-flex">
+                <div>
+                  <LocationOnIcon />
+                </div>
+              </div>
+            </div>
+            <div className="tags  flex-grow-1">
+              <Typography variant="h2" className="mt-4 mb-3">Tags</Typography>
+            </div>
+
+          </div>
         </>
       )}
     </div>
