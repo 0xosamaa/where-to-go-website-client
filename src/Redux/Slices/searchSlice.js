@@ -18,8 +18,7 @@ const initialState = {
 
 export const vendorSearch = createAsyncThunk('search/vendorSearch', async (queryString, thunkAPI) => {
     try {
-        // In production, change false to true
-        const response = await axiosInstance.get(`${URL}/vendors?filters[isApproved]=false&${queryString}`)
+        const response = await axiosInstance.get(`${URL}/vendors?filters[isApproved]=true&${queryString}`)
         return response.data
     } catch (error) {
         if (error.response.data.message === 'UnAuthorized..!') {
