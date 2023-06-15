@@ -32,6 +32,7 @@ const Login = () => {
                 color="common"
                 style={{
                     backgroundColor: '#00bbaa',
+                    boxShadow: 'none',
                 }}
             >
                 <Container maxWidth="lg">
@@ -206,6 +207,19 @@ const Login = () => {
                                         name="password"
                                         placeholder="Password"
                                     />
+                                </div>
+                                <div class="mb-3">
+                                    <Typography variant="p">
+                                        Don't have an account?{' '}
+                                        <Link to="/register">
+                                            <Typography
+                                                variant="span"
+                                                color={'#00bbaa'}
+                                            >
+                                                Sign up
+                                            </Typography>
+                                        </Link>
+                                    </Typography>
                                 </div>
                                 <div class="mb-3">
                                     <Button

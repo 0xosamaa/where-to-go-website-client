@@ -32,6 +32,7 @@ const Register = () => {
                 color="common"
                 style={{
                     backgroundColor: '#00bbaa',
+                    boxShadow: 'none',
                 }}
             >
                 <Container maxWidth="lg">
@@ -176,7 +177,10 @@ const Register = () => {
                         className="col-6 p-5"
                         style={{ backgroundColor: '#fff' }}
                     >
-                        <Container maxWidth="xs" className='d-flex flex-column justify-content-center align-items-center h-100'>
+                        <Container
+                            maxWidth="xs"
+                            className="d-flex flex-column justify-content-center align-items-center h-100"
+                        >
                             <div className="row">
                                 <div className="col-12">
                                     <Typography
@@ -211,6 +215,19 @@ const Register = () => {
                                         name="password"
                                         placeholder="Password"
                                     />
+                                </div>
+                                <div class="mb-3">
+                                    <Typography variant="p">
+                                        Already have an account?{' '}
+                                        <Link to="/login">
+                                            <Typography
+                                                variant="span"
+                                                color={'#00bbaa'}
+                                            >
+                                                Sign in
+                                            </Typography>
+                                        </Link>
+                                    </Typography>
                                 </div>
                                 <div class="mb-3">
                                     <Button
