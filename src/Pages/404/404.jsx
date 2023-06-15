@@ -5,6 +5,7 @@ import * as React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
+import { Container } from '@mui/system';
 
 
 const Page404 = () => {
@@ -14,7 +15,7 @@ const Page404 = () => {
     }
 
     return (
-        <div className="container d-flex flex-column flex-lg-row justify-content-around align-items-center">
+        <Container maxWidth="lg" className="d-flex flex-column flex-lg-row justify-content-around align-items-center">
             <div className="col-11 col-lg-5 d-flex justify-content-center align-items-center">
                 <img className="w-100 mt-5 mt-lg-0" src={Img404}/>
             </div>
@@ -27,7 +28,7 @@ const Page404 = () => {
                     Back to Home
                 </Button>
             </div>
-        </div>
+        </Container>
     )
 }
 
