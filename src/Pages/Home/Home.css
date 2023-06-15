@@ -43,3 +43,11 @@ a {
     left: 5rem;
     color: #fff;
 }
+
+@media screen and (max-width: 992px) {
+    .category h4 {
+        left: 50%;
+        bottom: 1rem;
+        transform: translateX(-50%);
+    }
+}
