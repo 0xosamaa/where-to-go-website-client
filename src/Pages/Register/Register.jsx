@@ -187,7 +187,7 @@ const Register = () => {
                                         variant="h2"
                                         className="text-center mb-3"
                                     >
-                                        Become a user
+                                        Become a User
                                     </Typography>
                                 </div>
                             </div>
