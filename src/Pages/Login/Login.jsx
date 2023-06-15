@@ -13,25 +13,17 @@ import {
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import whiteLogo from '../../assets/logos/white_logo.svg';
+import mainLogo from '../../assets/logos/main_logo.svg';
 import registerIll from '../../assets/images/register/register-ill.png';
 
 const Login = () => {
-    useEffect(() => {
-        document.body.style.backgroundColor = '#00bbaa';
-
-        return () => {
-            document.body.style.backgroundColor = '#fff';
-        };
-    }, []);
-
     return (
         <>
             <AppBar
                 position="sticky"
                 color="common"
                 style={{
-                    backgroundColor: '#00bbaa',
+                    // backgroundColor: '#00bbaa',
                     boxShadow: 'none',
                 }}
             >
@@ -45,7 +37,7 @@ const Login = () => {
                                 }}
                             >
                                 <img
-                                    src={whiteLogo}
+                                    src={mainLogo}
                                     alt="Where to go"
                                     width={32}
                                 />
@@ -67,7 +59,7 @@ const Login = () => {
                                 color="inherit"
                             >
                                 <img
-                                    src={whiteLogo}
+                                    src={mainLogo}
                                     alt="Where to go"
                                     width={32}
                                 />
@@ -169,12 +161,19 @@ const Login = () => {
             </AppBar>
             <Container
                 maxWidth="lg"
-                className="d-flex justify-content-center align-items-center"
-                style={{ minHeight: 'calc(100vh - 64px)' }}
+                className="d-flex justify-content-center align-items-center mt-5"
+                style={{
+                    minHeight: "calc(100vh - 64px)'",
+                }}
             >
-                <div className="row">
+                <div
+                    className="row"
+                    style={{
+                        boxShadow: '8px 8px 32px 0 rgba(1, 60, 60, 0.5)',
+                    }}
+                >
                     <div
-                        className="col-6 p-5"
+                        className="col-12 col-lg-6 p-5"
                         style={{ backgroundColor: '#fff' }}
                     >
                         <Container
@@ -187,28 +186,28 @@ const Login = () => {
                                         variant="h2"
                                         className="text-center mb-3"
                                     >
-                                        Sign in
+                                        Login as a User
                                     </Typography>
                                 </div>
                             </div>
                             <div className="row">
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <input
                                         type="email"
-                                        class="form-control"
+                                        className="form-control"
                                         name="email"
                                         placeholder="Email"
                                     />
                                 </div>
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <input
                                         type="password"
-                                        class="form-control"
+                                        className="form-control"
                                         name="password"
                                         placeholder="Password"
                                     />
                                 </div>
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <Typography variant="p">
                                         Don't have an account?{' '}
                                         <Link to="/register">
@@ -221,12 +220,12 @@ const Login = () => {
                                         </Link>
                                     </Typography>
                                 </div>
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <Button
                                         onClick={''}
                                         className="col-12"
                                         variant="contained"
-                                        color="secondary"
+                                        color="primary"
                                     >
                                         Sign in
                                     </Button>
@@ -235,8 +234,8 @@ const Login = () => {
                         </Container>
                     </div>
                     <div
-                        className="col-6 p-5"
-                        style={{ backgroundColor: '#0053CC' }}
+                        className="col-12 col-lg-6 p-5 d-none d-lg-block"
+                        style={{ backgroundColor: 'rgb(1, 140, 128)' }}
                     >
                         <img
                             src={registerIll}
