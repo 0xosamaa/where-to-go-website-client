@@ -21,6 +21,7 @@ const Security = () => {
     const [oldPassword, setOldPassword] = useState(false);
     const [newPassword, setNewPassword] = useState(false);
     const [conPassword, setConPassword] = useState(false);
+    const customer = useSelector(state => state.profile.customer);
     const error = useSelector(state => state.profile.error);
     const [data, setData] = useState({
         currentPassword:'',
@@ -71,7 +72,7 @@ const Security = () => {
     return (
         <>
             <div className="img-container w-100 d-flex justify-content-between align-items-center">
-                <img style={{width:'80px',height:'80px'}} className="rounded-circle" src="https://picsum.photos/200/300" alt="profile" />
+                <img style={{width:'80px',height:'80px'}} className="rounded-circle" src={customer.image? `http://localhost:8001/api/v1/images/customers/${customer.image}` :"https://picsum.photos/200/300"} alt="profile" />
             </div>
             <div className="info-container w-100 d-flex align-items-start flex-wrap">
                 <div className="info-content-item d-flex gap-3 align-items-center col-11 col-lg-3">
@@ -162,7 +163,7 @@ const Security = () => {
             </div>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={error === null? "success" : "error"} sx={{ width: '100%' }}>
-                    {error === null ? "Password Changed Successfully" : error.errors[0].msg}
+                    {error === null ? "Password Changed Successfully" : error?.errors[0].msg}
                 </Alert>
             </Snackbar>
         </>
