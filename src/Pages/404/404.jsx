@@ -21,7 +21,7 @@ const Page404 = () => {
             <div className="col-11 col-lg-5 d-flex flex-column align-items-center align-items-lg-start mb-5 mb-lg-0">
                 <Typography className="text-center text-lg-start" style={{color:'#00BBAA'}} variant="h3">Uh Oh..</Typography>
                 <Typography className="text-center text-lg-start" variant="h1">Something Went Wrong</Typography>
-                <Typography className="text-center text-lg-start" variant="h4">Looks like this page dos'nt exist </Typography>
+                <Typography className="text-center text-lg-start" variant="h4">Looks like this page does not exist </Typography>
                 <Button onClick={handleClick} className="col-6" variant="contained" color="primary">
                     <FontAwesomeIcon className="me-2" icon={faHouse} />
                     Back to Home
