@@ -1,0 +1,16 @@
+.carousel-item {
+    height: 75vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    border-radius: 1rem;
+}
+.carousel-caption {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+}

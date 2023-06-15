@@ -17,7 +17,6 @@ const theme = createTheme({
             dark: '#0043a8',
             contrastText: '#FFFFFF',
         },
-        
     },
     typography: {
         fontFamily: 'Dosis, sans-serif',
@@ -68,7 +67,7 @@ const theme = createTheme({
     },
     shape: {
         borderRadius: 4,
-    }
+    },
 });
 
 function App() {
