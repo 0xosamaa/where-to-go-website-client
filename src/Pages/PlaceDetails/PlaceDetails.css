@@ -1,0 +1,114 @@
+.gallery {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+  position: relative;
+  height: 40vmax;
+}
+
+.gallery-btn {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  margin: 12px !important;
+}
+
+.thumbnail, .gallery-1, .gallery-2, .gallery-3 {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.thumbnail {
+  grid-area: 1 / 1 / 4 / 2;
+  border-radius: 12px 0 0 12px;
+}
+.gallery-1 {
+  grid-area: 1 / 2 / 2 / 3;
+  border-top-right-radius: 12px;
+}
+.gallery-2 {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.gallery-3 {
+  grid-area: 3 / 2 / 4 / 3;
+  border-bottom-right-radius: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 3fr 1fr;
+    grid-column-gap: 8px;
+    grid-row-gap: 8px;
+    height: 60vmax;
+  }
+  .thumbnail {
+    grid-area: 1 / 1 / 2 / 4;
+    border-radius: 8px 8px 0 0;
+  }
+  .gallery-1 {
+    grid-area: 2 / 1 / 3 / 2;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 8px;
+  }
+  .gallery-2 {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+  .gallery-3 {
+    grid-area: 2 / 3 / 3 / 4;
+    border-bottom-right-radius: 8px;
+  }
+  .gallery-btn {
+    margin: 8px !important;
+  }
+}
+
+.gallery-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 10vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 998;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.gallery-slider {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gallery-slider img {
+  max-width: 80vw;
+  max-height: 80vh;
+  display: block;
+  margin: auto;
+  border-radius: 5vmin;
+  object-fit: contain;
+}
+
+.close-gallery {
+  z-index: 999;
+  position: fixed !important; 
+  top: 10%;
+  right: 2%;
+  transform: translate(-50%, -50%);
+  align-self: end;
+  width: 40px !important;
+  height: 40px !important;
+  cursor: pointer;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 50%;
+}

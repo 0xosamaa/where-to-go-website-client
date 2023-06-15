@@ -68,8 +68,7 @@ const SearchResults = () => {
   };
 
   const handleSearchItemClick = (evnet, placeId) => {
-    console.log(placeId);
-    navigate('/place');
+    navigate(`/place/${placeId}`);
   };
 
   return (
