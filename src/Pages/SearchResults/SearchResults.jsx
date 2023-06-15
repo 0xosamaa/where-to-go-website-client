@@ -1,4 +1,4 @@
-import { Pagination, Typography, useTheme } from "@mui/material";
+import { Pagination, Typography, useTheme, Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
@@ -72,7 +72,7 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="container d-flex flex-column-reverse gap-5 flex-md-row align-items-stretch align-items-md-start flex-fill my-5">
+    <Container maxWidth="lg" className="d-flex flex-column-reverse gap-5 flex-md-row align-items-stretch align-items-md-start flex-fill my-5">
       <div className="filter-menu d-block">
         <FilterMenu title="Rating" options={rating} />
         <FilterMenu
@@ -129,7 +129,7 @@ const SearchResults = () => {
           />
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 

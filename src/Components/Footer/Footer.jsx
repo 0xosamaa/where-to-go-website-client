@@ -8,7 +8,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import './Footer.css';
-import { Typography } from '@mui/material';
+import { Typography, Container } from '@mui/material';
 
 const Footer = () => {
     const theme = useTheme();
@@ -20,12 +20,19 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer>
-            <div className="container pb-0">
+        <footer className="mt-5">
+            <Container maxWidth="lg">
                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-center py-3">
                     <div className="d-flex mb-4 mb-md-0">
-                        <Typography variant="h6" className='mx-5 mx-md-0'>ABOUT</Typography>
-                        <Typography variant="h6" className="mx-5 mx-md-0 ms-md-5 ps-md-5">CONTACT</Typography>
+                        <Typography variant="h6" className="mx-5 mx-md-0">
+                            ABOUT
+                        </Typography>
+                        <Typography
+                            variant="h6"
+                            className="mx-5 mx-md-0 ms-md-5 ps-md-5"
+                        >
+                            CONTACT
+                        </Typography>
                     </div>
                     <div className="d-flex justify-content-center align-items-center">
                         <Link>
@@ -54,18 +61,27 @@ const Footer = () => {
                         </Link>
                     </div>
                     <div className="d-flex mt-4 mt-md-0">
-                        <Typography variant="h6" className="mx-5 mx-md-0 me-md-5 pe-md-5">PRIVACY</Typography>
-                        <Typography variant="h6" className="mx-5 mx-md-0">TERMS</Typography>
+                        <Typography
+                            variant="h6"
+                            className="mx-5 mx-md-0 me-md-5 pe-md-5"
+                        >
+                            PRIVACY
+                        </Typography>
+                        <Typography variant="h6" className="mx-5 mx-md-0">
+                            TERMS
+                        </Typography>
                     </div>
                 </div>
-                <hr className="mb-0 mt-4" style={{ color: '#bcc1ca', width: '100%', borderWidth: 2 }} />
+                <hr
+                    className="mb-0 mt-4"
+                    style={{ color: '#bcc1ca', width: '100%', borderWidth: 2 }}
+                />
                 <div className="copyrights">
                     All rights reserved - &copy; Where to go {year}
                 </div>
-            </div>
+            </Container>
         </footer>
     );
-
 };
 
 export default Footer;
