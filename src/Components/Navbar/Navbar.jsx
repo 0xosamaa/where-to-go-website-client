@@ -96,7 +96,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
 const pages = ['Places to go', 'Experiences', 'Discover'];
-const settings = ['Profile', 'Logout'];
+const settings = [
+    { name: 'Profile', path: '/profile' },
+    { name: 'Login', path: '/login' },
+    { name: 'Register', path: '/register' },
+    { name: 'Logout', path: '/logout' },
+];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -232,14 +237,16 @@ function Navbar() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem
-                                    key={setting}
-                                    onClick={handleCloseUserMenu}
-                                >
-                                    <Typography textAlign="center">
-                                        {setting}
-                                    </Typography>
-                                </MenuItem>
+                                <Link to={setting.path}>
+                                    <MenuItem
+                                        key={setting.name}
+                                        onClick={handleCloseUserMenu}
+                                    >
+                                        <Typography textAlign="center">
+                                            {setting.name}
+                                        </Typography>
+                                    </MenuItem>
+                                </Link>
                             ))}
                         </Menu>
                     </Box>

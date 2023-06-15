@@ -12,11 +12,12 @@
 }
 
 a {
-    color: #00bbaa;
+    color: black;
     text-decoration: none;
 }
 
 .top-rated a {
+    color: #00bbaa;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 
