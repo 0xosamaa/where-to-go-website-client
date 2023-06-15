@@ -11,7 +11,7 @@ const initialState = {
 export const getPlace = createAsyncThunk('place/getPlace', async (id, thunkAPI) => {
     try {
         const response = await axiosInstance.get(`${URL}/${id}`)
-        return response.data
+        return response.data.data
     } catch (error) {
         if (error.response.data.message === 'UnAuthorized..!') {
             localStorage.clear()

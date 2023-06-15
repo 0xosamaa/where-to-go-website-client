@@ -17,6 +17,12 @@ const theme = createTheme({
             dark: '#0043a8',
             contrastText: '#FFFFFF',
         },
+        info: {
+            main: '#FFFFFF',
+            light: '#FFFFFF',
+            dark: '#FFFFFF',
+            contrastText: '#000000',
+        }
     },
     typography: {
         fontFamily: 'Dosis, sans-serif',
