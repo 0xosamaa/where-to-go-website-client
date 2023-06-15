@@ -9,11 +9,6 @@ const BpIcon = styled('span')(({ theme }) => ({
     theme.palette.mode === 'dark'
       ? '0 0 0 1px rgb(16 22 26 / 40%)'
       : 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
-//   backgroundColor: theme.palette.mode === 'dark' ? '#394b59' : '#f5f8fa',
-//   backgroundImage:
-//     theme.palette.mode === 'dark'
-//       ? 'linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))'
-//       : 'linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))',
   '.Mui-focusVisible &': {
     outline: `2px auto ${theme.palette.primary.main}`,
     outlineOffset: 2,
@@ -63,9 +58,7 @@ function BpCheckbox(props) {
 
 const CustomizedCheckbox = () => {
   return (
-    <div>
-      <BpCheckbox />
-    </div>
+    <BpCheckbox />
   );
 }
 
