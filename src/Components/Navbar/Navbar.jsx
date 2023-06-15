@@ -119,7 +119,7 @@ function Navbar() {
 
     return (
         <AppBar
-            position="static"
+            position="sticky"
             color="common"
             style={{
                 boxShadow:
