@@ -84,7 +84,7 @@ const Profile = () => {
             <Edit open={open} handleOpens={handleClick} handleClickOpen={handleClickOpen} handleClose={handleClose} />
             <Snackbar open={opens} autoHideDuration={6000} onClose={handleCloseA}>
                 <Alert onClose={handleCloseA} severity={error === null? "success" : "error"} sx={{ width: '100%' }}>
-                    {error === null ? "Data Updated Successfully" : error.message}
+                    {error === null ? "Data Updated Successfully" : error?.message}
                 </Alert>
             </Snackbar>
         </div>

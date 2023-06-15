@@ -34,12 +34,12 @@ const Card = ({place}) => {
             <div className="card-body d-flex flex-fill justify-content-between mt-3 mt-lg-0">
                 <div className="content d-flex flex-column justify-content-between">
                     <div className="card-details">
-                        <Typography className="card-text" variant="body">Restaurant in Cairo, New Cairo</Typography>
+                        <Typography className="card-text" variant="body">{`${place.category[0]?.name} in ${place.address?.city || 'NoWhere'} - ${place.address?.country || 'NoWhere'}`}</Typography>
                         <Typography variant="h4">{place.placeName}</Typography>
-                        <hr style={{ width: 56, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>
+                        <hr style={{ width: 90, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>
                         <Typography className="card-text" variant="body">{place.description}</Typography>
-                        <br />
-                        <Typography className="card-text" variant="body">Kitchen • Wifi • Air conditioning</Typography>
+                        <hr style={{ width: 70, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>
+                        <Typography className="card-text" variant="body">Owner :  {`${place.firstName} ${place.lastName}`}</Typography>
                     </div>
                     <div className="card-rating d-flex">
                         <StarIcon fontSize="small" color="primary" className="me-2" />

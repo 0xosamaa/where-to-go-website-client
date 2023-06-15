@@ -30,10 +30,10 @@ export const getCustomer = createAsyncThunk('profile/getCustomer', async (id, th
 
 export const getFavoriteVendors = createAsyncThunk(
     'profile/getFavoriteVendors',
-    async (id, thunkAPI) => {
+    async (currentPage, thunkAPI) => {
         try {
             const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODhlOTEzN2RjZWQxN2ZmNzRmMDU3ZSIsInJvbGUiOiJDdXN0b21lciIsImlhdCI6MTY4NjczNzM2MiwiZXhwIjoxNjk0NTEzMzYyfQ.u0bD8-QNb0ZYGKKI2eOofLkTcgT7tXgTy9y-RBRB-zg'
-            const response = await axios.get(`${URL}/myFavorites`, {
+            const response = await axios.get(`${URL}/myFavorites?page=${currentPage}`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             return response.data.data
@@ -112,7 +112,7 @@ const profileSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
-        [getCustomer().pending]: (state, action) => {
+        [getCustomer.pending]: (state, action) => {
             state.loading = true
         },
         [getCustomer.fulfilled]: (state, action) => {
