@@ -1,7 +1,7 @@
 import {Alert, Snackbar, TextField, Typography} from "@mui/material";
 import * as React from "react";
 import Button from "@mui/material/Button";
-import contactusImage from "../../Assets/contactus.jpeg";
+import contactusImage from "../../assets/contactus.jpeg";
 import {useState} from "react";
 import axios from "axios";
 
