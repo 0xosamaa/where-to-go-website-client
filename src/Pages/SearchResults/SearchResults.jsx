@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import SearchItem from "../../Components/SearchResults/SearchItem/SearchItem";
 import FilterMenu from "../../Components/SearchResults/FilterMenu/FilterMenu";
 import {
+  clearFilters,
   getCategories,
   getTags,
   setPagination,
@@ -36,7 +37,10 @@ const SearchResults = () => {
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getTags());
-    dispatch(vendorSearch());
+    (async function fetchData() {
+      await dispatch(clearFilters());
+      dispatch(vendorSearch());
+    })();
   }, []);
 
   const rating = [

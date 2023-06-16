@@ -6,9 +6,11 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
 import CustomizedCheckbox from "../CustomizedCheckbox/CustomizedCheckbox";
 import CustomizedRadio from "../CustomizedRadio/CustomizedRadio";
+import { useDispatch } from "react-redux";
+import { setFilters } from "../../../Redux/Slices/searchSlice";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -53,11 +55,16 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const FilterMenu = (props) => {
   const [expanded, setExpanded] = React.useState("");
+  const dispatch = useDispatch();
   const theme = useTheme();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+
+  const handleRatingChange = (event, value) => {
+    dispatch(setFilters({ data: value, type: props.title }))
+  }
 
   return (
     <div>
@@ -77,7 +84,18 @@ const FilterMenu = (props) => {
                 <CustomizedRadio data={option} type={props.title} key={option.id} />
               ))}
             </RadioGroup>
-          ) : (
+          ) : props.title === "Rating" ? (
+            <Slider
+              getAriaLabel={() => 'Rating range'}
+              defaultValue={[1, 5]}
+              min={1}
+              max={5}
+              step={1}
+              onChange={handleRatingChange}
+              valueLabelDisplay="auto"
+            />
+          ) :
+          (
             props.options.map((option) => (
               <div className="d-block" key={option.id}>
                 <FormControlLabel

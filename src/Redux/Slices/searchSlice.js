@@ -98,7 +98,15 @@ const searchSlice = createSlice({
                 case 'Categories':
                     state.searchParams.category[0] = data.id;
                     break;
+                case 'Rating':
+                    state.searchParams.rating = data
+                    break;
             }
+        },
+        clearFilters(state) {
+            Object.values(state.searchParams).forEach((filterArray) => {
+                filterArray.length = 0
+            })
         },
         setPagination(state, action) {
             state.pagination = action.payload
@@ -145,5 +153,5 @@ const searchSlice = createSlice({
     },
 })
 
-export const { setFilters, setPagination, setQueryString } = searchSlice.actions
+export const { setFilters, setPagination, setQueryString, clearFilters } = searchSlice.actions
 export default searchSlice.reducer
