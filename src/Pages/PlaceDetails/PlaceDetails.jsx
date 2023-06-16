@@ -1,4 +1,4 @@
-import { Button, Pagination, Typography, useTheme } from "@mui/material";
+import { Button, Pagination, Typography, useTheme, Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -7,8 +7,6 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
-import SearchItem from '../../Components/SearchItem/SearchItem';
-import FilterMenu from '../../Components/FilterMenu/FilterMenu';
 import {
     getCategories,
     getTags,
@@ -22,7 +20,6 @@ import StarIcon from '@mui/icons-material/Star';
 import FavouriteIcon from '../../Components/FavouriteIcon/FavouriteIcon';
 import ShareIcon from '@mui/icons-material/Share';
 import Carousel from 'react-material-ui-carousel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SearchResults = () => {
   const navigate = useNavigate();
@@ -85,7 +82,7 @@ const SearchResults = () => {
     };
 
   return (
-    <div className="container d-flex flex-column mt-4 mb-5">
+    <Container className="d-flex flex-column mt-4 mb-5">
       {loading ? (
         <RiseLoader
           color={theme.palette.primary.main}
@@ -250,7 +247,7 @@ const SearchResults = () => {
           </div>
         </>
       )}
-    </div>
+    </Container>
   );
 };
 
