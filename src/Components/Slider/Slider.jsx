@@ -18,7 +18,7 @@ const Slider = () => {
         });
     }, []);
     return (
-        <div className="container my-5">
+        <div className="container mb-5">
             <div className="blog-slider">
                 <div className="blog-slider__wrp swiper-wrapper">
                     <div className="blog-slider__item swiper-slide">

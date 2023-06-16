@@ -12,11 +12,12 @@
 }
 
 a {
-    color: #00bbaa;
+    color: black;
     text-decoration: none;
 }
 
 .top-rated a {
+    color: #00bbaa;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -42,4 +43,12 @@ a {
     bottom: 1rem;
     left: 5rem;
     color: #fff;
+}
+
+@media screen and (max-width: 992px) {
+    .category h4 {
+        left: 50%;
+        bottom: 1rem;
+        transform: translateX(-50%);
+    }
 }
