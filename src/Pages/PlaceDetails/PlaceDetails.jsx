@@ -1,13 +1,11 @@
-import {
-    Button,
-    Pagination,
-    Typography,
-    useTheme,
-    Container,
-} from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
+import { Button, Pagination, Typography, useTheme } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PersonIcon from "@mui/icons-material/Person";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
 import SearchItem from '../../Components/SearchItem/SearchItem';
 import FilterMenu from '../../Components/FilterMenu/FilterMenu';
@@ -27,37 +25,37 @@ import Carousel from 'react-material-ui-carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SearchResults = () => {
-    const navigate = useNavigate();
-    const theme = useTheme();
-    const { id } = useParams();
-    const [loading, setLoading] = useState(true);
-    const dispatch = useDispatch();
-    const _categories = useSelector((state) => state.search.categories);
-    const _tags = useSelector((state) => state.search.tags);
-    const result = useSelector((state) => state.search.result);
-    const [pagination, setPagination] = useState({
-        currentPage: 1,
-        totalPages: 5,
-    });
-    const place = useSelector((state) => state.place.place);
-    const [images, setImages] = useState([]);
-    const [galleryVisible, setGalleryVisible] = useState(false);
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const _categories = useSelector((state) => state.search.categories);
+  const _tags = useSelector((state) => state.search.tags);
+  const result = useSelector((state) => state.search.result);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 5,
+  });
+  const place = useSelector((state) => state.place.place);
+  const [images, setImages] = useState([]);
+  const [galleryVisible, setGalleryVisible] = useState(false);
 
     const override = {
         display: 'block',
         margin: '30vh auto',
     };
 
-    useEffect(() => {
-        dispatch(getPlace(id)).then((data) => {
-            console.log(data);
-            const _gallery = [];
-            _gallery.push(data.payload.thumbnail);
-            _gallery.push(...data.payload.gallery);
-            setImages(_gallery);
-            setLoading(false);
-        });
-    }, []);
+  useEffect(() => {
+    dispatch(getPlace(id)).then((data) => {
+      console.log(data);
+      const _gallery = [];
+      _gallery.push(data.payload.thumbnail);
+      _gallery.push(...data.payload.gallery);
+      setImages(_gallery);
+      setLoading(false);
+    });
+  }, []);
 
     const rating = [
         { id: 1, name: 'Below 3' },
@@ -86,128 +84,174 @@ const SearchResults = () => {
         navigate('/place');
     };
 
-    return (
-        <Container className="d-flex flex-column mt-4 mb-5">
-            {loading ? (
-                <RiseLoader
-                    color={theme.palette.primary.main}
-                    loading={loading}
-                    cssOverride={override}
-                    size={25}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                />
-            ) : (
-                <>
-                    <Typography variant="h1" className="pb-0">
-                        {place.placeName}
+  return (
+    <div className="container d-flex flex-column mt-4 mb-5">
+      {loading ? (
+        <RiseLoader
+          color={theme.palette.primary.main}
+          loading={loading}
+          cssOverride={override}
+          size={25}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        <>
+          <Typography variant="h1" className="pb-0">
+            {place.placeName}
+          </Typography>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="card-rating d-flex">
+              <StarIcon fontSize="small" color="primary" className="me-2" />
+              <Typography variant="body">
+                <b>4.84</b> &nbsp;
+                <span className="text-muted">(324 reviews)</span>
+              </Typography>
+            </div>
+            <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center me-4">
+                <ShareIcon className="me-2" />
+                <Typography variant="body" style={{ fontSize: 20 }}>
+                  Share
+                </Typography>
+              </div>
+              <div className="d-flex align-items-center">
+                <FavouriteIcon />
+                <Typography variant="body" style={{ fontSize: 20 }}>
+                  Save
+                </Typography>
+              </div>
+            </div>
+          </div>
+          <div className="gallery mt-3">
+            <img
+              className="thumbnail"
+              src={`http://localhost:8001/api/v1/images/vendors/${place?.thumbnail}`}
+              alt="thumbnail"
+            />
+            <img
+              className="gallery-1"
+              src={`http://localhost:8001/api/v1/images/vendors/${
+                place.gallery ? place.gallery[0] : ""
+              }`}
+              alt="gallery-1"
+            />
+            <img
+              className="gallery-2"
+              src={`http://localhost:8001/api/v1/images/vendors/${
+                place.gallery ? place.gallery[1] : ""
+              }`}
+              alt="gallery-2"
+            />
+            <img
+              className="gallery-3"
+              src={`http://localhost:8001/api/v1/images/vendors/${
+                place.gallery ? place.gallery[2] : ""
+              }`}
+              alt="gallery-3"
+            />
+            <Button
+              variant="contained"
+              color="info"
+              className="gallery-btn"
+              onClick={() => setGalleryVisible(true)}
+            >
+              Gallery
+            </Button>
+          </div>
+          {galleryVisible && (
+            <>
+              <CloseIcon
+                size="large"
+                onClick={() => setGalleryVisible(false)}
+                className="close-gallery"
+              />
+              <div className="gallery-container">
+                <Carousel
+                  className="gallery-slider"
+                  autoPlay={false}
+                  animation="slide"
+                  duration={500}
+                  swipe={true}
+                  indicators={false}
+                  navButtonsAlwaysVisible={true}
+                  cycleNavigation={false}
+                >
+                  {images.map((img, index) => (
+                    <img
+                      key={index}
+                      className=""
+                      src={`http://localhost:8001/api/v1/images/vendors/${img}`}
+                      alt=""
+                      draggable={false}
+                    />
+                  ))}
+                </Carousel>
+              </div>
+            </>
+          )}
+          <div className="d-flex flex-column flex-md-row">
+            <div className="overview flex-grow-1">
+              <Typography variant="h2" className="mt-4 mb-0">
+                Overview
+              </Typography>
+              <div className="d-flex mb-2">
+                <div className="flex-grow-1">
+                  <div className="d-flex align-items-center mb-2">
+                    <LocationOnIcon color="primary" className="me-1" />
+                    <Typography variant="h6">
+                      {place.address?.street}
                     </Typography>
-                    <div className="d-flex justify-content-between align-items-center">
-                        <div className="card-rating d-flex">
-                            <StarIcon
-                                fontSize="small"
-                                color="primary"
-                                className="me-2"
-                            />
-                            <Typography variant="body">
-                                <b>4.84</b> &nbsp;
-                                <span className="text-muted">
-                                    (324 reviews)
-                                </span>
-                            </Typography>
-                        </div>
-                        <div className="d-flex align-items-center">
-                            <div className="d-flex align-items-center me-4">
-                                <ShareIcon className="me-2" />
-                                <Typography
-                                    variant="body"
-                                    style={{ fontSize: 20 }}
-                                >
-                                    Share
-                                </Typography>
-                            </div>
-                            <div className="d-flex align-items-center">
-                                <FavouriteIcon />
-                                <Typography
-                                    variant="body"
-                                    style={{ fontSize: 20 }}
-                                >
-                                    Save
-                                </Typography>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="gallery mt-3">
-                        <img
-                            className="thumbnail"
-                            src={`http://localhost:8001/api/v1/images/vendors/${place?.thumbnail}`}
-                            alt="thumbnail"
-                        />
-                        <img
-                            className="gallery-1"
-                            src={`http://localhost:8001/api/v1/images/vendors/${
-                                place.gallery ? place.gallery[0] : ''
-                            }`}
-                            alt="gallery-1"
-                        />
-                        <img
-                            className="gallery-2"
-                            src={`http://localhost:8001/api/v1/images/vendors/${
-                                place.gallery ? place.gallery[1] : ''
-                            }`}
-                            alt="gallery-2"
-                        />
-                        <img
-                            className="gallery-3"
-                            src={`http://localhost:8001/api/v1/images/vendors/${
-                                place.gallery ? place.gallery[2] : ''
-                            }`}
-                            alt="gallery-3"
-                        />
-                        <Button
-                            variant="contained"
-                            color="info"
-                            className="gallery-btn"
-                            onClick={() => setGalleryVisible(true)}
-                        >
-                            Gallery
-                        </Button>
-                    </div>
-                    {galleryVisible && (
-                        <>
-                            <CloseIcon
-                                size="large"
-                                onClick={() => setGalleryVisible(false)}
-                                className="close-gallery"
-                            />
-                            <div className="gallery-container">
-                                <Carousel
-                                    className="gallery-slider"
-                                    autoPlay={false}
-                                    animation="slide"
-                                    duration={500}
-                                    swipe={true}
-                                    indicators={false}
-                                    navButtonsAlwaysVisible={true}
-                                    cycleNavigation={false}
-                                >
-                                    {images.map((img, index) => (
-                                        <img
-                                            key={index}
-                                            className=""
-                                            src={`http://localhost:8001/api/v1/images/vendors/${img}`}
-                                            alt=""
-                                            draggable={false}
-                                        />
-                                    ))}
-                                </Carousel>
-                            </div>
-                        </>
-                    )}
-                </>
-            )}
-        </Container>
-    );
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <LocalOfferIcon
+                      fontSize="small"
+                      color="primary"
+                      className="mx-1"
+                    />
+                    <Typography variant="h6">
+                      {place.category[0].name}
+                    </Typography>
+                  </div>
+                </div>
+                <div className="flex-grow-1">
+                  <div className="d-flex align-items-center mb-2">
+                    <PersonIcon color="primary" className="me-2" />
+                    <Typography variant="h6">{`${place.firstName} ${place.lastName}`}</Typography>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <LocalPhoneIcon color="primary" className="me-2" />
+                    <Typography variant="h6">{place.phoneNumber}</Typography>
+                  </div>
+                </div>
+              </div>
+              <Typography variant="body">{place.description}</Typography>
+            </div>
+            <div className="tags  flex-grow-1">
+              <Typography variant="h2" className="mt-4 mb-0">
+                Tags
+              </Typography>
+            </div>
+          </div>
+          <hr
+            style={{
+              width: "100%",
+              color: "#9095A0",
+              borderWidth: 2,
+              margin: "32px 0",
+            }}
+          />
+          <div className="card-rating d-flex">
+            <StarIcon fontSize="small" color="primary" className="me-2" />
+            <Typography variant="body">
+              <b>4.84</b> &nbsp;
+              <span className="text-muted">(324 reviews)</span>
+            </Typography>
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default SearchResults;
