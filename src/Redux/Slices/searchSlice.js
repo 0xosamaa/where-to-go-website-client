@@ -4,6 +4,18 @@ const URL = '/api/v1'
 
 const initialState = {
     result: [],
+    pagination: {
+        currentPage: 1,
+        perPage: 5,
+    },
+    queryString: '',
+    searchParams: {
+        category: [],
+        tags: [],
+        location: [],
+        placeName: [],
+        rating: [],
+    },
     location: {
         country: '',
         state: '',
@@ -16,9 +28,17 @@ const initialState = {
     error: 'null',
 };
 
-export const vendorSearch = createAsyncThunk('search/vendorSearch', async (queryString, thunkAPI) => {
+export const vendorSearch = createAsyncThunk('search/vendorSearch', async (_, thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`${URL}/vendors?filters[isApproved]=true&${queryString}`)
+        // const response = await axiosInstance.get(`${URL}/vendors?filters[isApproved]=true&${initialState.queryString}`)
+        const { search } = thunkAPI.getState();
+        const { currentPage, perPage } = search.pagination;
+        const queryString = search.queryString;
+
+        const query = `${URL}/vendors?page=${currentPage}&limit=${perPage}&${queryString}`
+        console.log(query)
+
+        const response = await axiosInstance.get(query)
         return response.data
     } catch (error) {
         if (error.response.data.message === 'UnAuthorized..!') {
@@ -55,10 +75,38 @@ export const getTags = createAsyncThunk('search/getTags', async (thunkAPI) => {
     }
 })
 
+const alterArray = (array, value) => {
+    const index = array.indexOf(value);
+    if (index !== -1) {
+        array.splice(index, 1);
+    } else {
+        array.push(value);
+    }
+    return array;
+}
+
 const searchSlice = createSlice({
     name: 'search',
     initialState,
-    reducers: {},
+    reducers: {
+        setFilters(state, action) {
+            const { data, type } = action.payload
+            switch (type) {
+                case 'Tags':
+                    state.searchParams.tags = alterArray(state.searchParams.tags, data.id)
+                    break;
+                case 'Categories':
+                    state.searchParams.category[0] = data.id;
+                    break;
+            }
+        },
+        setPagination(state, action) {
+            state.pagination = action.payload
+        },
+        setQueryString(state, action) {
+            state.queryString = action.payload
+        }
+    },
     extraReducers: {
         [vendorSearch.pending]: (state) => {
             state.loading = true
@@ -66,8 +114,6 @@ const searchSlice = createSlice({
         [vendorSearch.fulfilled]: (state, action) => {
             state.result = action.payload.data
             state.pagination = action.payload.pagination
-            // console.log(state.result)
-            // console.log(state.pagination)
             state.loading = false
         },
         [vendorSearch.rejected]: (state, action) => {
@@ -99,4 +145,5 @@ const searchSlice = createSlice({
     },
 })
 
+export const { setFilters, setPagination, setQueryString } = searchSlice.actions
 export default searchSlice.reducer

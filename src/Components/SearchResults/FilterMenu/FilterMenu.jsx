@@ -1,13 +1,14 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import { FormControlLabel } from "@mui/material";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import CustomizedCheckbox from "../CustomizedCheckbox/CustomizedCheckbox";
+import CustomizedRadio from "../CustomizedRadio/CustomizedRadio";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -52,6 +53,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const FilterMenu = (props) => {
   const [expanded, setExpanded] = React.useState("");
+  const theme = useTheme();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -67,13 +69,26 @@ const FilterMenu = (props) => {
           <Typography variant="h6">{props.title}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            {props.options.map((option) => (
-                <div className="d-block" key={option.id}>
-                    <FormControlLabel control={<CustomizedCheckbox />} label={<Typography variant="body">{option.name}</Typography>} />
-                </div>
-            ))}
-          </Typography>
+          {props.title === "Categories" ? (
+            <RadioGroup
+              name="categories-group"
+            >
+              {props.options.map((option) => (
+                <CustomizedRadio data={option} type={props.title} key={option.id} />
+              ))}
+            </RadioGroup>
+          ) : (
+            props.options.map((option) => (
+              <div className="d-block" key={option.id}>
+                <FormControlLabel
+                  control={
+                    <CustomizedCheckbox data={option} type={props.title} />
+                  }
+                  label={<Typography variant="body">{option.name}</Typography>}
+                />
+              </div>
+            ))
+          )}
         </AccordionDetails>
       </Accordion>
     </div>

@@ -60,21 +60,21 @@ const SearchResults = () => {
         { id: 3, name: 'Above 4' },
     ];
 
-    const handlePageChange = (event, page) => {
-        setLoading(true);
-        dispatch(vendorSearch(`page=${page}`)).then((data) => {
-            const { currentPage, totalPages } = data.payload.pagination;
-            setPagination({ currentPage, totalPages });
-            setLoading(false);
-        });
+    // const handlePageChange = (event, page) => {
+    //     setLoading(true);
+    //     dispatch(vendorSearch(`page=${page}`)).then((data) => {
+    //         const { currentPage, totalPages } = data.payload.pagination;
+    //         setPagination({ currentPage, totalPages });
+    //         setLoading(false);
+    //     });
 
-        setTimeout(() => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'auto',
-            });
-        }, 0);
-    };
+    //     setTimeout(() => {
+    //         window.scrollTo({
+    //             top: 0,
+    //             behavior: 'auto',
+    //         });
+    //     }, 0);
+    // };
 
     const handleSearchItemClick = (evnet, placeId) => {
         console.log(placeId);

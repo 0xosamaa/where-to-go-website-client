@@ -2,30 +2,28 @@ import { Pagination, Typography, useTheme, Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import SearchItem from "../../Components/SearchItem/SearchItem";
-import FilterMenu from "../../Components/FilterMenu/FilterMenu";
+import SearchItem from "../../Components/SearchResults/SearchItem/SearchItem";
+import FilterMenu from "../../Components/SearchResults/FilterMenu/FilterMenu";
 import {
   getCategories,
   getTags,
+  setPagination,
   vendorSearch,
 } from "../../Redux/Slices/searchSlice";
 import "./SearchResults.css";
 import RiseLoader from "react-spinners/RiseLoader";
 import { useNavigate } from "react-router-dom";
-import SearchBar from "../../Components/SearchBar/SearchBar";
+import SearchBar from "../../Components/SearchResults/SearchBar/SearchBar";
 
 const SearchResults = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const _categories = useSelector((state) => state.search.categories);
   const _tags = useSelector((state) => state.search.tags);
   const result = useSelector((state) => state.search.result);
-  const [pagination, setPagination] = useState({
-    currentPage: 1,
-    totalPages: 5,
-  });
+  const pagination = useSelector((state) => state.search.pagination);
+  const loading = useSelector((state) => state.search.loading);
 
   const categories = useSelector((state) => state.search.selectedCategories);
   const tags = useSelector((state) => state.search.selectedTags);
@@ -38,12 +36,7 @@ const SearchResults = () => {
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getTags());
-    setLoading(true);
-    dispatch(vendorSearch("")).then((data) => {
-      const { currentPage, totalPages } = data.payload.pagination;
-      setPagination({ currentPage, totalPages });
-      setLoading(false);
-    });
+    dispatch(vendorSearch());
   }, []);
 
   const rating = [
@@ -52,13 +45,15 @@ const SearchResults = () => {
     { id: 3, name: "Above 4" },
   ];
 
-  const handlePageChange = (event, page) => {
-    setLoading(true);
-    dispatch(vendorSearch(`page=${page}`)).then((data) => {
-      const { currentPage, totalPages } = data.payload.pagination;
-      setPagination({ currentPage, totalPages });
-      setLoading(false);
-    });
+  const handlePageChange = async (event, page) => {
+    await dispatch(
+      setPagination({
+        ...pagination,
+        currentPage: page,
+      })
+    );
+  
+    dispatch(vendorSearch());
   
     setTimeout(() => {
       window.scrollTo({
@@ -67,6 +62,7 @@ const SearchResults = () => {
       });
     }, 0);
   };
+  
 
   const handleSearchItemClick = (evnet, placeId) => {
     navigate(`/place/${placeId}`);
@@ -91,7 +87,6 @@ const SearchResults = () => {
             })}
           />
         </div>
-        {/* <Typography variant="body">{categories.toString()}</Typography> */}
         {loading ? (
           <RiseLoader
             color={theme.palette.primary.main}
@@ -104,7 +99,7 @@ const SearchResults = () => {
         ) : (
           <div className="search-results d-flex flex-column align-items-stretch">
             <Typography variant="body" className="mb-3 d-block">
-              {pagination.total} Places in Egypt
+              {pagination.total} places found
             </Typography>
             {result.map((place, index) => {
               return index ? (

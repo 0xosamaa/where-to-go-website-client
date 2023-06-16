@@ -2,7 +2,7 @@ import { Typography } from "@mui/material"
 import PropTypes from "prop-types";
 import StarIcon from '@mui/icons-material/Star';
 
-import FavouriteIcon from "../FavouriteIcon/FavouriteIcon"
+import FavouriteIcon from "../../FavouriteIcon/FavouriteIcon"
 import './SearchItem.css'
 
 const SearchItem = ({ place, onClick }) => {

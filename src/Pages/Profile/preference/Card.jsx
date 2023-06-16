@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material"
-import '../../../Components/SearchItem/SearchItem.css'
+import '../../../Components/SearchResults/SearchItem/SearchItem.css'
 import StarIcon from '@mui/icons-material/Star';
 import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder.js";
