@@ -21,7 +21,7 @@ const Preference = () => {
 
     useEffect(() => {
         let totalPages = 0;
-        if (customer.favoritePlaces.length < 3) {
+        if (customer.favoritePlaces?.length < 3) {
             totalPages = 1;
         }
         else {
@@ -82,7 +82,7 @@ const Preference = () => {
                         {Places.map((place) => {
                             return (
                                 <>
-                                    <Card key={place._id} place={place} />
+                                    <Card key={place._id} page={pagination.currentPage} place={place} />
                                     <hr style={{ width: '100%', color: '#9095A0', borderWidth: 2, margin: '24px 0' }}/>
                                 </>
                             )
