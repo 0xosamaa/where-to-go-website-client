@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
-import { Typography, Container } from '@mui/material';
+import { Typography, Container, useTheme } from '@mui/material';
 import Slider from '../../Components/Slider/Slider';
 import Header from '../../Components/Header/Header';
 import top1 from '../../assets/images/places/top-rated/top-rated-1.jpeg';
@@ -14,13 +14,15 @@ import openPlaces from '../../assets/images/places/categories/open-places.jpeg';
 import parks from '../../assets/images/places/categories/parks.jpeg';
 
 const Home = () => {
+    const theme = useTheme();
+
     return (
         <>
             <Header />
             <Container maxWidth="lg" className="top-rated my-5">
                 <div className="row">
                     <div className="col-12 my-3 text-center text-lg-start">
-                        <Typography variant="h3" color={'#00bbaa'}>
+                        <Typography variant="h3" color={theme.palette.primary.main}>
                             Top Rated
                         </Typography>
                     </div>
@@ -35,7 +37,7 @@ const Home = () => {
                             </div>
                             <div className="row">
                                 <div className="col-12 text-start">
-                                    <Typography variant="p" fontWeight={'bold'}>
+                                    <Typography color="primary" variant="p" fontWeight={'bold'}>
                                         Al Masa Hotel
                                     </Typography>
                                 </div>
@@ -51,7 +53,7 @@ const Home = () => {
                             </div>
                             <div className="row">
                                 <div className="col-12 text-start">
-                                    <Typography variant="p" fontWeight={'bold'}>
+                                    <Typography color="primary" variant="p" fontWeight={'bold'}>
                                         Al Masa Hotel
                                     </Typography>
                                 </div>
@@ -67,7 +69,7 @@ const Home = () => {
                             </div>
                             <div className="row">
                                 <div className="col-12 text-start">
-                                    <Typography variant="p" fontWeight={'bold'}>
+                                    <Typography color="primary" variant="p" fontWeight={'bold'}>
                                         Al Masa Hotel
                                     </Typography>
                                 </div>
@@ -83,7 +85,7 @@ const Home = () => {
                             </div>
                             <div className="row">
                                 <div className="col-12">
-                                    <Typography variant="p" fontWeight={'bold'}>
+                                    <Typography color="primary" variant="p" fontWeight={'bold'}>
                                         Al Masa Hotel
                                     </Typography>
                                 </div>
@@ -96,7 +98,7 @@ const Home = () => {
             <Container maxWidth="lg" className="categories mb-5">
                 <div className="row">
                     <div className="col-12 text-center text-lg-start my-3">
-                        <Typography variant="h3" color={'#00bbaa'}>
+                        <Typography variant="h3" color="primary">
                             Categories
                         </Typography>
                     </div>

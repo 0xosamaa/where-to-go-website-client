@@ -15,7 +15,7 @@ const Page404 = () => {
     }
 
     return (
-        <Container maxWidth="lg" className="d-flex flex-column flex-lg-row justify-content-around align-items-center">
+        <Container maxWidth="lg" style={{ height: '88vh' }} className="d-flex flex-column flex-lg-row justify-content-around align-items-center">
             <div className="col-11 col-lg-5 d-flex justify-content-center align-items-center">
                 <img className="w-100 mt-5 mt-lg-0" src={Img404}/>
             </div>

@@ -3,20 +3,33 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import AppRoutes from './Routes';
 import { createTheme, ThemeProvider } from '@mui/material';
 
+const primary = {};
+const secondary = {};
+
+if (localStorage.getItem('token')) {
+    primary.main = '#00BBAA';
+    primary.light = '#07ffea';
+    primary.dark = '#00a99b';
+    primary.contrastText = '#FFFFFF';
+    secondary.main = '#0053CC';
+    secondary.light = '#1673ff';
+    secondary.dark = '#0043a8';
+    secondary.contrastText = '#FFFFFF';
+} else {
+    primary.main = '#0053CC';
+    primary.light = '#1673ff';
+    primary.dark = '#0043a8';
+    primary.contrastText = '#FFFFFF';
+    secondary.main = '#00BBAA';
+    secondary.light = '#07ffea';
+    secondary.dark = '#00a99b';
+    secondary.contrastText = '#FFFFFF';
+}
+
 const theme = createTheme({
     palette: {
-        primary: {
-            main: '#00BBAA',
-            light: '#07ffea',
-            dark: '#00a99b',
-            contrastText: '#FFFFFF',
-        },
-        secondary: {
-            main: '#0053CC',
-            light: '#1673ff',
-            dark: '#0043a8',
-            contrastText: '#FFFFFF',
-        },
+        primary: primary,
+        secondary: secondary,
         info: {
             main: '#FFFFFF',
             light: '#FFFFFF',

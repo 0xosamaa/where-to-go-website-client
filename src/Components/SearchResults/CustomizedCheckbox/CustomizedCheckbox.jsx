@@ -1,5 +1,8 @@
 import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
+import PropTypes from "prop-types";
+import { setFilters } from "../../../Redux/Slices/searchSlice.js"
+import { useDispatch } from "react-redux";
 
 const BpIcon = styled('span')(({ theme }) => ({
   borderRadius: 3,
@@ -8,7 +11,7 @@ const BpIcon = styled('span')(({ theme }) => ({
   boxShadow:
     theme.palette.mode === 'dark'
       ? '0 0 0 1px rgb(16 22 26 / 40%)'
-      : 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
+      : 'inset 0 0 0 1.5px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
   '.Mui-focusVisible &': {
     outline: `2px auto ${theme.palette.primary.main}`,
     outlineOffset: 2,
@@ -56,10 +59,19 @@ function BpCheckbox(props) {
   );
 }
 
-const CustomizedCheckbox = () => {
+const CustomizedCheckbox = ({ data, type }) => {
+  const dispatch = useDispatch();
+
   return (
-    <BpCheckbox />
+    <BpCheckbox onChange={
+      () => dispatch(setFilters({ data, type }))
+    } />
   );
 }
+
+CustomizedCheckbox.propTypes = {
+  data: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 export default CustomizedCheckbox

@@ -89,8 +89,9 @@
 }
 
 .gallery-slider img {
-  max-width: 80vw;
-  max-height: 80vh;
+  transform: translateY(+5%);
+  max-width: 70vw;
+  max-height: 70vh;
   display: block;
   margin: auto;
   border-radius: 5vmin;
@@ -100,7 +101,7 @@
 .close-gallery {
   z-index: 999;
   position: fixed !important; 
-  top: 10%;
+  top: 20%;
   right: 2%;
   transform: translate(-50%, -50%);
   align-self: end;

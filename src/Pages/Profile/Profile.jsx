@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faStar, faUserTie } from '@fortawesome/free-solid-svg-icons';
-import { Alert, Snackbar, Typography } from '@mui/material';
+import { Alert, Snackbar, Typography, useTheme } from '@mui/material';
 import Info from './Info/Info.jsx';
 import Security from './Security/Security.jsx';
 import Edit from './Edit/Edit.jsx';
@@ -12,6 +12,7 @@ import Preference from './preference/Preference.jsx';
 import { Container } from '@mui/system';
 
 const Profile = () => {
+    const theme = useTheme();
     const dispatch = useDispatch();
     const [active, setActive] = useState('Info');
     const [opens, setOpens] = useState(false);
@@ -62,7 +63,7 @@ return (
                 >
                     <div
                         style={{
-                            color: active === 'Info' ? '#00BBAA' : '#555',
+                            color: active === 'Info' ? theme.palette.primary.main : '#555',
                         }}
                         className="control d-flex align-items-center gap-3"
                         onClick={() => setActive('Info')}
@@ -74,7 +75,7 @@ return (
                     </div>
                     <div
                         style={{
-                            color: active === 'Security' ? '#00BBAA' : '#555',
+                            color: active === 'Security' ? theme.palette.primary.main : '#555',
                         }}
                         className="control d-flex align-items-center gap-3"
                         onClick={() => setActive('Security')}
@@ -86,7 +87,7 @@ return (
                     </div>
                     <div
                         style={{
-                            color: active === 'Preference' ? '#00BBAA' : '#555',
+                            color: active === 'Preference' ? theme.palette.primary.main : '#555',
                         }}
                         className="control d-flex align-items-center gap-3"
                         onClick={() => setActive('Preference')}

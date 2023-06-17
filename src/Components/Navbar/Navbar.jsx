@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 // import './Navbar.css';
 import mainLogo from '../../assets/logos/main_logo.svg';
+import secondaryLogo from '../../assets/logos/secondary_logo.svg';
 
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
@@ -15,6 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const pages = ['Places to go', 'Experiences', 'Discover'];
 const settings = [
@@ -54,7 +56,7 @@ function Navbar() {
                     '0px 2px 4px -1px rgba(0,0,0,0.06),0px 4px 5px 0px rgba(0,0,0,0.045),0px 1px 10px 0px rgba(0,0,0,0.03)',
             }}
         >
-            <Container maxWidth="xl">
+            <Container maxWidth="lg">
                 <Toolbar disableGutters>
                     <Link className="navbar-brand" to="/">
                         <Box
@@ -62,8 +64,8 @@ function Navbar() {
                                 flexGrow: 1,
                                 display: { xs: 'none', md: 'flex' },
                             }}
-                        >
-                            <img src={mainLogo} alt="Where to go" width={32} />
+                        >                            
+                            <img src={localStorage.getItem('token') ? mainLogo : secondaryLogo} alt="Where to go" width={32} />
                         </Box>
                     </Link>
 
@@ -81,7 +83,7 @@ function Navbar() {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                         >
-                            <img src={mainLogo} alt="Where to go" width={32} />
+                            <img src={localStorage.getItem('token') ? mainLogo : secondaryLogo} alt="Where to go" width={32} />
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -137,10 +139,14 @@ function Navbar() {
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
-                                />
+                                {localStorage.getItem('img') ? (
+                                    <Avatar
+                                        alt="Profile Image"
+                                        src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem('img')}`}
+                                    />
+                                ) : (
+                                    <AccountCircleIcon color='primary' style={{ fontSize: 40 }} />
+                                )}
                             </IconButton>
                         </Tooltip>
                         <Menu

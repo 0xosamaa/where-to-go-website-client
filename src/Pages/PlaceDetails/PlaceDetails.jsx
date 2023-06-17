@@ -60,21 +60,21 @@ const SearchResults = () => {
         { id: 3, name: 'Above 4' },
     ];
 
-    const handlePageChange = (event, page) => {
-        setLoading(true);
-        dispatch(vendorSearch(`page=${page}`)).then((data) => {
-            const { currentPage, totalPages } = data.payload.pagination;
-            setPagination({ currentPage, totalPages });
-            setLoading(false);
-        });
+    // const handlePageChange = (event, page) => {
+    //     setLoading(true);
+    //     dispatch(vendorSearch(`page=${page}`)).then((data) => {
+    //         const { currentPage, totalPages } = data.payload.pagination;
+    //         setPagination({ currentPage, totalPages });
+    //         setLoading(false);
+    //     });
 
-        setTimeout(() => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'auto',
-            });
-        }, 0);
-    };
+    //     setTimeout(() => {
+    //         window.scrollTo({
+    //             top: 0,
+    //             behavior: 'auto',
+    //         });
+    //     }, 0);
+    // };
 
     const handleSearchItemClick = (evnet, placeId) => {
         console.log(placeId);
@@ -101,8 +101,8 @@ const SearchResults = () => {
             <div className="card-rating d-flex">
               <StarIcon fontSize="small" color="primary" className="me-2" />
               <Typography variant="body">
-                <b>4.84</b> &nbsp;
-                <span className="text-muted">(324 reviews)</span>
+                <b>{place.avgRate.toFixed(1) || (0).toFixed(1)}</b> &nbsp;
+                <span className="text-muted">({place.numberOfReviews || 0} reviews)</span>
               </Typography>
             </div>
             <div className="d-flex align-items-center">
@@ -167,9 +167,9 @@ const SearchResults = () => {
                 <Carousel
                   className="gallery-slider"
                   autoPlay={false}
-                  animation="slide"
-                  duration={500}
-                  swipe={true}
+                  animation="fade"
+                  duration={250}
+                  swipe={false}
                   indicators={false}
                   navButtonsAlwaysVisible={true}
                   cycleNavigation={false}
@@ -241,8 +241,8 @@ const SearchResults = () => {
           <div className="card-rating d-flex">
             <StarIcon fontSize="small" color="primary" className="me-2" />
             <Typography variant="body">
-              <b>4.84</b> &nbsp;
-              <span className="text-muted">(324 reviews)</span>
+              <b>{place.avgRate.toFixed(1) || (0).toFixed(1)}</b> &nbsp;
+              <span className="text-muted">({place.numberOfReviews || 0} reviews)</span>
             </Typography>
           </div>
         </>
