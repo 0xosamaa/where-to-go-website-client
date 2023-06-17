@@ -10,13 +10,131 @@ import {
     Avatar,
     Tooltip,
     MenuItem,
+    useTheme,
 } from '@mui/material';
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { RiseLoader } from 'react-spinners';
 import mainLogo from '../../assets/logos/main_logo.svg';
 import registerIll from '../../assets/images/register/register-ill.png';
+import axiosInstance from '../../Axios';
+import { Margin } from '@mui/icons-material';
 
 const Register = () => {
+    const [loading, setLoading] = useState(false);
+    const [signupDetails, setSignupDetails] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+    });
+    const [formErrors, setFormErrors] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+    });
+    const [signupError, setSignupError] = useState();
+
+    const navigate = useNavigate();
+    const theme = useTheme();
+
+    const handleSignup = async () => {
+        setLoading(true);
+        setSignupError(false);
+        setFormErrors({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+        });
+
+        let isValid = true;
+
+        if (signupDetails.firstName.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                firstName: 'First Name Required',
+            }));
+            isValid = false;
+        } else if (!signupDetails.firstName.match(/^[A-Za-z]+$/)) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                firstName: 'Invalid First Name',
+            }));
+            isValid = false;
+        }
+
+        if (signupDetails.lastName.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                lastName: 'Last Name Required',
+            }));
+            isValid = false;
+        } else if (!signupDetails.lastName.match(/^[A-Za-z]+$/)) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                lastName: 'Invalid Last Name',
+            }));
+            isValid = false;
+        }
+
+        if (signupDetails.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                email: 'Email Required',
+            }));
+            isValid = false;
+        } else if (
+            !signupDetails.email.match(
+                /^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/
+            )
+        ) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                email: 'Invalid Email',
+            }));
+            isValid = false;
+        }
+
+        if (signupDetails.password.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                password: 'Password Required',
+            }));
+            isValid = false;
+        } else if (
+            !signupDetails.password.match(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/
+            )
+        ) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                password: 'Invalid Password',
+            }));
+            isValid = false;
+        }
+
+        if (isValid) {
+            try {
+                const res = await axiosInstance.post(
+                    '/api/v1/customers',
+                    signupDetails
+                );
+                navigate('/');
+            } catch (err) {
+                setSignupError(true);
+            }
+        }
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        if (signupError)
+            setTimeout(() => {
+                setSignupError(false);
+            }, 3 * 1000);
+    }, [signupError]);
 
     return (
         <>
@@ -192,13 +310,48 @@ const Register = () => {
                                 </div>
                             </div>
                             <div className="row">
+                                {signupError && (
+                                    <div style={{ padding: '.375rem .75rem' }}>
+                                        <div className="alert alert-danger col-12">
+                                            Sign up failed
+                                        </div>
+                                    </div>
+                                )}
                                 <div className="mb-3">
                                     <input
                                         type="text"
                                         className="form-control"
-                                        name="name"
-                                        placeholder="Name"
+                                        name="firstName"
+                                        placeholder="First Name"
+                                        value={signupDetails.firstName}
+                                        onChange={(e) =>
+                                            setSignupDetails({
+                                                ...signupDetails,
+                                                firstName: e.target.value,
+                                            })
+                                        }
                                     />
+                                    <small style={{ color: 'red' }}>
+                                        {formErrors.firstName}
+                                    </small>
+                                </div>
+                                <div className="mb-3">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="lastName"
+                                        placeholder="Last Name"
+                                        value={signupDetails.lastName}
+                                        onChange={(e) =>
+                                            setSignupDetails({
+                                                ...signupDetails,
+                                                lastName: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <small style={{ color: 'red' }}>
+                                        {formErrors.lastName}
+                                    </small>
                                 </div>
                                 <div className="mb-3">
                                     <input
@@ -206,7 +359,17 @@ const Register = () => {
                                         className="form-control"
                                         name="email"
                                         placeholder="Email"
+                                        value={signupDetails.email}
+                                        onChange={(e) =>
+                                            setSignupDetails({
+                                                ...signupDetails,
+                                                email: e.target.value,
+                                            })
+                                        }
                                     />
+                                    <small style={{ color: 'red' }}>
+                                        {formErrors.email}
+                                    </small>
                                 </div>
                                 <div className="mb-3">
                                     <input
@@ -214,7 +377,17 @@ const Register = () => {
                                         className="form-control"
                                         name="password"
                                         placeholder="Password"
+                                        value={signupDetails.password}
+                                        onChange={(e) =>
+                                            setSignupDetails({
+                                                ...signupDetails,
+                                                password: e.target.value,
+                                            })
+                                        }
                                     />
+                                    <small style={{ color: 'red' }}>
+                                        {formErrors.password}
+                                    </small>
                                 </div>
                                 <div className="mb-3">
                                     <Typography variant="p">
@@ -230,14 +403,28 @@ const Register = () => {
                                     </Typography>
                                 </div>
                                 <div className="mb-3">
-                                    <Button
-                                        onClick={''}
-                                        className="col-12"
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        Sign up
-                                    </Button>
+                                    {loading ? (
+                                        <div className="col-12 text-center">
+                                            <RiseLoader
+                                                color={
+                                                    theme.palette.primary.main
+                                                }
+                                                loading={loading}
+                                                size={10}
+                                                aria-label="Loading Spinner"
+                                                data-testid="loader"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <Button
+                                            onClick={handleSignup}
+                                            className="col-12"
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            Sign up
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
                         </Container>
