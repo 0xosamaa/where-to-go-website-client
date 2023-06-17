@@ -10,13 +10,101 @@ import {
     Avatar,
     Tooltip,
     MenuItem,
+    useTheme,
 } from '@mui/material';
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { RiseLoader } from 'react-spinners';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axiosInstance from '../../Axios';
 import mainLogo from '../../assets/logos/main_logo.svg';
 import registerIll from '../../assets/images/register/register-ill.png';
 
 const Login = () => {
+    const [loading, setLoading] = useState(false);
+    const [loginDetails, setLoginDetails] = useState({
+        email: '',
+        password: '',
+    });
+
+    const [formErrors, setFormErrors] = useState({
+        email: '',
+        password: '',
+    });
+    const [loginError, setLoginError] = useState();
+    const navigate = useNavigate();
+    const theme = useTheme();
+
+    const handleLogin = async () => {
+        setLoading(true);
+        setLoginError(false);
+        setFormErrors({
+            email: '',
+            password: '',
+        });
+
+        let isValid = true;
+
+        if (loginDetails.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                email: 'Email Required',
+            }));
+            isValid = false;
+        } else if (
+            !loginDetails.email.match(
+                /^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/
+            )
+        ) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                email: 'Invalid Email',
+            }));
+            isValid = false;
+        }
+
+        if (loginDetails.password.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                password: 'Password Required',
+            }));
+            isValid = false;
+        } else if (
+            !loginDetails.password.match(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/
+            )
+        ) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                password: 'Invalid Password',
+            }));
+            isValid = false;
+        }
+
+        if (isValid) {
+            try {
+                const res = await axiosInstance.post(
+                    'api/v1/customer/login',
+                    loginDetails
+                );
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('userId', res.data.userId);
+                localStorage.setItem('img', res.data.img);
+                navigate('/');
+            } catch (err) {
+                console.log(err);
+                setLoginError(true);
+            }
+        }
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        if (loginError)
+            setTimeout(() => {
+                setLoginError(false);
+            }, 3 * 1000);
+    }, [loginError]);
+
     return (
         <>
             <AppBar
@@ -191,13 +279,30 @@ const Login = () => {
                                 </div>
                             </div>
                             <div className="row">
+                                {loginError && (
+                                    <div style={{ padding: '.375rem .75rem' }}>
+                                        <div className="alert alert-danger col-12">
+                                            Login failed
+                                        </div>
+                                    </div>
+                                )}
                                 <div className="mb-3">
                                     <input
                                         type="email"
                                         className="form-control"
                                         name="email"
                                         placeholder="Email"
+                                        value={loginDetails.email}
+                                        onChange={(e) =>
+                                            setLoginDetails({
+                                                ...loginDetails,
+                                                email: e.target.value,
+                                            })
+                                        }
                                     />
+                                    <small style={{ color: 'red' }}>
+                                        {formErrors.email}
+                                    </small>
                                 </div>
                                 <div className="mb-3">
                                     <input
@@ -205,7 +310,17 @@ const Login = () => {
                                         className="form-control"
                                         name="password"
                                         placeholder="Password"
+                                        value={loginDetails.password}
+                                        onChange={(e) =>
+                                            setLoginDetails({
+                                                ...loginDetails,
+                                                password: e.target.value,
+                                            })
+                                        }
                                     />
+                                    <small style={{ color: 'red' }}>
+                                        {formErrors.password}
+                                    </small>
                                 </div>
                                 <div className="mb-3">
                                     <Typography variant="p">
@@ -221,14 +336,28 @@ const Login = () => {
                                     </Typography>
                                 </div>
                                 <div className="mb-3">
-                                    <Button
-                                        onClick={''}
-                                        className="col-12"
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        Sign in
-                                    </Button>
+                                    {loading ? (
+                                        <div className="col-12 text-center">
+                                            <RiseLoader
+                                                color={
+                                                    theme.palette.primary.main
+                                                }
+                                                loading={loading}
+                                                size={10}
+                                                aria-label="Loading Spinner"
+                                                data-testid="loader"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <Button
+                                            onClick={handleLogin}
+                                            className="col-12"
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            Sign in
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
                         </Container>
