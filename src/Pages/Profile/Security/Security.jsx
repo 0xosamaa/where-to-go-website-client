@@ -71,16 +71,16 @@ const Security = () => {
 
     return (
         <>
-            <div className="img-container w-100 d-flex justify-content-between align-items-center">
+            <div className="img-container mt-lg-5 pt-lg-5 w-100 d-flex justify-content-between align-items-center">
                 <img style={{width:'80px',height:'80px'}} className="rounded-circle" src={customer.image? `http://localhost:8001/api/v1/images/customers/${customer.image}` :"https://picsum.photos/200/300"} alt="profile" />
             </div>
             <div className="info-container w-100 d-flex align-items-start flex-wrap">
-                <div className="info-content-item d-flex gap-3 align-items-center col-11 col-lg-3">
+                <div className="info-content-item d-flex gap-3 align-items-center col-11 col-lg-4">
                     <FontAwesomeIcon icon={faLock} />
                     <Typography variant="h4" >Change Password</Typography>
                     <hr/>
                 </div>
-                <div style={{border:'solid 1px #999', borderRadius:'10px'}} className="form-container d-flex p-5 flex-column gap-5 col-12 col-md-9">
+                <div style={{border:'solid 1px #999', borderRadius:'10px'}} className="form-container d-flex p-5 flex-column align-items-center gap-5 col-12 col-lg-8">
                     <FormControl sx={{ m: 1, width: '80%' }} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Old Password</InputLabel>
                         <OutlinedInput
@@ -150,7 +150,7 @@ const Security = () => {
                     <button onClick={handleChangePassword} className="btn btn-outline-primary w-50">Change Password</button>
                 </div>
             </div>
-            <div className="info-container w-100 d-flex align-items-start flex-wrap">
+            {/*<div className="info-container w-100 d-flex align-items-start flex-wrap">
                 <div className="info-content-item d-flex gap-3 align-items-center col-11 col-lg-3">
                     <FontAwesomeIcon icon={faBan} />
                     <Typography variant="h4" >Activate/Deactivate</Typography>
@@ -160,7 +160,7 @@ const Security = () => {
                     <Typography variant="h5">Deactivate</Typography>
                     <button className="btn btn-outline-danger w-50">Deactivate</button>
                 </div>
-            </div>
+            </div>*/}
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={error === null? "success" : "error"} sx={{ width: '100%' }}>
                     {error === null ? "Password Changed Successfully" : error?.errors[0].msg}
