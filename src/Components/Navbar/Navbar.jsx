@@ -15,6 +15,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const pages = ['Places to go', 'Experiences', 'Discover'];
 const settings = [
@@ -137,10 +138,14 @@ function Navbar() {
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
-                                />
+                                {localStorage.getItem('img') ? (
+                                    <Avatar
+                                        alt="Profile Image"
+                                        src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem('img')}`}
+                                    />
+                                ) : (
+                                    <AccountCircleIcon color='primary' style={{ fontSize: 40 }} />
+                                )}
                             </IconButton>
                         </Tooltip>
                         <Menu
