@@ -22,11 +22,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const genders = [
     {
-        value:"Male",
+        value:"male",
         label:"Male"
     },
     {
-        value:"Female",
+        value:"female",
         label:"Female"
     }
 ]
@@ -106,7 +106,7 @@ const Edit = ({handleClickOpen, handleClose, open, handleOpens}) => {
                                 select
                                 label="Gender"
                                 name="gender"
-                                defaultValue={customer.gender || 'Male'}
+                                defaultValue={customer.gender || 'male'}
                                 SelectProps={{
                                     native: true,
                                 }}
