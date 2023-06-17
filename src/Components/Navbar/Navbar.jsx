@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 // import './Navbar.css';
 import mainLogo from '../../assets/logos/main_logo.svg';
+import secondaryLogo from '../../assets/logos/secondary_logo.svg';
 
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
@@ -63,8 +64,8 @@ function Navbar() {
                                 flexGrow: 1,
                                 display: { xs: 'none', md: 'flex' },
                             }}
-                        >
-                            <img src={mainLogo} alt="Where to go" width={32} />
+                        >                            
+                            <img src={localStorage.getItem('token') ? mainLogo : secondaryLogo} alt="Where to go" width={32} />
                         </Box>
                     </Link>
 
@@ -82,7 +83,7 @@ function Navbar() {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                         >
-                            <img src={mainLogo} alt="Where to go" width={32} />
+                            <img src={localStorage.getItem('token') ? mainLogo : secondaryLogo} alt="Where to go" width={32} />
                         </IconButton>
                         <Menu
                             id="menu-appbar"

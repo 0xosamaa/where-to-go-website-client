@@ -17,6 +17,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../Axios';
 import mainLogo from '../../assets/logos/main_logo.svg';
+import secondaryLogo from '../../assets/logos/secondary_logo.svg';
 import registerIll from '../../assets/images/register/register-ill.png';
 
 const Login = () => {
@@ -125,7 +126,7 @@ const Login = () => {
                                 }}
                             >
                                 <img
-                                    src={mainLogo}
+                                    src={localStorage.getItem('token') ? mainLogo : secondaryLogo}
                                     alt="Where to go"
                                     width={32}
                                 />
@@ -328,7 +329,7 @@ const Login = () => {
                                         <Link to="/register">
                                             <Typography
                                                 variant="span"
-                                                color={'#00bbaa'}
+                                                color={theme.palette.primary.main}
                                             >
                                                 Sign up
                                             </Typography>
@@ -364,7 +365,7 @@ const Login = () => {
                     </div>
                     <div
                         className="col-12 col-lg-6 p-5 d-none d-lg-block"
-                        style={{ backgroundColor: 'rgb(1, 140, 128)' }}
+                        style={{ backgroundColor: theme.palette.primary.main }}
                     >
                         <img
                             src={registerIll}

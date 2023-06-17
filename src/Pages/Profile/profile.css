@@ -1,4 +1,8 @@
-.control:hover {
-  color: #00BBAA !important;
+.control {
+  transition: all 0.25s ease-in-out;
   cursor: pointer;
+}
+
+.control:hover {
+  transform: translateX(12px);
 }
