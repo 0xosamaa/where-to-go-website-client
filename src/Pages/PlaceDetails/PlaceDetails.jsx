@@ -101,8 +101,8 @@ const SearchResults = () => {
             <div className="card-rating d-flex">
               <StarIcon fontSize="small" color="primary" className="me-2" />
               <Typography variant="body">
-                <b>4.84</b> &nbsp;
-                <span className="text-muted">(324 reviews)</span>
+                <b>{place.avgRate.toFixed(1) || (0).toFixed(1)}</b> &nbsp;
+                <span className="text-muted">({place.numberOfReviews || 0} reviews)</span>
               </Typography>
             </div>
             <div className="d-flex align-items-center">
@@ -241,8 +241,8 @@ const SearchResults = () => {
           <div className="card-rating d-flex">
             <StarIcon fontSize="small" color="primary" className="me-2" />
             <Typography variant="body">
-              <b>4.84</b> &nbsp;
-              <span className="text-muted">(324 reviews)</span>
+              <b>{place.avgRate.toFixed(1) || (0).toFixed(1)}</b> &nbsp;
+              <span className="text-muted">({place.numberOfReviews || 0} reviews)</span>
             </Typography>
           </div>
         </>
