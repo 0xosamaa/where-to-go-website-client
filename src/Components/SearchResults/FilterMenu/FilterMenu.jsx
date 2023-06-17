@@ -87,8 +87,8 @@ const FilterMenu = (props) => {
           ) : props.title === "Rating" ? (
             <Slider
               getAriaLabel={() => 'Rating range'}
-              defaultValue={[1, 5]}
-              min={1}
+              defaultValue={[0, 5]}
+              min={0}
               max={5}
               step={1}
               onChange={handleRatingChange}

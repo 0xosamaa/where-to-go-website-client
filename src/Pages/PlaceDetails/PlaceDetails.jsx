@@ -167,9 +167,9 @@ const SearchResults = () => {
                 <Carousel
                   className="gallery-slider"
                   autoPlay={false}
-                  animation="slide"
-                  duration={500}
-                  swipe={true}
+                  animation="fade"
+                  duration={250}
+                  swipe={false}
                   indicators={false}
                   navButtonsAlwaysVisible={true}
                   cycleNavigation={false}
