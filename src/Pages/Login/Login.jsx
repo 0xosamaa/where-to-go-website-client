@@ -92,7 +92,6 @@ const Login = () => {
                 localStorage.setItem('img', res.data.img);
                 navigate('/');
             } catch (err) {
-                console.log(err);
                 setLoginError(true);
             }
         }
@@ -126,7 +125,11 @@ const Login = () => {
                                 }}
                             >
                                 <img
-                                    src={localStorage.getItem('token') ? mainLogo : secondaryLogo}
+                                    src={
+                                        localStorage.getItem('token')
+                                            ? mainLogo
+                                            : secondaryLogo
+                                    }
                                     alt="Where to go"
                                     width={32}
                                 />
@@ -329,7 +332,9 @@ const Login = () => {
                                         <Link to="/register">
                                             <Typography
                                                 variant="span"
-                                                color={theme.palette.primary.main}
+                                                color={
+                                                    theme.palette.primary.main
+                                                }
                                             >
                                                 Sign up
                                             </Typography>

@@ -118,14 +118,12 @@ const Register = () => {
 
         if (isValid) {
             try {
-                const res = await axiosInstance.post(
+                await axiosInstance.post(
                     '/api/v1/auth/customer/register',
                     signupDetails
                 );
-                console.log(res);
                 navigate('/login');
             } catch (err) {
-                console.log(err);
                 setSignupError(true);
             }
         }
