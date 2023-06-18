@@ -84,7 +84,7 @@ const SearchResults = () => {
               return { id: tag._id, name: tag.name };
             })}
           />
-          <FilterMenu title="Location" />
+          <FilterMenu title="Sort" />
         </div>
         {loading ? (
           <RiseLoader

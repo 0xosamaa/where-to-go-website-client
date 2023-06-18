@@ -12,16 +12,26 @@ const SearchItem = ({ place, onClick }) => {
             <div className="card-body d-flex flex-fill justify-content-between mt-3 mt-lg-0">
                 <div onClick={onClick} className="content clickable d-flex flex-column justify-content-between">
                     <div className="card-details">
-                        <Typography className="card-text" variant="body">{place.category.length ? place.category[0].name : 'Place'} 
+                        <Typography className="card-text" variant="body">{place.category ? place.category.name : 'Place'} 
                             {place.address?.country ? ` in ${place.address?.country}` : ''}
                             {place.address?.city ? `, ${place.address?.city}` : ''} 
                             {console.log(place)}   
                         </Typography>
                         <Typography variant="h4">{place.placeName}</Typography>
                         <hr style={{ width: 56, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>
-                        <Typography className="card-text" variant="body">Amet enim fugiat la</Typography>
+                        <Typography className="card-text" variant="body">{place.description}</Typography>
                         <br />
-                        <Typography className="card-text" variant="body">Kitchen • Wifi • Air conditioning</Typography>
+                        <Typography className="card-text" variant="body">
+                            {place.tagNames.map((tag, index) => {
+                                if (index > 2) {
+                                    return
+                                }
+                                if (index) {
+                                    return ` • ${tag}`;
+                                }
+                                return tag;
+                            })}
+                        </Typography>
                     </div>
                     <div className="card-rating d-flex">
                         <StarIcon fontSize="small" color="primary" className="me-2" />
