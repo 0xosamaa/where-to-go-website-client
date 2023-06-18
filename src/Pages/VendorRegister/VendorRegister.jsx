@@ -166,67 +166,175 @@ const VendorRegister = () => {
 
         let isValid = true;
 
-        // if (vendorData.firstName.length === 0) {
-        //     setFormErrors((prevErrors) => ({
-        //         ...prevErrors,
-        //         firstName: 'First Name Required',
-        //     }));
-        //     isValid = false;
-        // } else if (!vendorData.firstName.match(/^[A-Za-z]+$/)) {
-        //     setFormErrors((prevErrors) => ({
-        //         ...prevErrors,
-        //         firstName: 'Invalid First Name',
-        //     }));
-        //     isValid = false;
-        // }
+        if (vendorData.firstName.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                firstName: 'First Name Required',
+            }));
+            isValid = false;
+        } else if (!vendorData.firstName.match(/^[A-Za-z]+$/)) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                firstName: 'Invalid First Name',
+            }));
+            isValid = false;
+        }
 
-        // if (vendorData.lastName.length === 0) {
-        //     setFormErrors((prevErrors) => ({
-        //         ...prevErrors,
-        //         lastName: 'Last Name Required',
-        //     }));
-        //     isValid = false;
-        // } else if (!vendorData.lastName.match(/^[A-Za-z]+$/)) {
-        //     setFormErrors((prevErrors) => ({
-        //         ...prevErrors,
-        //         lastName: 'Invalid Last Name',
-        //     }));
-        //     isValid = false;
-        // }
+        if (vendorData.lastName.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                lastName: 'Last Name Required',
+            }));
+            isValid = false;
+        } else if (!vendorData.lastName.match(/^[A-Za-z]+$/)) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                lastName: 'Invalid Last Name',
+            }));
+            isValid = false;
+        }
 
-        // if (vendorData.email.length === 0) {
-        //     setFormErrors((prevErrors) => ({
-        //         ...prevErrors,
-        //         email: 'Email Required',
-        //     }));
-        //     isValid = false;
-        // } else if (
-        //     !vendorData.email.match(/^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/)
-        // ) {
-        //     setFormErrors((prevErrors) => ({
-        //         ...prevErrors,
-        //         email: 'Invalid Email',
-        //     }));
-        //     isValid = false;
-        // }
+        if (vendorData.placeName.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                placeName: 'Place Name Required',
+            }));
+            isValid = false;
+        }
 
-        // if (vendorData.password.length === 0) {
-        //     setFormErrors((prevErrors) => ({
-        //         ...prevErrors,
-        //         password: 'Password Required',
-        //     }));
-        //     isValid = false;
-        // } else if (
-        //     !vendorData.password.match(
-        //         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/
-        //     )
-        // ) {
-        //     setFormErrors((prevErrors) => ({
-        //         ...prevErrors,
-        //         password: 'Invalid Password',
-        //     }));
-        //     isValid = false;
-        // }
+        if (vendorData.category.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                category: 'Category Required',
+            }));
+            isValid = false;
+        }
+
+        if (vendorData.country.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                country: 'Country Required',
+            }));
+            isValid = false;
+        }
+
+        if (vendorData.state.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                state: 'State Required',
+            }));
+            isValid = false;
+        }
+
+        if (vendorData.city.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                city: 'City Required',
+            }));
+            isValid = false;
+        }
+
+        if (vendorData.street.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                street: 'Street Required',
+            }));
+            isValid = false;
+        }
+
+        if (vendorData.zip.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                zip: 'Zip Code Required',
+            }));
+            isValid = false;
+        } else if (!vendorData.zip.match(/^(\\d{5}(?:[-\\s]\\d{4})?)?$/)) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                zip: 'Invalid Zip Code',
+            }));
+            isValid = false;
+        }
+        if (vendorData.phoneNumber.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                phoneNumber: 'Phone Number Required',
+            }));
+            isValid = false;
+        } else if (
+            !vendorData.phoneNumber.match(
+                /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
+            )
+        ) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                phoneNumber: 'Invalid Phone Number',
+            }));
+            isValid = false;
+        }
+        if (vendorData.description.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                description: 'Description Required',
+            }));
+            isValid = false;
+        } else if (!vendorData.description.match(/^[A-Za-z]+$/)) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                description: 'Invalid Description',
+            }));
+            isValid = false;
+        }
+
+        if (vendorData.thumbnail.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                thumbnail: 'Thumbnail Required',
+            }));
+            isValid = false;
+        } 
+
+        if (vendorData.gallery.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                gallery: 'Gallery Required',
+            }));
+            isValid = false;
+        } 
+
+        if (vendorData.email.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                email: 'Email Required',
+            }));
+            isValid = false;
+        } else if (
+            !vendorData.email.match(/^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/)
+        ) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                email: 'Invalid Email',
+            }));
+            isValid = false;
+        }
+
+        if (vendorData.password.length === 0) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                password: 'Password Required',
+            }));
+            isValid = false;
+        } else if (
+            !vendorData.password.match(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/
+            )
+        ) {
+            setFormErrors((prevErrors) => ({
+                ...prevErrors,
+                password: 'Invalid Password',
+            }));
+            isValid = false;
+        }
 
         if (isValid) {
             try {
