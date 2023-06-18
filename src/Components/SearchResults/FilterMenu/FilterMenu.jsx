@@ -80,6 +80,7 @@ const FilterMenu = (props) => {
             <RadioGroup
               name="categories-group"
             >
+              <CustomizedRadio data={{ id: "", name: "All"}} type={props.title} />
               {props.options.map((option) => (
                 <CustomizedRadio data={option} type={props.title} key={option.id} />
               ))}
@@ -94,6 +95,8 @@ const FilterMenu = (props) => {
               onChange={handleRatingChange}
               valueLabelDisplay="auto"
             />
+          ) : props.title === "Location" ? (
+            <Typography>Location</Typography>
           ) :
           (
             props.options.map((option) => (
@@ -115,7 +118,7 @@ const FilterMenu = (props) => {
 
 FilterMenu.propTypes = {
   title: PropTypes.string.isRequired,
-  options: PropTypes.array.isRequired,
+  options: PropTypes.array,
 };
 
 export default FilterMenu;

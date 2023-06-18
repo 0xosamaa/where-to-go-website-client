@@ -16,6 +16,7 @@ import {
 import { Link } from 'react-router-dom';
 import mainLogo from '../../assets/logos/main_logo.svg';
 import secondaryLogo from '../../assets/logos/secondary_logo.svg';
+
 const SecNavbar = () => {
     return (
         <AppBar

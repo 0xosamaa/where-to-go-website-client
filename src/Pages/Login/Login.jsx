@@ -20,8 +20,10 @@ import mainLogo from '../../assets/logos/main_logo.svg';
 import secondaryLogo from '../../assets/logos/secondary_logo.svg';
 import registerIll from '../../assets/images/register/register-ill.png';
 import SecNavbar from '../../Components/SecNavbar/SecNavbar';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [loginDetails, setLoginDetails] = useState({
         email: '',

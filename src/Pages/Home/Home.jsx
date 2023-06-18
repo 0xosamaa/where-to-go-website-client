@@ -94,7 +94,7 @@ const Home = () => {
                     </div>
                 </div>
             </Container>
-            <Slider />
+            {/* <Slider /> */}
             <Container maxWidth="lg" className="categories mb-5">
                 <div className="row">
                     <div className="col-12 text-center text-lg-start my-3">
