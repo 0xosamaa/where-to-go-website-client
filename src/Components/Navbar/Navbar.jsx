@@ -17,6 +17,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useDispatch } from 'react-redux';
 
 const pages = ['Places to go', 'Experiences', 'Discover'];
 const settings = [
@@ -29,6 +30,7 @@ const settings = [
 ];
 
 function Navbar() {
+    const dispatch = useDispatch();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -56,6 +58,7 @@ function Navbar() {
     };
 
     return (
+
         <AppBar
             position="sticky"
             color="common"
@@ -163,7 +166,7 @@ function Navbar() {
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
-                                {localStorage.getItem('img') ? (
+                                {localStorage.getItem('token') ? (
                                     <Avatar
                                         alt="Profile Image"
                                         src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(

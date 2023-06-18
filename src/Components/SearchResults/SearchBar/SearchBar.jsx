@@ -36,6 +36,7 @@ const SearchBar = () => {
         await dispatch(setPagination({ ...pagination, currentPage: 1 }));
         await dispatch(setQueryString(queryString))
         dispatch(vendorSearch());
+        console.log(queryString)
     }
 
     return (
