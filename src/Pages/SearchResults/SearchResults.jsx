@@ -43,12 +43,6 @@ const SearchResults = () => {
     })();
   }, []);
 
-  const rating = [
-    { id: 1, name: "Below 3" },
-    { id: 2, name: "From 3 to 4" },
-    { id: 3, name: "Above 4" },
-  ];
-
   const handlePageChange = async (event, page) => {
     await dispatch(
       setPagination({
@@ -77,7 +71,7 @@ const SearchResults = () => {
       <SearchBar />
       <Container className="d-flex flex-column-reverse gap-5 flex-md-row align-items-stretch align-items-md-start flex-fill mt-4">
         <div className="filter-menu d-block">
-          <FilterMenu title="Rating" options={rating} />
+          <FilterMenu title="Rating" />
           <FilterMenu
             title="Categories"
             options={_categories.map((category) => {
@@ -90,6 +84,7 @@ const SearchResults = () => {
               return { id: tag._id, name: tag.name };
             })}
           />
+          <FilterMenu title="Location" />
         </div>
         {loading ? (
           <RiseLoader
