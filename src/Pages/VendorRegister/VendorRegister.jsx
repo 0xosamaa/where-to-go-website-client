@@ -1,9 +1,4 @@
-import {
-    Container,
-    Typography,
-    Button,
-    useTheme,
-} from '@mui/material';
+import { Container, Typography, Button, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RiseLoader } from 'react-spinners';
@@ -407,6 +402,7 @@ const VendorRegister = () => {
                                     </small>
                                 </div>
                                 <div className="mb-3">
+                                    <label>Category</label>
                                     <select
                                         className="form-control"
                                         name="category"
@@ -428,6 +424,7 @@ const VendorRegister = () => {
                                     </small>
                                 </div>
                                 <div className="mb-3">
+                                    <label>Country</label>
                                     <select
                                         className="form-control"
                                         name="country"
@@ -453,6 +450,7 @@ const VendorRegister = () => {
                                 </div>
                                 {states && (
                                     <div className="mb-3">
+                                        <label>State</label>
                                         <select
                                             className="form-control"
                                             name="state"
@@ -479,6 +477,7 @@ const VendorRegister = () => {
                                 )}
                                 {cities && (
                                     <div className="mb-3">
+                                        <label>City</label>
                                         <select
                                             className="form-control"
                                             name="city"
@@ -591,7 +590,7 @@ const VendorRegister = () => {
                                 <div className="mb-3">
                                     <Typography variant="p">
                                         Already have an account?{' '}
-                                        <Link to="/login">
+                                        <Link to="http://localhost:3000/vendor/login">
                                             <Typography
                                                 variant="span"
                                                 color={
