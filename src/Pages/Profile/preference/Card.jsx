@@ -10,7 +10,7 @@ import {deleteFavoriteVendor, getFavoriteVendors} from "../../../Redux/Slices/pr
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-const Card = ({place}) => {
+const Card = ({place,page}) => {
     const dispatch = useDispatch();
     const [checked,setChecked] = useState(true)
     const customer = useSelector(state => state.profile.customer);
@@ -23,7 +23,7 @@ const Card = ({place}) => {
             }
             dispatch(deleteFavoriteVendor(data)).then((res) => {
                 console.log(res);
-                dispatch(getFavoriteVendors());
+                dispatch(getFavoriteVendors(page));
             });
         }
     }

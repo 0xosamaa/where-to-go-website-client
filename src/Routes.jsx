@@ -9,6 +9,7 @@ import React from 'react';
 import PlaceDetails from './Pages/PlaceDetails/PlaceDetails';
 import ContactUs from './Pages/ContactUs/ContactUs.jsx';
 import Page404 from './Pages/404/404.jsx';
+import VendorRegister from './Pages/VendorRegister/VendorRegister';
 
 const AppRoutes = () => {
     return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/vendor/register" element={<VendorRegister />} />
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="/search" element={<SearchResults />} />

@@ -29,7 +29,7 @@ const Info = ({handleClickOpen}) => {
                     />
             ):(
                 <>
-                    <div className="img-container w-100 d-flex justify-content-between align-items-center">
+                    <div className="img-container mt-lg-5 pt-lg-5 w-100 d-flex justify-content-between align-items-center">
                         <img style={{width:'80px',height:'80px'}} className="rounded-circle" src={customer.image? `http://localhost:8001/api/v1/images/customers/${customer.image}` :"https://picsum.photos/200/300"} alt="profile" />
                         <Button style={{width:'60px',height:'60px'}} onClick={handleClickOpen} variant="outlined" className="rounded-circle">
                             <FontAwesomeIcon icon={faPenToSquare} />

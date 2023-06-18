@@ -22,11 +22,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const genders = [
     {
-        value:"Male",
+        value:"male",
         label:"Male"
     },
     {
-        value:"Female",
+        value:"female",
         label:"Female"
     }
 ]
@@ -87,29 +87,26 @@ const Edit = ({handleClickOpen, handleClose, open, handleOpens}) => {
                 </AppBar>
                 <div className="container d-flex justify-content-center w-100 mt-5 p-5 align-items-center">
                     <form onSubmit={handleSubmit} className="w-100 d-flex justify-content-center flex-column gap-5 align-items-center" action="">
-                        <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
-                            <TextField className="col-11 col-lg-5" id="outlined-basic" defaultValue={customer.firstName} name="firstName" label="First Name" variant="outlined" />
-                            <TextField className="col-11 col-lg-6" id="outlined-basic" defaultValue={customer.lastName} name="lastName" label="Last Name" variant="outlined" />
+                        <div className="row d-flex justify-content-around gap-3 gap-lg-0 justify-content-lg-around w-75">
+                            <TextField className="col-12 col-lg-5" id="outlined-basic" defaultValue={customer.firstName} name="firstName" label="First Name" variant="outlined" />
+                            <TextField className="col-12 col-lg-5" id="outlined-basic" defaultValue={customer.lastName} name="lastName" label="Last Name" variant="outlined" />
                         </div>
-                        <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
-                            <TextField className="col-11 col-lg-7" id="outlined-basic" defaultValue={customer.email} name="email" label="Email" variant="outlined" />
-                            <TextField className="col-11 col-lg-4" id="outlined-basic" defaultValue={customer.phoneNumber} name="phoneNumber" label="Phone" variant="outlined" />
+                        <div className="row d-flex justify-content-around justify-content-lg-around gap-3 w-75">
+                            <TextField className="col-12 col-lg-11" id="outlined-basic" defaultValue={customer.email} name="email" label="Email" variant="outlined" />
                         </div>
-                        <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
-                            <TextField className="col-5 col-lg-4" id="outlined-basic" defaultValue={customer.address?.country} name="country" label="Country" variant="outlined" />
-                            <TextField className="col-5 col-lg-3" id="outlined-basic" defaultValue={customer.address?.city} name="city" label="City" variant="outlined" />
-                            <TextField className="col-5 col-lg-4" id="outlined-basic" defaultValue={customer.address?.street} name="street" label="Street" variant="outlined" />
+                        <div className="row d-flex justify-content-around gap-3 gap-lg-0 justify-content-lg-around w-75">
+                            <TextField className="col-12 col-lg-5" id="outlined-basic" defaultValue={customer.address?.country} name="country" label="Country" variant="outlined" />
+                            <TextField className="col-12 col-lg-5" id="outlined-basic" defaultValue={customer.address?.city} name="city" label="City" variant="outlined" />
                         </div>
-                        <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
-                            <TextField className="col-5 col-lg-4" id="outlined-basic" defaultValue={customer.address?.state} name="state" label="State" variant="outlined" />
-                            <TextField className="col-5 col-lg-3" id="outlined-basic" defaultValue={customer.address?.zip} name="zip" label="Zip" variant="outlined" />
+                        <div className="row d-flex justify-content-around gap-3 gap-lg-0 justify-content-lg-around w-75">
+                            <TextField className="col-12 col-lg-5" id="outlined-basic" defaultValue={customer.phoneNumber} name="phoneNumber" label="Phone" variant="outlined" />
                             <TextField
-                                className="col-11 col-lg-4"
+                                className="col-12 col-lg-5"
                                 id="outlined-select-currency-native"
                                 select
                                 label="Gender"
                                 name="gender"
-                                defaultValue={customer.gender || 'Male'}
+                                defaultValue={customer.gender || 'male'}
                                 SelectProps={{
                                     native: true,
                                 }}
@@ -122,15 +119,20 @@ const Edit = ({handleClickOpen, handleClose, open, handleOpens}) => {
                                 ))}
                             </TextField>
                         </div>
-                        <div className="row d-flex justify-content-around justify-content-lg-between gap-4 w-75">
+                        <div className="row d-flex justify-content-around gap-3 gap-lg-0 justify-content-lg-around w-75">
+                            <TextField className="col-12 col-lg-3" id="outlined-basic" defaultValue={customer.address?.street} name="street" label="Street" variant="outlined" />
+                            <TextField className="col-12 col-lg-3" id="outlined-basic" defaultValue={customer.address?.state} name="state" label="State" variant="outlined" />
+                            <TextField className="col-12 col-lg-3" id="outlined-basic" defaultValue={customer.address?.zip} name="zip" label="Zip" variant="outlined" />
+                        </div>
+                        <div className="row d-flex justify-content-around gap-3 gap-lg-0 justify-content-lg-around w-75">
                             <LocalizationProvider name="dateOfBirth" dateAdapter={AdapterDayjs}>
-                                <DatePicker defaultValue={dayjs(customer.dateOfBirth)} onChange={(e)=> handleDateChange(e)} className="col-11 col-lg-5" />
+                                <DatePicker defaultValue={dayjs(customer.dateOfBirth)} onChange={(e)=> handleDateChange(e)} className="col-12 col-lg-5" />
                             </LocalizationProvider>
-                            <TextField className="col-11 col-lg-5" id="outlined-basic" type="file" name="image" variant="outlined" />
+                            <TextField className="col-12 col-lg-5" id="outlined-basic" type="file" name="image" variant="outlined" />
                         </div>
 
 
-                        <div className="row d-flex justify-content-between gap-4 w-75">
+                        <div className="row d-flex justify-content-around gap-4 w-75">
                             <Button type="submit" className="col-8 col-lg-4" variant="contained" color="primary">
                                 Update
                             </Button>

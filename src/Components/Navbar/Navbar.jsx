@@ -1,21 +1,21 @@
 // import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import './Navbar.css';
 import mainLogo from '../../assets/logos/main_logo.svg';
 import secondaryLogo from '../../assets/logos/secondary_logo.svg';
 
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const pages = ['Places to go', 'Experiences', 'Discover'];
@@ -32,6 +32,8 @@ function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+    const navigate = useNavigate();
+
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -45,6 +47,12 @@ function Navbar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleLogout = () => {
+        localStorage.clear();
+        handleCloseUserMenu();
+        navigate('/');
     };
 
     return (
@@ -64,8 +72,16 @@ function Navbar() {
                                 flexGrow: 1,
                                 display: { xs: 'none', md: 'flex' },
                             }}
-                        >                            
-                            <img src={localStorage.getItem('token') ? mainLogo : secondaryLogo} alt="Where to go" width={32} />
+                        >
+                            <img
+                                src={
+                                    localStorage.getItem('token')
+                                        ? mainLogo
+                                        : secondaryLogo
+                                }
+                                alt="Where to go"
+                                width={32}
+                            />
                         </Box>
                     </Link>
 
@@ -83,7 +99,15 @@ function Navbar() {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                         >
-                            <img src={localStorage.getItem('token') ? mainLogo : secondaryLogo} alt="Where to go" width={32} />
+                            <img
+                                src={
+                                    localStorage.getItem('token')
+                                        ? mainLogo
+                                        : secondaryLogo
+                                }
+                                alt="Where to go"
+                                width={32}
+                            />
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -142,10 +166,15 @@ function Navbar() {
                                 {localStorage.getItem('img') ? (
                                     <Avatar
                                         alt="Profile Image"
-                                        src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem('img')}`}
+                                        src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
+                                            'img'
+                                        )}`}
                                     />
                                 ) : (
-                                    <AccountCircleIcon color='primary' style={{ fontSize: 40 }} />
+                                    <AccountCircleIcon
+                                        color="primary"
+                                        style={{ fontSize: 40 }}
+                                    />
                                 )}
                             </IconButton>
                         </Tooltip>
@@ -165,18 +194,29 @@ function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <Link to={setting.path}>
+                            {settings.map((setting) =>
+                                setting.name === 'Logout' ? (
                                     <MenuItem
                                         key={setting.name}
-                                        onClick={handleCloseUserMenu}
+                                        onClick={handleLogout}
                                     >
                                         <Typography textAlign="center">
                                             {setting.name}
                                         </Typography>
                                     </MenuItem>
-                                </Link>
-                            ))}
+                                ) : (
+                                    <Link to={setting.path}>
+                                        <MenuItem
+                                            key={setting.name}
+                                            onClick={handleCloseUserMenu}
+                                        >
+                                            <Typography textAlign="center">
+                                                {setting.name}
+                                            </Typography>
+                                        </MenuItem>
+                                    </Link>
+                                )
+                            )}
                         </Menu>
                     </Box>
                 </Toolbar>
