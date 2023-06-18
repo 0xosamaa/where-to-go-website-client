@@ -111,9 +111,9 @@ const Login = () => {
             <SecNavbar />
             <Container
                 maxWidth="lg"
-                className="d-flex justify-content-center align-items-center mt-5"
+                className="d-flex justify-content-center align-items-center"
                 style={{
-                    minHeight: "calc(100vh - 64px)'",
+                    minHeight: 'calc(100vh - 64px)',
                 }}
             >
                 <div

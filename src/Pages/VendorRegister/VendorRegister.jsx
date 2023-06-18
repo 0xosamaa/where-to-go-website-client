@@ -18,9 +18,10 @@ import { RiseLoader } from 'react-spinners';
 import mainLogo from '../../assets/logos/main_logo.svg';
 import secondaryLogo from '../../assets/logos/secondary_logo.svg';
 import registerIll from '../../assets/images/register/register-ill.png';
-import axiosInstance from '../../Axios';
+import { axiosInstanceFormData } from '../../Axios';
 import { Margin } from '@mui/icons-material';
 import axios from 'axios';
+import SecNavbar from '../../Components/SecNavbar/SecNavbar';
 
 const VendorRegister = () => {
     const [loading, setLoading] = useState(false);
@@ -40,7 +41,6 @@ const VendorRegister = () => {
         zip: '',
         phoneNumber: '',
         email: '',
-        password: '',
         description: '',
         thumbnail: '',
         gallery: [],
@@ -57,7 +57,6 @@ const VendorRegister = () => {
         zip: '',
         phoneNumber: '',
         email: '',
-        password: '',
         description: '',
         thumbnail: '',
         gallery: [],
@@ -139,11 +138,8 @@ const VendorRegister = () => {
         }));
     };
 
-    useEffect(() => {
-        console.log(vendorData);
-    });
-
-    const handleSignup = async () => {
+    const handleSignup = async (e) => {
+        e.preventDefault();
         setLoading(true);
         setSignupError(false);
         setFormErrors({
@@ -158,7 +154,6 @@ const VendorRegister = () => {
             zip: '',
             phoneNumber: '',
             email: '',
-            password: '',
             description: '',
             thumbnail: '',
             gallery: '',
@@ -248,13 +243,8 @@ const VendorRegister = () => {
                 zip: 'Zip Code Required',
             }));
             isValid = false;
-        } else if (!vendorData.zip.match(/^(\\d{5}(?:[-\\s]\\d{4})?)?$/)) {
-            setFormErrors((prevErrors) => ({
-                ...prevErrors,
-                zip: 'Invalid Zip Code',
-            }));
-            isValid = false;
         }
+
         if (vendorData.phoneNumber.length === 0) {
             setFormErrors((prevErrors) => ({
                 ...prevErrors,
@@ -278,12 +268,6 @@ const VendorRegister = () => {
                 description: 'Description Required',
             }));
             isValid = false;
-        } else if (!vendorData.description.match(/^[A-Za-z]+$/)) {
-            setFormErrors((prevErrors) => ({
-                ...prevErrors,
-                description: 'Invalid Description',
-            }));
-            isValid = false;
         }
 
         if (vendorData.thumbnail.length === 0) {
@@ -292,7 +276,7 @@ const VendorRegister = () => {
                 thumbnail: 'Thumbnail Required',
             }));
             isValid = false;
-        } 
+        }
 
         if (vendorData.gallery.length === 0) {
             setFormErrors((prevErrors) => ({
@@ -300,7 +284,7 @@ const VendorRegister = () => {
                 gallery: 'Gallery Required',
             }));
             isValid = false;
-        } 
+        }
 
         if (vendorData.email.length === 0) {
             setFormErrors((prevErrors) => ({
@@ -318,33 +302,17 @@ const VendorRegister = () => {
             isValid = false;
         }
 
-        if (vendorData.password.length === 0) {
-            setFormErrors((prevErrors) => ({
-                ...prevErrors,
-                password: 'Password Required',
-            }));
-            isValid = false;
-        } else if (
-            !vendorData.password.match(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,}$/
-            )
-        ) {
-            setFormErrors((prevErrors) => ({
-                ...prevErrors,
-                password: 'Invalid Password',
-            }));
-            isValid = false;
-        }
-
         if (isValid) {
             try {
-                await axiosInstance.post(
+                const data = new FormData(e.target);
+                console.log(data.get('thumbnail'));
+                console.log(data.get('gallery'));
+                await axiosInstanceFormData.post(
                     '/api/v1/auth/vendor/register',
-                    vendorData
+                    data
                 );
                 navigate('http://localhost:3000/vendor/login');
             } catch (err) {
-                console.log(err);
                 setSignupError(true);
             }
         }
@@ -360,155 +328,12 @@ const VendorRegister = () => {
 
     return (
         <>
-            <AppBar
-                position="sticky"
-                color="common"
-                style={{
-                    // backgroundColor: '#00bbaa',
-                    boxShadow: 'none',
-                }}
-            >
-                <Container maxWidth="lg">
-                    <Toolbar disableGutters>
-                        <Link className="navbar-brand" to="/">
-                            <Box
-                                sx={{
-                                    flexGrow: 1,
-                                    display: { xs: 'none', md: 'flex' },
-                                }}
-                            >
-                                <img
-                                    src={
-                                        localStorage.getItem('token')
-                                            ? mainLogo
-                                            : secondaryLogo
-                                    }
-                                    alt="Where to go"
-                                    width={32}
-                                />
-                            </Box>
-                        </Link>
-
-                        {/* <Box
-                            sx={{
-                                flexGrow: 1,
-                                display: { xs: 'flex', md: 'none' },
-                            }}
-                        >
-                            <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleOpenNavMenu}
-                                color="inherit"
-                            >
-                                <img
-                                    src={mainLogo}
-                                    alt="Where to go"
-                                    width={32}
-                                />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorElNav}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                                open={Boolean(anchorElNav)}
-                                onClose={handleCloseNavMenu}
-                                sx={{
-                                    display: { xs: 'block', md: 'none' },
-                                }}
-                            >
-                                {pages.map((page) => (
-                                    <MenuItem
-                                        key={page}
-                                        onClick={handleCloseNavMenu}
-                                    >
-                                        <Typography textAlign="center">
-                                            {page}
-                                        </Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box> */}
-                        {/* <Box
-                            className="ms-4"
-                            sx={{
-                                flexGrow: 1,
-                                display: { xs: 'none', md: 'flex' },
-                            }}
-                        >
-                            {pages.map((page) => (
-                                <Button
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{
-                                        my: 2,
-                                        color: 'black',
-                                        display: 'block',
-                                    }}
-                                >
-                                    {page}
-                                </Button>
-                            ))}
-                        </Box> */}
-
-                        {/* <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton
-                                    onClick={handleOpenUserMenu}
-                                    sx={{ p: 0 }}
-                                >
-                                    <Avatar
-                                        alt="Remy Sharp"
-                                        src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
-                                    />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                {settings.map((setting) => (
-                                    <MenuItem
-                                        key={setting}
-                                        onClick={handleCloseUserMenu}
-                                    >
-                                        <Typography textAlign="center">
-                                            {setting}
-                                        </Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box> */}
-                    </Toolbar>
-                </Container>
-            </AppBar>
+            <SecNavbar />
             <Container
                 maxWidth="lg"
-                className="d-flex justify-content-center align-items-center mt-5"
+                className="d-flex justify-content-center align-items-center my-5"
                 style={{
-                    minHeight: "calc(100vh - 64px)'",
+                    minHeight: 'calc(100vh - 64px)',
                 }}
             >
                 {/* {JSON.stringify(countries.data)} */}
@@ -536,9 +361,17 @@ const VendorRegister = () => {
                                     </Typography>
                                 </div>
                             </div>
-                            <div className="row">
+                            <form
+                                onSubmit={handleSignup}
+                                className="row"
+                                encType="multipart/form-data"
+                            >
                                 {signupError && (
-                                    <div style={{ padding: '.375rem .75rem' }}>
+                                    <div
+                                        style={{
+                                            padding: '.375rem .75rem',
+                                        }}
+                                    >
                                         <div className="alert alert-danger col-12">
                                             Sign up failed
                                         </div>
@@ -766,19 +599,6 @@ const VendorRegister = () => {
                                     </small>
                                 </div>
                                 <div className="mb-3">
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        name="password"
-                                        placeholder="Password"
-                                        value={vendorData.password}
-                                        onChange={handleInputChange}
-                                    />
-                                    <small style={{ color: 'red' }}>
-                                        {formErrors.password}
-                                    </small>
-                                </div>
-                                <div className="mb-3">
                                     <Typography variant="p">
                                         Already have an account?{' '}
                                         <Link to="/login">
@@ -808,7 +628,7 @@ const VendorRegister = () => {
                                         </div>
                                     ) : (
                                         <Button
-                                            onClick={handleSignup}
+                                            type="submit"
                                             className="col-12"
                                             variant="contained"
                                             color="primary"
@@ -817,7 +637,7 @@ const VendorRegister = () => {
                                         </Button>
                                     )}
                                 </div>
-                            </div>
+                            </form>
                         </Container>
                     </div>
                     <div
