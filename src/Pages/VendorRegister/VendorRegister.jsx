@@ -2,24 +2,14 @@ import {
     Container,
     Typography,
     Button,
-    AppBar,
-    Box,
-    Toolbar,
-    IconButton,
-    Menu,
-    Avatar,
-    Tooltip,
-    MenuItem,
     useTheme,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RiseLoader } from 'react-spinners';
-import mainLogo from '../../assets/logos/main_logo.svg';
-import secondaryLogo from '../../assets/logos/secondary_logo.svg';
+
 import registerIll from '../../assets/images/register/register-ill.png';
-import { axiosInstanceFormData } from '../../Axios';
-import { Margin } from '@mui/icons-material';
+import axiosInstance, { axiosInstanceFormData } from '../../Axios';
 import axios from 'axios';
 import SecNavbar from '../../Components/SecNavbar/SecNavbar';
 
