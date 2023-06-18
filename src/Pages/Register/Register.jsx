@@ -119,11 +119,13 @@ const Register = () => {
         if (isValid) {
             try {
                 const res = await axiosInstance.post(
-                    '/api/v1/customers',
+                    '/api/v1/auth/customer/register',
                     signupDetails
                 );
-                navigate('/');
+                console.log(res);
+                navigate('/login');
             } catch (err) {
+                console.log(err);
                 setSignupError(true);
             }
         }
@@ -157,7 +159,11 @@ const Register = () => {
                                 }}
                             >
                                 <img
-                                    src={localStorage.getItem('token') ? mainLogo : secondaryLogo}
+                                    src={
+                                        localStorage.getItem('token')
+                                            ? mainLogo
+                                            : secondaryLogo
+                                    }
                                     alt="Where to go"
                                     width={32}
                                 />
@@ -396,7 +402,9 @@ const Register = () => {
                                         <Link to="/login">
                                             <Typography
                                                 variant="span"
-                                                color={theme.palette.primary.main}
+                                                color={
+                                                    theme.palette.primary.main
+                                                }
                                             >
                                                 Sign in
                                             </Typography>

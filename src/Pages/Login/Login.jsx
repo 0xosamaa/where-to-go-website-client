@@ -84,11 +84,11 @@ const Login = () => {
         if (isValid) {
             try {
                 const res = await axiosInstance.post(
-                    'api/v1/customer/login',
+                    '/api/v1/auth/customer/login',
                     loginDetails
                 );
                 localStorage.setItem('token', res.data.token);
-                localStorage.setItem('userId', res.data.userId);
+                localStorage.setItem('userId', res.data.id);
                 localStorage.setItem('img', res.data.img);
                 navigate('/');
             } catch (err) {
