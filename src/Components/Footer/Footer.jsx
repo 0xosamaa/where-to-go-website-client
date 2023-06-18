@@ -25,13 +25,13 @@ const Footer = () => {
                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-center py-3">
                     <div className="d-flex mb-4 mb-md-0">
                         <Typography variant="h6" className="mx-5 mx-md-0">
-                            ABOUT
+                            <Link to='/aboutus'> ABOUT </Link>
                         </Typography>
                         <Typography
                             variant="h6"
                             className="mx-5 mx-md-0 ms-md-5 ps-md-5"
                         >
-                            CONTACT
+                            <Link to='/contactus'> CONTACT </Link>
                         </Typography>
                     </div>
                     <div className="d-flex justify-content-center align-items-center">
@@ -65,10 +65,10 @@ const Footer = () => {
                             variant="h6"
                             className="mx-5 mx-md-0 me-md-5 pe-md-5"
                         >
-                            PRIVACY
+                            <Link to='/privacy'> PRIVACY </Link>
                         </Typography>
                         <Typography variant="h6" className="mx-5 mx-md-0">
-                            TERMS
+                        <Link to='/terms'> TERMS </Link>
                         </Typography>
                     </div>
                 </div>
