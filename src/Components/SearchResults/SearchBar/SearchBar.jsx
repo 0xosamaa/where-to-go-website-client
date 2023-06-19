@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import {
+  setKeyword,
   setPagination,
   setQueryString,
   vendorSearch,
@@ -65,6 +66,16 @@ const SearchBar = () => {
     console.log(queryString);
   };
 
+  const handleChange = (event) => {
+    dispatch(setKeyword(event.target.value));
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchWithFilters();
+    }
+  }
+
   return (
     <div className="search-bar-body">
       <SearchIcon
@@ -72,7 +83,13 @@ const SearchBar = () => {
         onClick={searchWithFilters}
         style={{ backgroundColor: theme.palette.primary.main }}
       />
-        <CssTextField label="Search keyword" style={{ width: 350 }} id="custom-css-outlined-input" />
+        <CssTextField 
+          placeholder="Enter place name or owner" 
+          style={{ width: 350 }} 
+          id="custom-css-outlined-input" 
+          onChange={handleChange}
+          onKeyPress={handleKeyPress}
+        />
     </div>
   );
 };

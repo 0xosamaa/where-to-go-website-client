@@ -17,20 +17,19 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsLoggedIn } from '../../Redux/Slices/authSlice';
 
-const pages = ['Places to go', 'Experiences', 'Discover'];
 const settings = [
     { name: 'Profile', path: '/profile' },
-    { name: 'Register', path: '/register' },
-    { name: 'Login', path: '/login' },
     { name: 'Logout', path: '/logout' },
-    { name: 'Search', path: '/search' },
-    { name: 'Contact', path: '/contactus' },
+    { name: 'Log in', path: '/login' },
+    { name: 'Sign up', path: '/register' },
 ];
 
 function Navbar() {
     const dispatch = useDispatch();
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -52,6 +51,7 @@ function Navbar() {
     };
 
     const handleLogout = () => {
+        dispatch(setIsLoggedIn(false));
         localStorage.clear();
         handleCloseUserMenu();
         navigate('/');
@@ -130,7 +130,7 @@ function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
+                            {/* {pages.map((page) => (
                                 <MenuItem
                                     key={page}
                                     onClick={handleCloseNavMenu}
@@ -139,7 +139,14 @@ function Navbar() {
                                         {page}
                                     </Typography>
                                 </MenuItem>
-                            ))}
+                            ))} */}
+                            <Link to="/search">
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">
+                                        Discover
+                                    </Typography>
+                                </MenuItem>
+                            </Link>
                         </Menu>
                     </Box>
                     <Box
@@ -149,7 +156,7 @@ function Navbar() {
                             display: { xs: 'none', md: 'flex' },
                         }}
                     >
-                        {pages.map((page) => (
+                        {/* {pages.map((page) => (
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
@@ -157,7 +164,15 @@ function Navbar() {
                             >
                                 {page}
                             </Button>
-                        ))}
+                        ))} */}
+                        <Link to="/search">
+                            <Button
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'black', display: 'block' }}
+                            >
+                                Discover
+                            </Button>
+                        </Link>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
@@ -198,7 +213,7 @@ function Navbar() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) =>
-                                setting.name === 'Logout' ? (
+                                setting.name === 'Logout' && isLoggedIn ? (
                                     <MenuItem
                                         key={setting.name}
                                         onClick={handleLogout}
@@ -207,10 +222,10 @@ function Navbar() {
                                             {setting.name}
                                         </Typography>
                                     </MenuItem>
-                                ) : (
-                                    <Link to={setting.path}>
+                                ) : 
+                                setting.name === 'Profile' && isLoggedIn ? (
+                                    <Link key={setting.name} to={setting.path}>
                                         <MenuItem
-                                            key={setting.name}
                                             onClick={handleCloseUserMenu}
                                         >
                                             <Typography textAlign="center">
@@ -218,7 +233,18 @@ function Navbar() {
                                             </Typography>
                                         </MenuItem>
                                     </Link>
-                                )
+                                ) :
+                                !isLoggedIn && (setting.name === 'Log in' || setting.name === 'Sign up') ? (
+                                    <Link key={setting.name} to={setting.path}>
+                                        <MenuItem
+                                            onClick={handleCloseUserMenu}
+                                        >
+                                            <Typography textAlign="center">
+                                                {setting.name}
+                                            </Typography>
+                                        </MenuItem>
+                                    </Link>
+                                ) : ('')
                             )}
                         </Menu>
                     </Box>
