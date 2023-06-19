@@ -15,6 +15,8 @@ const initialState = {
         location: [],
         placeName: [],
         rating: [],
+        sortField: [],
+        sortOrder: [],
     },
     location: {
         country: '',
@@ -35,7 +37,7 @@ export const vendorSearch = createAsyncThunk('search/vendorSearch', async (_, th
         const { currentPage, perPage } = search.pagination;
         const queryString = search.queryString;
 
-        const query = `${URL}/vendors?page=${currentPage}&limit=${perPage}&${queryString}`
+        const query = `${URL}/auth/search?page=${currentPage}&limit=${perPage}&${queryString}`
         console.log(query)
 
         const response = await axiosInstance.get(query)
@@ -93,13 +95,17 @@ const searchSlice = createSlice({
             const { data, type } = action.payload
             switch (type) {
                 case 'Tags':
-                    state.searchParams.tags = alterArray(state.searchParams.tags, data.id)
+                    state.searchParams.tags = alterArray(state.searchParams.tags, data.id);
                     break;
                 case 'Categories':
                     state.searchParams.category[0] = data.id;
                     break;
                 case 'Rating':
-                    state.searchParams.rating = data
+                    state.searchParams.rating = data;
+                    break;
+                case 'Sort':
+                    state.searchParams.sortField[0] = data.sortField
+                    state.searchParams.sortOrder[0] = data.sortOrder
                     break;
             }
         },

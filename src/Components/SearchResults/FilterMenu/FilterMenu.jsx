@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
@@ -6,11 +5,12 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import { FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
+import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Slider } from "@mui/material";
 import CustomizedCheckbox from "../CustomizedCheckbox/CustomizedCheckbox";
 import CustomizedRadio from "../CustomizedRadio/CustomizedRadio";
 import { useDispatch } from "react-redux";
 import { setFilters } from "../../../Redux/Slices/searchSlice";
+import { useState } from "react";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -54,7 +54,10 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 const FilterMenu = (props) => {
-  const [expanded, setExpanded] = React.useState("");
+  const [expanded, setExpanded] = useState("");
+  const [sortField, setSortField] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
+
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -64,6 +67,16 @@ const FilterMenu = (props) => {
 
   const handleRatingChange = (event, value) => {
     dispatch(setFilters({ data: value, type: props.title }))
+  }
+
+  const handleSortFieldChange = (event) => {
+    setSortField(event.target.value)
+    dispatch(setFilters({ data: { sortField: event.target.value, sortOrder }, type: props.title }))
+  }
+
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value)
+    dispatch(setFilters({ data: { sortField, sortOrder: event.target.value }, type: props.title }))
   }
 
   return (
@@ -95,8 +108,40 @@ const FilterMenu = (props) => {
               onChange={handleRatingChange}
               valueLabelDisplay="auto"
             />
-          ) : props.title === "Location" ? (
-            <Typography>Location</Typography>
+          ) : props.title === "Sort" ? (
+            <>
+            <FormControl sx={{ m: 1, minWidth: 120 }} fullWidth size="small">
+              <InputLabel id="sort-field-label">Field</InputLabel>
+              <Select
+                labelId="sort-field-label"
+                id="sort-field"
+                value={sortField}
+                label="Field"
+                onChange={handleSortFieldChange}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={"placeName"}>Place Name</MenuItem>
+                <MenuItem value={"category"}>Category</MenuItem>
+                <MenuItem value={"avgRate"}>Rating</MenuItem>
+                <MenuItem value={"numberOfReviews"}>Reviews Number</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 120 }} fullWidth size="small">
+              <InputLabel id="sort-order-label">Order</InputLabel>
+              <Select
+                labelId="sort-order-label"
+                id="sort-order"
+                value={sortOrder}
+                label="Order"
+                onChange={handleSortOrderChange}
+              >
+                <MenuItem value="asc">Ascending</MenuItem>
+                <MenuItem value="desc">Descending</MenuItem>
+              </Select>
+            </FormControl>
+            </>
           ) :
           (
             props.options.map((option) => (
