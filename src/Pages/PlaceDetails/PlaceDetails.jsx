@@ -1,4 +1,4 @@
-import { Button, Pagination, Typography, useTheme, Container, Rating, styled } from "@mui/material";
+import { Button, Pagination, Typography, useTheme, Container, Rating, styled, Avatar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -75,6 +75,15 @@ const SearchResults = () => {
         console.log(placeId);
         navigate('/place');
     };
+
+    const StyledRating = styled(Rating)({
+      '& .MuiRating-iconFilled': {
+        color: theme.palette.primary.main,
+      },
+      '& .MuiRating-iconHover': {
+        color: theme.palette.primary.main,
+      },
+    });
 
   return (
     <Container className="d-flex flex-column mt-4 mb-5">
@@ -223,23 +232,118 @@ const SearchResults = () => {
               <Typography variant="h2" className="mt-4 mb-0">
                 Tags
               </Typography>
+              {place.tagNames?.map((tag) => {
+                <Typography variant="h6">{tag}</Typography>
+              })}
             </div>
           </div>
-          <hr
-            style={{
-              width: "100%",
-              color: "#9095A0",
-              borderWidth: 2,
-              margin: "32px 0",
-            }}
-          />
-          <div className="card-rating d-flex">
-            <StarIcon fontSize="small" color="primary" className="me-2" />
-            <Typography variant="body">
-              <b>{place.avgRate.toFixed(1) || (0).toFixed(1)}</b> &nbsp;
-              <span className="text-muted">({place.numberOfReviews || 0} reviews)</span>
-            </Typography>
-          </div>
+          {place.numberOfReviews > 0 ? (
+            <>
+            <hr
+              style={{
+                width: "100%",
+                color: "#9095A0",
+                borderWidth: 2,
+                margin: "32px 0",
+              }}
+            />
+            <div className="card-rating d-flex">
+              <StarIcon fontSize="small" color="primary" className="me-2 mb-3" />
+              <Typography variant="body">
+                <b>{place.avgRate.toFixed(1) || (0).toFixed(1)}</b> &nbsp;
+                <span className="text-muted">({place.numberOfReviews || 0} reviews)</span>
+              </Typography>
+            </div>
+            <div className="reviews-container">
+              <div className="review-card">
+                <div className="review-user d-flex align-items-center mb-3">
+                  <img
+                      style={{ width: 48, borderRadius: '50%' }}
+                      alt="Profile Image"
+                      src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
+                          'img'
+                      )}`}
+                  />
+                  <div className="ms-2">
+                    <Typography variant="h6" >User name</Typography>
+                    <Typography variant="body" color={"#9095A0"}>February 2023</Typography>
+                  </div>
+                </div>
+                <Typography variant="body" className="description">
+                  Review Content Review Content Review Content Review Content Review Content Review Content Review Content 
+                </Typography>
+                <StyledRating size="small" defaultValue={3} readOnly style={{ float: 'right'}} />
+              </div>
+              <div className="review-card">
+                <div className="review-user d-flex align-items-center mb-3">
+                  <img
+                      style={{ width: 48, borderRadius: '50%' }}
+                      alt="Profile Image"
+                      src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
+                          'img'
+                      )}`}
+                  />
+                  <div className="ms-2">
+                    <Typography variant="h6" >User name</Typography>
+                    <Typography variant="body" color={"#9095A0"}>February 2023</Typography>
+                  </div>
+                </div>
+                <Typography variant="body" className="description">
+                  Review Content Review Content Review Content Review Content Review Content Review Content Review Content 
+                </Typography>
+                <StyledRating size="small" defaultValue={3} readOnly style={{ float: 'right'}} />
+              </div>
+              <div className="review-card">
+                <div className="review-user d-flex align-items-center mb-3">
+                  <img
+                      style={{ width: 48, borderRadius: '50%' }}
+                      alt="Profile Image"
+                      src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
+                          'img'
+                      )}`}
+                  />
+                  <div className="ms-2">
+                    <Typography variant="h6" >User name</Typography>
+                    <Typography variant="body" color={"#9095A0"}>February 2023</Typography>
+                  </div>
+                </div>
+                <Typography variant="body" className="description">
+                  Review Content Review Content Review Content Review Content Review Content Review Content Review Content 
+                </Typography>
+                <StyledRating size="small" defaultValue={3} readOnly style={{ float: 'right'}} />
+              </div>
+              <div className="review-card">
+                <div className="review-user d-flex align-items-center mb-3">
+                  <img
+                      style={{ width: 48, borderRadius: '50%' }}
+                      alt="Profile Image"
+                      src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
+                          'img'
+                      )}`}
+                  />
+                  <div className="ms-2">
+                    <Typography variant="h6" >User name</Typography>
+                    <Typography variant="body" color={"#9095A0"}>February 2023</Typography>
+                  </div>
+                </div>
+                <Typography variant="body" className="description">
+                  Review Content Review Content Review Content Review Content Review Content Review Content Review Content 
+                </Typography>
+                <StyledRating size="small" defaultValue={3} readOnly style={{ float: 'right'}} />
+              </div>
+              <Button
+                variant="contained"
+                color="info"
+                // onClick={() => setGalleryVisible(true)}
+              >
+                Show all reviews
+              </Button>
+            </div>
+            </>
+          ) : (
+            ''
+          )
+          }
           <hr
             style={{
               width: "100%",

@@ -1,11 +1,11 @@
 .gallery {
   display: grid;
+  height: 100%;
   grid-template-columns: 3fr 1fr;
   grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 12px;
   grid-row-gap: 12px;
   position: relative;
-  height: 600px;
 }
 
 .gallery-btn {
@@ -16,7 +16,7 @@
 }
 
 .thumbnail, .gallery-1, .gallery-2, .gallery-3 {
-  object-fit: contain;
+  object-fit: cover;
   width: 100%;
   height: 100%;
 }
@@ -43,7 +43,7 @@
     grid-template-rows: 3fr 1fr;
     grid-column-gap: 8px;
     grid-row-gap: 8px;
-    height: 60vmax;
+    height: 100%;
   }
   .thumbnail {
     grid-area: 1 / 1 / 2 / 4;
@@ -112,4 +112,24 @@
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 50%;
+}
+
+.reviews-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.review-card {
+  padding: 1rem 4rem 1rem 0;
+  width: 50%;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+  -webkit-line-clamp: 2;
+  max-height: 3.0em;
 }

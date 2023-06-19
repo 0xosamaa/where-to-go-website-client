@@ -19,7 +19,7 @@ const SearchItem = ({ place, onClick }) => {
                         </Typography>
                         <Typography variant="h4">{place.placeName}</Typography>
                         <hr style={{ width: 56, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>
-                        <Typography className="card-text" variant="body">{place.description}</Typography>
+                        <Typography className="card-text description" variant="body">{place.description}</Typography>
                         <br />
                         <Typography className="card-text" variant="body">
                             {place.tagNames.map((tag, index) => {
