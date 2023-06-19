@@ -5,12 +5,13 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Slider } from "@mui/material";
+import { Button, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Slider } from "@mui/material";
 import CustomizedCheckbox from "../CustomizedCheckbox/CustomizedCheckbox";
 import CustomizedRadio from "../CustomizedRadio/CustomizedRadio";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFilters } from "../../../Redux/Slices/searchSlice";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -58,6 +59,7 @@ const FilterMenu = (props) => {
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -89,7 +91,7 @@ const FilterMenu = (props) => {
           <Typography variant="h6">{props.title}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {props.title === "Categories" ? (
+          {props.title === "Categories" && isLoggedIn ? (
             <RadioGroup
               name="categories-group"
             >
@@ -143,7 +145,7 @@ const FilterMenu = (props) => {
             </FormControl>
             </>
           ) :
-          (
+          props.title === "Tags" && isLoggedIn ? (
             props.options.map((option) => (
               <div className="d-block" key={option.id}>
                 <FormControlLabel
@@ -154,7 +156,17 @@ const FilterMenu = (props) => {
                 />
               </div>
             ))
-          )}
+          ) : (
+            <Link to="/login">
+              <Button 
+                variant="contained" 
+                size="small"
+              >
+                Login to unlock
+              </Button>
+            </Link>
+          )
+        }
         </AccordionDetails>
       </Accordion>
     </div>

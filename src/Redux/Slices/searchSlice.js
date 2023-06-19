@@ -18,6 +18,7 @@ const initialState = {
         sortField: [],
         sortOrder: [],
     },
+    keyword: '',
     location: {
         country: '',
         state: '',
@@ -37,7 +38,7 @@ export const vendorSearch = createAsyncThunk('search/vendorSearch', async (_, th
         const { currentPage, perPage } = search.pagination;
         const queryString = search.queryString;
 
-        const query = `${URL}/auth/search?page=${currentPage}&limit=${perPage}&${queryString}`
+        const query = `${URL}/auth/search?page=${currentPage}&limit=${perPage}&search=${search.keyword}&${queryString}`
         console.log(query)
 
         const response = await axiosInstance.get(query)
@@ -119,7 +120,10 @@ const searchSlice = createSlice({
         },
         setQueryString(state, action) {
             state.queryString = action.payload
-        }
+        },
+        setKeyword(state, action) {
+            state.keyword = action.payload
+        },
     },
     extraReducers: {
         [vendorSearch.pending]: (state) => {
@@ -159,5 +163,5 @@ const searchSlice = createSlice({
     },
 })
 
-export const { setFilters, setPagination, setQueryString, clearFilters } = searchSlice.actions
+export const { setFilters, setPagination, setQueryString, clearFilters, setKeyword } = searchSlice.actions
 export default searchSlice.reducer

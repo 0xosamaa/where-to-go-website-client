@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCustomer } from '../../Redux/Slices/profileSlice.js';
 import Preference from './preference/Preference.jsx';
 import { Container } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const theme = useTheme();
@@ -18,10 +19,15 @@ const Profile = () => {
     const [opens, setOpens] = useState(false);
     const [open, setOpen] = React.useState(false);
     const error = useSelector((state) => state.profile.error);
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const navigate = useNavigate();
 
     const customer = useSelector((state) => state.profile.customer);
 
     useEffect(() => {
+        if (!isLoggedIn) {
+            navigate('/login');
+        }
         dispatch(getCustomer()).then((res) => {
             console.log(res);
         });

@@ -20,7 +20,8 @@ import mainLogo from '../../assets/logos/main_logo.svg';
 import secondaryLogo from '../../assets/logos/secondary_logo.svg';
 import registerIll from '../../assets/images/register/register-ill.png';
 import SecNavbar from '../../Components/SecNavbar/SecNavbar';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsLoggedIn } from '../../Redux/Slices/authSlice';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const Login = () => {
     const [loginError, setLoginError] = useState();
     const navigate = useNavigate();
     const theme = useTheme();
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
     const handleLogin = async () => {
         setLoading(true);
@@ -90,6 +92,7 @@ const Login = () => {
                     '/api/v1/auth/customer/login',
                     loginDetails
                 );
+                dispatch(setIsLoggedIn(true));
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('userId', res.data.id);
                 localStorage.setItem('img', res.data.img);
@@ -100,6 +103,12 @@ const Login = () => {
         }
         setLoading(false);
     };
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/');
+        }
+    }, []);
 
     useEffect(() => {
         if (loginError)

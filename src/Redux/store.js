@@ -3,6 +3,7 @@ import profileReducer from "./Slices/profileSlice.js";
 import searchReducer from "./Slices/searchSlice";
 import placeReducer from "./Slices/placeSlice";
 import reviewReducer from "./Slices/reviewSlice.js"
+import authReducer from "./Slices/authSlice.js";
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         search: searchReducer,
         place: placeReducer,
         review: reviewReducer,
+        auth: authReducer,
     }
 })
 
