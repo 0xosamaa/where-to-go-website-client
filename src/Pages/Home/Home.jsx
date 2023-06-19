@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 import { Typography, Container, useTheme } from '@mui/material';
@@ -16,12 +16,16 @@ import parks from '../../assets/images/places/categories/parks.jpeg';
 const Home = () => {
     const theme = useTheme();
 
+    useEffect(() => {
+        console.log("Hello React")
+    }, [])
+
     return (
         <>
             <Header />
             <Container maxWidth="lg" className="top-rated my-5">
                 <div className="row">
-                    <div className="col-12 my-3 text-center text-lg-start">
+                    <div className="col-12 mb-3 text-center text-lg-start">
                         <Typography variant="h3" color={theme.palette.primary.main}>
                             Top Rated
                         </Typography>
@@ -94,7 +98,7 @@ const Home = () => {
                     </div>
                 </div>
             </Container>
-            <Slider />
+            {/* <Slider /> */}
             <Container maxWidth="lg" className="categories mb-5">
                 <div className="row">
                     <div className="col-12 text-center text-lg-start my-3">
