@@ -6,18 +6,6 @@
     display: flex;
 }
 
-@media screen and (max-width: 992px) {
-    .card-image {
-        width: 100%;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .card-image {
-        width: 400px;
-    }
-}
-
 .card-body {
     margin-left: 16px;
 }
@@ -28,4 +16,19 @@
 
 .clickable:hover {
     cursor: pointer;
+}
+
+@media screen and (max-width: 992px) {
+    .card-image {
+        width: 400px;
+    }
+    .card-body {
+        width: 400px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .card-image {
+        width: 400px;
+    }
 }

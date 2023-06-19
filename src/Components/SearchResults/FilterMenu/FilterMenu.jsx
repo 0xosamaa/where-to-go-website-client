@@ -123,7 +123,7 @@ const FilterMenu = (props) => {
                   <em>None</em>
                 </MenuItem>
                 <MenuItem value={"placeName"}>Place Name</MenuItem>
-                {/* <MenuItem value={"category.name"}>Category</MenuItem> */}
+                <MenuItem value={"category"}>Category</MenuItem>
                 <MenuItem value={"avgRate"}>Rating</MenuItem>
                 <MenuItem value={"numberOfReviews"}>Reviews Number</MenuItem>
               </Select>

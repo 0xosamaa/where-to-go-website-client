@@ -1,4 +1,4 @@
-import { Button, Pagination, Typography, useTheme, Container } from "@mui/material";
+import { Button, Pagination, Typography, useTheme, Container, Rating, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -12,6 +12,7 @@ import {
     getTags,
     vendorSearch,
 } from '../../Redux/Slices/searchSlice';
+import SubmitRating from '../../Components/PlaceDetails/SubmitRating/SubmitRating';
 import { getPlace } from '../../Redux/Slices/placeSlice';
 import './PlaceDetails.css';
 import RiseLoader from 'react-spinners/RiseLoader';
@@ -53,12 +54,6 @@ const SearchResults = () => {
       setLoading(false);
     });
   }, []);
-
-    const rating = [
-        { id: 1, name: 'Below 3' },
-        { id: 2, name: 'From 3 to 4' },
-        { id: 3, name: 'Above 4' },
-    ];
 
     // const handlePageChange = (event, page) => {
     //     setLoading(true);
@@ -245,6 +240,18 @@ const SearchResults = () => {
               <span className="text-muted">({place.numberOfReviews || 0} reviews)</span>
             </Typography>
           </div>
+          <hr
+            style={{
+              width: "100%",
+              color: "#9095A0",
+              borderWidth: 2,
+              margin: "32px 0",
+            }}
+          />
+          <Typography variant="h2" className="pt-0">
+            Rate this place
+          </Typography>
+          <SubmitRating />
         </>
       )}
     </Container>
