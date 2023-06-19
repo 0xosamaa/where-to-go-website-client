@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axiosInstance from '../../Axios'
-const URL = '/api/v1/vendors'
+const URL = '/api/v1/auth/vendor'
 
 const initialState = {
     place: {},

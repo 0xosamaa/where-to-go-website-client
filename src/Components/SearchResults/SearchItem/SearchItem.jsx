@@ -4,8 +4,10 @@ import StarIcon from '@mui/icons-material/Star';
 
 import FavouriteIcon from "../../FavouriteIcon/FavouriteIcon"
 import './SearchItem.css'
+import { useSelector } from "react-redux";
 
 const SearchItem = ({ place, onClick }) => {
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     return (
         <div className="d-flex flex-column flex-lg-row">
             <img onClick={onClick} className="card-image clickable" src={`http://localhost:8001/api/v1/images/vendors/${place.thumbnail}`} alt="demo" />
@@ -41,9 +43,11 @@ const SearchItem = ({ place, onClick }) => {
                         </Typography>
                     </div>
                 </div>
-                <div className="love-icon">
-                    <FavouriteIcon />
-                </div>
+                {isLoggedIn ? (
+                    <div className="love-icon">
+                        <FavouriteIcon />
+                    </div>
+                ): ('')}
             </div>
         </div>
     )

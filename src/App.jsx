@@ -2,12 +2,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import AppRoutes from './Routes';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-const getTheme = () => {
+const getTheme = (isLoggedIn) => {
     const primary = {};
     const secondary = {};
 
-    if (localStorage.getItem('token')) {
+    if (isLoggedIn) {
         primary.main = '#00BBAA';
         primary.light = '#07ffea';
         primary.dark = '#00a99b';
@@ -92,7 +93,9 @@ const getTheme = () => {
 }
 
 function App() {
-    const theme = getTheme();
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+    const theme = getTheme(isLoggedIn);
+
     return (
         <ThemeProvider theme={theme}>
             <AppRoutes />

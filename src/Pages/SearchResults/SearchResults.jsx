@@ -95,7 +95,7 @@ const SearchResults = () => {
             aria-label="Loading Spinner"
             data-testid="loader"
           />
-        ) : (
+        ) : result.length > 0 ? (
           <div className="search-results d-flex flex-column align-items-stretch">
             <Typography variant="body" className="mb-3 d-block">
               {pagination.total} places found
@@ -118,6 +118,8 @@ const SearchResults = () => {
               style={{ marginTop: 48, alignSelf: "center" }}
             />
           </div>
+        ) : (
+          <Typography variant="h2" className="mb-3 d-block text">No results found</Typography>
         )}
       </Container>
     </>

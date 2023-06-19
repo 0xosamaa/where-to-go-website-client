@@ -38,11 +38,12 @@ const SearchResults = () => {
   const place = useSelector((state) => state.place.place);
   const [images, setImages] = useState([]);
   const [galleryVisible, setGalleryVisible] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-    const override = {
-        display: 'block',
-        margin: '30vh auto',
-    };
+  const override = {
+      display: 'block',
+      margin: '30vh auto',
+  };
 
   useEffect(() => {
     dispatch(getPlace(id)).then((data) => {
@@ -116,12 +117,15 @@ const SearchResults = () => {
                   Share
                 </Typography>
               </div>
-              <div className="d-flex align-items-center">
-                <FavouriteIcon />
-                <Typography variant="body" style={{ fontSize: 20 }}>
-                  Save
-                </Typography>
-              </div>
+              {isLoggedIn ? (
+                <div className="d-flex align-items-center">
+                  <FavouriteIcon />
+                  <Typography variant="body" style={{ fontSize: 20 }}>
+                    Save
+                  </Typography>
+                </div>
+                ) : ('')
+              }
             </div>
           </div>
           <div className="gallery mt-3">
@@ -344,18 +348,23 @@ const SearchResults = () => {
             ''
           )
           }
-          <hr
-            style={{
-              width: "100%",
-              color: "#9095A0",
-              borderWidth: 2,
-              margin: "32px 0",
-            }}
-          />
-          <Typography variant="h2" className="pt-0">
-            Rate this place
-          </Typography>
-          <SubmitRating />
+          {isLoggedIn ? (
+            <>
+            <hr
+              style={{
+                width: "100%",
+                color: "#9095A0",
+                borderWidth: 2,
+                margin: "32px 0",
+              }}
+            />
+            <Typography variant="h2" className="pt-0">
+              Rate this place
+            </Typography>
+            <SubmitRating />
+            </>
+          ) : ('')
+        }
         </>
       )}
     </Container>
