@@ -14,7 +14,7 @@ const initialState = {
 
 export const getCustomer = createAsyncThunk('profile/getCustomer', async (id, thunkAPI) => {
     try {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjQ4OGU5MTM3ZGNlZDE3ZmY3NGYwNTdlIiwicm9sZSI6IkN1c3RvbWVyIn0sImlhdCI6MTY4NzAzNDUwNiwiZXhwIjoxNjk0ODEwNTA2fQ.pMD-42jIyqrB_26a4eo6wKqtTOXHcf0LYL1B5nPl_yc'
+        const token = localStorage.getItem('token')
         const response = await axios.get(`${URL}/getMe`, {
             headers: { Authorization: `Bearer ${token}` },
         })
@@ -32,7 +32,7 @@ export const getFavoriteVendors = createAsyncThunk(
     'profile/getFavoriteVendors',
     async (currentPage, thunkAPI) => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjQ4OGU5MTM3ZGNlZDE3ZmY3NGYwNTdlIiwicm9sZSI6IkN1c3RvbWVyIn0sImlhdCI6MTY4NzAzNDUwNiwiZXhwIjoxNjk0ODEwNTA2fQ.pMD-42jIyqrB_26a4eo6wKqtTOXHcf0LYL1B5nPl_yc'
+            const token = localStorage.getItem('token')
             const response = await axios.get(`${URL}/myFavorites?page=${currentPage}`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
@@ -51,7 +51,7 @@ export const deleteFavoriteVendor = createAsyncThunk(
     'profile/deleteFavoriteVendor',
     async (data, thunkAPI) => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjQ4OGU5MTM3ZGNlZDE3ZmY3NGYwNTdlIiwicm9sZSI6IkN1c3RvbWVyIn0sImlhdCI6MTY4NzAzNDUwNiwiZXhwIjoxNjk0ODEwNTA2fQ.pMD-42jIyqrB_26a4eo6wKqtTOXHcf0LYL1B5nPl_yc'
+            const token = localStorage.getItem('token')
             const response = await axios.delete(`${URL}/favorites`, {
                 headers: { Authorization: `Bearer ${token}` },
                 data: data,
@@ -72,7 +72,7 @@ export const updateCustomer = createAsyncThunk(
     'profile/updateCustomer',
     async (customer, thunkAPI) => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjQ4OGU5MTM3ZGNlZDE3ZmY3NGYwNTdlIiwicm9sZSI6IkN1c3RvbWVyIn0sImlhdCI6MTY4NzAzNDUwNiwiZXhwIjoxNjk0ODEwNTA2fQ.pMD-42jIyqrB_26a4eo6wKqtTOXHcf0LYL1B5nPl_yc'
+            const token = localStorage.getItem('token')
             const response = await axios.put(`${URL}/updateMe`, customer, {
                 headers: { Authorization: `Bearer ${token}` },
             })
@@ -91,7 +91,7 @@ export const changePassword = createAsyncThunk(
     'profile/changePassword',
     async (passwords, thunkAPI) => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjQ4OGU5MTM3ZGNlZDE3ZmY3NGYwNTdlIiwicm9sZSI6IkN1c3RvbWVyIn0sImlhdCI6MTY4NzAzNDUwNiwiZXhwIjoxNjk0ODEwNTA2fQ.pMD-42jIyqrB_26a4eo6wKqtTOXHcf0LYL1B5nPl_yc'
+            const token = localStorage.getItem('token')
             const response = await axios.put(`${URL}/changeMyPassaowrd`, passwords, {
                 headers: { Authorization: `Bearer ${token}` },
             })
