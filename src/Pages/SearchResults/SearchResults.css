@@ -12,6 +12,13 @@
   min-height: 500px;
 }
 
+@media screen and (max-width: 992px) {
+  .search-results {
+    width: 400px;
+    margin: auto;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .search-results, .filter-menu {
     width: 400px;

@@ -84,7 +84,7 @@ const SearchResults = () => {
               return { id: tag._id, name: tag.name };
             })}
           />
-          <FilterMenu title="Location" />
+          <FilterMenu title="Sort" />
         </div>
         {loading ? (
           <RiseLoader
@@ -103,14 +103,7 @@ const SearchResults = () => {
             {result.map((place, index) => {
               return index ? (
                 <div key={place._id}>
-                  <hr
-                    style={{
-                      width: "100%",
-                      color: "#9095A0",
-                      borderWidth: 2,
-                      margin: "24px 0",
-                    }}
-                  />
+                  <hr className="divider" />
                   <SearchItem place={place} onClick={(event) => handleSearchItemClick(event, place._id)} />
                 </div>
               ) : (
