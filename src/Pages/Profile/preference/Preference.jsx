@@ -25,7 +25,7 @@ const Preference = () => {
             totalPages = 1;
         }
         else {
-            totalPages = customer.favoritePlaces.length / 3;
+            totalPages = Math.ceil(customer.favoritePlaces.length / 3);
         }
         setPagination({
             currentPage: 1,
