@@ -30,7 +30,7 @@ const SubmitRating = () => {
                 if (data.payload.success) {
                     setAlert({ visible: true, severity: 'success', message: 'Review is submitted successfully' });
                     dispatch(getPlace(id));
-                    dispatch(getReviews());
+                    dispatch(getReviews(id));
                 }
                 else {
                     setAlert({ visible: true, severity: 'error', message: data.payload.error });

@@ -126,7 +126,7 @@ const SearchResults = () => {
               </div>
               {isLoggedIn ? (
                 <div className="d-flex align-items-center">
-                  <FavouriteIcon checked={favoriteVendors.filter((vendor) => vendor._id === id).length > 0} />
+                  <FavouriteIcon vendorId={id} checked={favoriteVendors.filter((vendor) => vendor._id === id).length > 0} />
                   <Typography variant="body" style={{ fontSize: 20 }}>
                     Save
                   </Typography>
