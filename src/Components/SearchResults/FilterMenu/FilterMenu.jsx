@@ -5,13 +5,14 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import { Button, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Slider } from "@mui/material";
+import { Autocomplete, Button, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Slider, TextField } from "@mui/material";
 import CustomizedCheckbox from "../CustomizedCheckbox/CustomizedCheckbox";
 import CustomizedRadio from "../CustomizedRadio/CustomizedRadio";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilters } from "../../../Redux/Slices/searchSlice";
-import { useState } from "react";
+import { setCountry, setFilters } from "../../../Redux/Slices/searchSlice";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getCities, getCountries, getStates } from "../../../Redux/Slices/locationSlice";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -55,13 +56,28 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 const FilterMenu = (props) => {
+  // Local state
   const [expanded, setExpanded] = useState("");
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
+  // Redux state
+  const countries = useSelector((state) => state.location.countries);
+  const states = useSelector((state) => state.location.states);
+  const cities = useSelector((state) => state.location.cities);
+
+  const rating = useSelector((state) => state.search.searchParams.rating);
+
+
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
   const theme = useTheme();
+
+  useEffect(() => {
+    dispatch(getCountries());
+    dispatch(getStates());
+    dispatch(getCities());
+  }, [])
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -103,7 +119,7 @@ const FilterMenu = (props) => {
           ) : props.title === "Rating" ? (
             <Slider
               getAriaLabel={() => 'Rating range'}
-              defaultValue={[0, 5]}
+              defaultValue={rating}
               min={0}
               max={5}
               step={1}
@@ -156,6 +172,16 @@ const FilterMenu = (props) => {
                 />
               </div>
             ))
+          ) : 
+          props.title === "Location" && isLoggedIn ? (
+            <Autocomplete
+              options={countries}
+              id="country-autocomplete"
+              onChange={(event, newCountry) => {
+                dispatch(setCountry(newCountry));
+              }}
+              renderInput={(params) => <TextField {...params} label="Country" />}
+            />
           ) : (
             <Link to="/login">
               <Button 

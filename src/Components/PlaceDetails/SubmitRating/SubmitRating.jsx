@@ -2,7 +2,7 @@ import { Alert, Button, Rating, Snackbar, TextField, styled, useTheme } from "@m
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { addReview } from "../../../Redux/Slices/reviewSlice";
+import { addReview, getReviews } from "../../../Redux/Slices/reviewSlice";
 import { getPlace } from "../../../Redux/Slices/placeSlice";
 
 const SubmitRating = () => {
@@ -30,6 +30,7 @@ const SubmitRating = () => {
                 if (data.payload.success) {
                     setAlert({ visible: true, severity: 'success', message: 'Review is submitted successfully' });
                     dispatch(getPlace(id));
+                    dispatch(getReviews());
                 }
                 else {
                     setAlert({ visible: true, severity: 'error', message: data.payload.error });

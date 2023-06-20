@@ -7,6 +7,8 @@ import './SearchItem.css'
 import { useSelector } from "react-redux";
 
 const SearchItem = ({ place, onClick }) => {
+    const favoriteVendors = useSelector((state) => state.profile.favoriteVendors);
+    
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     return (
         <div className="d-flex flex-column flex-lg-row">
@@ -17,7 +19,7 @@ const SearchItem = ({ place, onClick }) => {
                         <Typography className="card-text" variant="body">{place.category ? place.category.name : 'Place'} 
                             {place.address?.country ? ` in ${place.address?.country}` : ''}
                             {place.address?.city ? `, ${place.address?.city}` : ''} 
-                            {console.log(place)}   
+                            {console.log(place)}
                         </Typography>
                         <Typography variant="h4">{place.placeName}</Typography>
                         <hr style={{ width: 56, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>
@@ -45,7 +47,7 @@ const SearchItem = ({ place, onClick }) => {
                 </div>
                 {isLoggedIn ? (
                     <div className="love-icon">
-                        <FavouriteIcon />
+                        <FavouriteIcon vendorId={place._id} checked={favoriteVendors.filter((vendor) => vendor._id === place._id).length > 0} />
                     </div>
                 ): ('')}
             </div>

@@ -6,6 +6,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import { formatDistanceToNow } from "date-fns";
 
 import {
     getCategories,
@@ -21,6 +22,8 @@ import StarIcon from '@mui/icons-material/Star';
 import FavouriteIcon from '../../Components/FavouriteIcon/FavouriteIcon';
 import ShareIcon from '@mui/icons-material/Share';
 import Carousel from 'react-material-ui-carousel';
+import { getReviews } from "../../Redux/Slices/reviewSlice";
+import { getAllFavoriteVendors } from "../../Redux/Slices/profileSlice";
 
 const SearchResults = () => {
   const navigate = useNavigate();
@@ -39,14 +42,18 @@ const SearchResults = () => {
   const [images, setImages] = useState([]);
   const [galleryVisible, setGalleryVisible] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
+  const reviews = useSelector((state) => state.review.reviews)
+  const favoriteVendors = useSelector((state) => state.profile.favoriteVendors);
+  
   const override = {
       display: 'block',
       margin: '30vh auto',
   };
 
   useEffect(() => {
+    dispatch(getAllFavoriteVendors());
     dispatch(getPlace(id)).then((data) => {
+      dispatch(getReviews(id))
       console.log(data);
       const _gallery = [];
       _gallery.push(data.payload.thumbnail);
@@ -119,7 +126,7 @@ const SearchResults = () => {
               </div>
               {isLoggedIn ? (
                 <div className="d-flex align-items-center">
-                  <FavouriteIcon />
+                  <FavouriteIcon checked={favoriteVendors.filter((vendor) => vendor._id === id).length > 0} />
                   <Typography variant="body" style={{ fontSize: 20 }}>
                     Save
                   </Typography>
@@ -259,82 +266,28 @@ const SearchResults = () => {
               </Typography>
             </div>
             <div className="reviews-container">
-              <div className="review-card">
-                <div className="review-user d-flex align-items-center mb-3">
-                  <img
-                      style={{ width: 48, borderRadius: '50%' }}
-                      alt="Profile Image"
-                      src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
-                          'img'
-                      )}`}
-                  />
-                  <div className="ms-2">
-                    <Typography variant="h6" >User name</Typography>
-                    <Typography variant="body" color={"#9095A0"}>February 2023</Typography>
+              {reviews.map((review, index) => (
+                index < 4 ? (
+                  <>
+                  <div className="review-card">
+                    <div className="review-user d-flex align-items-center mb-3">
+                      <img
+                          style={{ width: 48, borderRadius: '50%' }}
+                          alt="Profile Image"
+                          src={`http://localhost:8001/api/v1/images/customers/${review.userId.image}`}
+                      />
+                      <div className="ms-2">
+                        <Typography variant="h6" >{review.userId.firstName + ' ' + review.userId.lastName}</Typography>
+                        <Typography variant="body" color={"#9095A0"}>{formatDistanceToNow(new Date(review.timestamp), { addSuffix: true, includeSeconds: false })}</Typography>
+                      </div>
+                    </div>
+                    <Typography variant="body" className="description">{review.content}</Typography>
+                    <StyledRating size="small" defaultValue={review.rating} readOnly style={{ float: 'right'}} />
                   </div>
-                </div>
-                <Typography variant="body" className="description">
-                  Review Content Review Content Review Content Review Content Review Content Review Content Review Content 
-                </Typography>
-                <StyledRating size="small" defaultValue={3} readOnly style={{ float: 'right'}} />
-              </div>
-              <div className="review-card">
-                <div className="review-user d-flex align-items-center mb-3">
-                  <img
-                      style={{ width: 48, borderRadius: '50%' }}
-                      alt="Profile Image"
-                      src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
-                          'img'
-                      )}`}
-                  />
-                  <div className="ms-2">
-                    <Typography variant="h6" >User name</Typography>
-                    <Typography variant="body" color={"#9095A0"}>February 2023</Typography>
-                  </div>
-                </div>
-                <Typography variant="body" className="description">
-                  Review Content Review Content Review Content Review Content Review Content Review Content Review Content 
-                </Typography>
-                <StyledRating size="small" defaultValue={3} readOnly style={{ float: 'right'}} />
-              </div>
-              <div className="review-card">
-                <div className="review-user d-flex align-items-center mb-3">
-                  <img
-                      style={{ width: 48, borderRadius: '50%' }}
-                      alt="Profile Image"
-                      src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
-                          'img'
-                      )}`}
-                  />
-                  <div className="ms-2">
-                    <Typography variant="h6" >User name</Typography>
-                    <Typography variant="body" color={"#9095A0"}>February 2023</Typography>
-                  </div>
-                </div>
-                <Typography variant="body" className="description">
-                  Review Content Review Content Review Content Review Content Review Content Review Content Review Content 
-                </Typography>
-                <StyledRating size="small" defaultValue={3} readOnly style={{ float: 'right'}} />
-              </div>
-              <div className="review-card">
-                <div className="review-user d-flex align-items-center mb-3">
-                  <img
-                      style={{ width: 48, borderRadius: '50%' }}
-                      alt="Profile Image"
-                      src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
-                          'img'
-                      )}`}
-                  />
-                  <div className="ms-2">
-                    <Typography variant="h6" >User name</Typography>
-                    <Typography variant="body" color={"#9095A0"}>February 2023</Typography>
-                  </div>
-                </div>
-                <Typography variant="body" className="description">
-                  Review Content Review Content Review Content Review Content Review Content Review Content Review Content 
-                </Typography>
-                <StyledRating size="small" defaultValue={3} readOnly style={{ float: 'right'}} />
-              </div>
+                  </>
+                ) : ('')
+              ))}
+              { place.numberOfReviews > 4 ? (
               <Button
                 variant="contained"
                 color="info"
@@ -342,6 +295,7 @@ const SearchResults = () => {
               >
                 Show all reviews
               </Button>
+              ) : ('')}
             </div>
             </>
           ) : (
