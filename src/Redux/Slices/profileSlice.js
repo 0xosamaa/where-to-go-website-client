@@ -47,6 +47,44 @@ export const getFavoriteVendors = createAsyncThunk(
     }
 )
 
+export const getAllFavoriteVendors = createAsyncThunk(
+    'profile/getAllFavoriteVendors',
+    async (thunkAPI) => {
+        try {
+            const token = localStorage.getItem('token')
+            const response = await axios.get(`${URL}/myFavorites`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            return response.data.data
+        } catch (error) {
+            if (error.response.data.message === 'UnAuthorized..!') {
+                localStorage.clear()
+                window.location.href = '/login'
+            }
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
+
+export const addFavoriteVendor = createAsyncThunk(
+    'profile/addFavoriteVendor',
+    async (data, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('token')
+            const response = await axios.patch(`${URL}/favorites`, data, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            return response.data
+        } catch (error) {
+            if (error.response.data.message === 'UnAuthorized..!') {
+                localStorage.clear()
+                window.location.href = '/login'
+            }
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    }
+)
+
 export const deleteFavoriteVendor = createAsyncThunk(
     'profile/deleteFavoriteVendor',
     async (data, thunkAPI) => {
@@ -66,7 +104,6 @@ export const deleteFavoriteVendor = createAsyncThunk(
         }
     }
 )
-
 
 export const updateCustomer = createAsyncThunk(
     'profile/updateCustomer',
@@ -110,7 +147,11 @@ export const changePassword = createAsyncThunk(
 const profileSlice = createSlice({
     name: 'profile',
     initialState,
-    reducers: {},
+    reducers: {
+        setVendorId: (state, action) => {
+            state.vendorId = action.payload
+        }
+    },
     extraReducers: {
         [getCustomer.pending]: (state, action) => {
             state.loading = true
@@ -145,6 +186,7 @@ const profileSlice = createSlice({
             state.error = action.payload
             state.loading = false
         },
+        // Get Favorite Vendors pagination
         [getFavoriteVendors.pending]: (state, action) => {
             state.loading = true
         },
@@ -155,9 +197,43 @@ const profileSlice = createSlice({
         [getFavoriteVendors.rejected]: (state, action) => {
             state.error = action.payload
             state.loading = false
+        },
+        // Get All Favorite Vendors
+        [getAllFavoriteVendors.pending]: (state, action) => {
+            state.loading = true
+        },
+        [getAllFavoriteVendors.fulfilled]: (state, action) => {
+            state.favoriteVendors = action.payload
+            state.loading = false
+        },
+        [getAllFavoriteVendors.rejected]: (state, action) => {
+            state.error = action.payload
+            state.loading = false
+        },
+        [addFavoriteVendor.pending]: (state, action) => {
+            state.loading = true
+        },
+        [addFavoriteVendor.fulfilled]: (state, action) => {
+            // state.favoriteVendors.push(state.vendorId)
+            state.loading = false
+        },
+        [addFavoriteVendor.rejected]: (state, action) => {
+            state.error = action.payload
+            state.loading = false
+        },
+        [deleteFavoriteVendor.pending]: (state, action) => {
+            state.loading = true
+        },
+        [deleteFavoriteVendor.fulfilled]: (state, action) => {
+            // state.favoriteVendors.splice(state.favoriteVendors.indexOf(state.vendorId), 1);
+            state.loading = false
+        },
+        [deleteFavoriteVendor.rejected]: (state, action) => {
+            state.error = action.payload
+            state.loading = false
         }
     },
 })
 
-export const { setEmployee, clearEmployee } = profileSlice.actions
+export const { setEmployee, clearEmployee, setVendorId } = profileSlice.actions
 export default profileSlice.reducer

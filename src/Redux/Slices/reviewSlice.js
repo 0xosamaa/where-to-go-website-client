@@ -6,7 +6,7 @@ const initialState = {
     reviews: [],
 };
 
-export const addReview = createAsyncThunk('revews/addRevew', async (data, thunkAPI) => {
+export const addReview = createAsyncThunk('reviews/addReview', async (data, thunkAPI) => {
     try {
         const response = await axiosInstance.post(URL, data)
         return response.data
@@ -37,11 +37,9 @@ const reviewSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
-        [addReview.fulfilled]: (state, action) => {
-            console.log(action.payload.success)
-        },
+        [addReview.fulfilled]: (state, action) => {},
         [getReviews.fulfilled]: (state, action) => {
-            console.log(action.payload)
+            state.reviews = action.payload.reviews
         },
     },
 })

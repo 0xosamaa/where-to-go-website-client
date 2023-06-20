@@ -12,18 +12,15 @@ const initialState = {
     searchParams: {
         category: [],
         tags: [],
-        location: [],
+        country: [],
+        state: [],
+        city: [],
         placeName: [],
-        rating: [],
+        rating: [0, 5],
         sortField: [],
         sortOrder: [],
     },
     keyword: '',
-    location: {
-        country: '',
-        state: '',
-        city: '',
-    },
     categories: [],
     tags: [],
     rating: [],
@@ -124,6 +121,18 @@ const searchSlice = createSlice({
         setKeyword(state, action) {
             state.keyword = action.payload
         },
+        setRating(state, action) {
+            state.searchParams.rating = action.payload
+        },
+        setCountry(state, action) {
+            state.searchParams.country[0] = action.payload
+        },
+        setState(state, action) {
+            state.searchParams.state[0] = action.payload
+        },
+        setCity(state, action) {
+            state.searchParams.city[0] = action.payload
+        },
     },
     extraReducers: {
         [vendorSearch.pending]: (state) => {
@@ -163,5 +172,15 @@ const searchSlice = createSlice({
     },
 })
 
-export const { setFilters, setPagination, setQueryString, clearFilters, setKeyword } = searchSlice.actions
+export const { 
+    setFilters, 
+    setPagination, 
+    setQueryString, 
+    clearFilters, 
+    setKeyword,
+    setRating,
+    setCountry,
+    setState,
+    setCity,
+} = searchSlice.actions
 export default searchSlice.reducer

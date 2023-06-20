@@ -51,10 +51,6 @@ const SearchBar = () => {
             }
           });
           queryString += "&";
-        } else if (key === "location") {
-          Object.entries(value).forEach(([key, value]) => {
-            queryString += `${key}=${value}&`;
-          });
         } else {
           queryString += `${key}=${value}&`;
         }

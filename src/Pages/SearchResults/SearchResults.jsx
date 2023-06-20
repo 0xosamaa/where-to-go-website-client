@@ -1,4 +1,4 @@
-import { Pagination, Typography, useTheme, Container } from "@mui/material";
+import { Pagination, Typography, useTheme, Container, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
@@ -9,12 +9,15 @@ import {
   getCategories,
   getTags,
   setPagination,
+  setQueryString,
+  setRating,
   vendorSearch,
 } from "../../Redux/Slices/searchSlice";
 import "./SearchResults.css";
 import RiseLoader from "react-spinners/RiseLoader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SearchBar from "../../Components/SearchResults/SearchBar/SearchBar";
+import { getAllFavoriteVendors } from "../../Redux/Slices/profileSlice";
 
 const SearchResults = () => {
   const navigate = useNavigate();
@@ -25,9 +28,9 @@ const SearchResults = () => {
   const result = useSelector((state) => state.search.result);
   const pagination = useSelector((state) => state.search.pagination);
   const loading = useSelector((state) => state.search.loading);
-
-  const categories = useSelector((state) => state.search.selectedCategories);
-  const tags = useSelector((state) => state.search.selectedTags);
+  const searchParams = useSelector((state) => state.search.searchParams);
+  const location = useLocation();
+  const favoriteVendors = useSelector((state) => state.profile.favoriteVendors);
 
   const override = {
     display: "block",
@@ -35,6 +38,13 @@ const SearchResults = () => {
   };
 
   useEffect(() => {
+    // const queryParams = new URLSearchParams(location.search);
+    // let rating = queryParams.get('filters[rating]');
+    // if (rating) {
+    //   rating = rating.split(',').map(rate => parseInt(rate));
+    //   dispatch(setRating(rating));
+    // }
+    dispatch(getAllFavoriteVendors());
     dispatch(getCategories());
     dispatch(getTags());
     (async function fetchData() {
@@ -61,9 +71,36 @@ const SearchResults = () => {
     }, 0);
   };
   
-
   const handleSearchItemClick = (evnet, placeId) => {
     navigate(`/place/${placeId}`);
+  };
+
+  const searchWithFilters = async () => {
+    let queryString = "";
+    Object.entries(searchParams).forEach(([key, value]) => {
+      if (value.length > 0) {
+        if (key === "category" || key === "tags" || key === "rating") {
+          queryString += `filters[${key}]=`;
+          value.forEach((item, index) => {
+            if (index) {
+              queryString += `,${item}`;
+            } else {
+              queryString += item;
+            }
+          });
+          queryString += "&";
+        } else if (key === "location") {
+          Object.entries(value).forEach(([key, value]) => {
+            queryString += `${key}=${value}&`;
+          });
+        } else {
+          queryString += `${key}=${value}&`;
+        }
+      }
+    });
+    await dispatch(setPagination({ ...pagination, currentPage: 1 }));
+    await dispatch(setQueryString(queryString));
+    dispatch(vendorSearch());
   };
 
   return (
@@ -84,7 +121,9 @@ const SearchResults = () => {
               return { id: tag._id, name: tag.name };
             })}
           />
+          <FilterMenu title="Location" />
           <FilterMenu title="Sort" />
+          <Button variant="contained" fullWidth onClick={searchWithFilters}>Apply Filters</Button>
         </div>
         {loading ? (
           <RiseLoader
