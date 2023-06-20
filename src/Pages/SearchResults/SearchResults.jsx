@@ -106,8 +106,8 @@ const SearchResults = () => {
   return (
     <>
       <SearchBar />
-      <Container className="d-flex flex-column-reverse gap-5 flex-md-row align-items-stretch flex-fill mt-4">
-        <div className="filter-menu d-block col-3">
+      <Container className="d-flex flex-column-reverse gap-5 flex-md-row align-items-stretch align-items-md-start flex-fill mt-4">
+        <div className="filter-menu d-block">
           <FilterMenu title="Rating" />
           <FilterMenu
             title="Categories"
@@ -135,7 +135,7 @@ const SearchResults = () => {
             data-testid="loader"
           />
         ) : result.length > 0 ? (
-          <div className="search-results d-flex flex-column align-items-stretch col-9">
+          <div className="search-results d-flex flex-column align-items-stretch">
             <Typography variant="body" className="mb-3 d-block">
               {pagination.total} places found
             </Typography>

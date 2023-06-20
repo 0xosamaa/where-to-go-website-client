@@ -61,7 +61,7 @@ const SubmitRating = () => {
     return (
         <>
         <StyledRating
-            value={rating}
+            defaultValue={rating}
             onChange={(e, newValue) => {
                 setRating(newValue);
             }}

@@ -22,8 +22,9 @@ import StarIcon from '@mui/icons-material/Star';
 import FavouriteIcon from '../../Components/FavouriteIcon/FavouriteIcon';
 import ShareIcon from '@mui/icons-material/Share';
 import Carousel from 'react-material-ui-carousel';
-import { getReviews } from "../../Redux/Slices/reviewSlice";
+import { getReviews, setReviewsVisible } from "../../Redux/Slices/reviewSlice";
 import { getAllFavoriteVendors } from "../../Redux/Slices/profileSlice";
+import AllReviews from "../../Components/PlaceDetails/AllReviews/AllReviews";
 
 const SearchResults = () => {
   const navigate = useNavigate();
@@ -118,12 +119,13 @@ const SearchResults = () => {
               </Typography>
             </div>
             <div className="d-flex align-items-center">
-              <div className="d-flex align-items-center me-4">
+
+              {/* <div className="d-flex align-items-center me-4">
                 <ShareIcon className="me-2" />
                 <Typography variant="body" style={{ fontSize: 20 }}>
                   Share
                 </Typography>
-              </div>
+              </div> */}
               {isLoggedIn ? (
                 <div className="d-flex align-items-center">
                   <FavouriteIcon vendorId={id} checked={favoriteVendors.filter((vendor) => vendor._id === id).length > 0} />
@@ -239,7 +241,7 @@ const SearchResults = () => {
               </div>
               <Typography variant="body">{place.description}</Typography>
             </div>
-            <div className="tags  flex-grow-1">
+            <div className="tags flex-grow-1">
               <Typography variant="h2" className="mt-4 mb-0">
                 Tags
               </Typography>
@@ -288,13 +290,16 @@ const SearchResults = () => {
                 ) : ('')
               ))}
               { place.numberOfReviews > 4 ? (
+              <>
               <Button
                 variant="contained"
                 color="info"
-                // onClick={() => setGalleryVisible(true)}
+                onClick={() => dispatch(setReviewsVisible(true))}
               >
                 Show all reviews
               </Button>
+              <AllReviews />
+              </>
               ) : ('')}
             </div>
             </>

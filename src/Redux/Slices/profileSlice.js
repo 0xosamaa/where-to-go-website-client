@@ -6,6 +6,7 @@ const URL = 'http://localhost:8001/api/v1/customers'
 
 const initialState = {
     customer: {},
+    image: localStorage.getItem('img'),
     favoriteVendors: [],
     loading: false,
     error: null,
@@ -169,6 +170,8 @@ const profileSlice = createSlice({
         },
         [updateCustomer.fulfilled]: (state, action) => {
             state.customer = action.payload
+            localStorage.setItem('img', action.payload.image)
+            state.image = action.payload.image
             state.loading = false
         },
         [updateCustomer.rejected]: (state, action) => {

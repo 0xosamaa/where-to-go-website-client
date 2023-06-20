@@ -9,7 +9,7 @@ import { Autocomplete, Button, FormControl, FormControlLabel, InputLabel, MenuIt
 import CustomizedCheckbox from "../CustomizedCheckbox/CustomizedCheckbox";
 import CustomizedRadio from "../CustomizedRadio/CustomizedRadio";
 import { useDispatch, useSelector } from "react-redux";
-import { setCountry, setFilters } from "../../../Redux/Slices/searchSlice";
+import { setCity, setCountry, setFilters, setState } from "../../../Redux/Slices/searchSlice";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getCities, getCountries, getStates } from "../../../Redux/Slices/locationSlice";
@@ -128,7 +128,7 @@ const FilterMenu = (props) => {
             />
           ) : props.title === "Sort" ? (
             <>
-            <FormControl sx={{ m: 1, minWidth: 120 }} fullWidth size="small">
+            <FormControl sx={{ m: 0, minWidth: 120 }} className="mb-2" fullWidth size="small">
               <InputLabel id="sort-field-label">Field</InputLabel>
               <Select
                 labelId="sort-field-label"
@@ -146,7 +146,7 @@ const FilterMenu = (props) => {
                 <MenuItem value={"numberOfReviews"}>Reviews Number</MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{ m: 1, minWidth: 120 }} fullWidth size="small">
+            <FormControl sx={{ m: 0, minWidth: 120 }} fullWidth size="small">
               <InputLabel id="sort-order-label">Order</InputLabel>
               <Select
                 labelId="sort-order-label"
@@ -174,14 +174,37 @@ const FilterMenu = (props) => {
             ))
           ) : 
           props.title === "Location" && isLoggedIn ? (
+            <>
             <Autocomplete
+              className="mb-2"
               options={countries}
+              size="small"
               id="country-autocomplete"
               onChange={(event, newCountry) => {
                 dispatch(setCountry(newCountry));
               }}
               renderInput={(params) => <TextField {...params} label="Country" />}
             />
+            <Autocomplete
+              className="mb-2"
+              options={states}
+              size="small"
+              id="state-autocomplete"
+              onChange={(event, newState) => {
+                dispatch(setState(newState));
+              }}
+              renderInput={(params) => <TextField {...params} label="State" />}
+            />
+            <Autocomplete
+              options={cities}
+              size="small"
+              id="city-autocomplete"
+              onChange={(event, newCity) => {
+                dispatch(setCity(newCity));
+              }}
+              renderInput={(params) => <TextField {...params} label="City" />}
+            />
+            </>
           ) : (
             <Link to="/login">
               <Button 
