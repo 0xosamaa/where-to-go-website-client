@@ -13,7 +13,7 @@ const SubmitRating = () => {
     const [content, setContent] = useState('');
     const [alert, setAlert] = useState({
         visible: false,
-        severity: '',
+        severity: 'success',
         message: '',
     });
 

@@ -15,15 +15,16 @@ const initialState = {
         country: [],
         state: [],
         city: [],
-        placeName: [],
+        search: [],
         rating: [0, 5],
         sortField: [],
         sortOrder: [],
     },
-    keyword: '',
+    // keyword: '',
     categories: [],
     tags: [],
     rating: [],
+    vendorsNames: [],
     loading: false,
     error: 'null',
 };
@@ -35,7 +36,7 @@ export const vendorSearch = createAsyncThunk('search/vendorSearch', async (_, th
         const { currentPage, perPage } = search.pagination;
         const queryString = search.queryString;
 
-        const query = `${URL}/auth/search?page=${currentPage}&limit=${perPage}&search=${search.keyword}&${queryString}`
+        const query = `${URL}/auth/search?page=${currentPage}&limit=${perPage}&${queryString}`
         console.log(query)
 
         const response = await axiosInstance.get(query)
@@ -66,6 +67,19 @@ export const getTags = createAsyncThunk('search/getTags', async (thunkAPI) => {
     try {
         const response = await axiosInstance.get(`${URL}/tags`)
         return response.data.data
+    } catch (error) {
+        if (error.response.data.message === 'UnAuthorized..!') {
+            localStorage.clear()
+            window.location.href = '/login'
+        }
+        return thunkAPI.rejectWithValue(error.response.data)
+    }
+})
+
+export const getVendorsNames = createAsyncThunk('search/getVendorsNames', async (thunkAPI) => {
+    try {
+        const response = await axiosInstance.get(`${URL}/auth/vendorsNames`)
+        return response.data
     } catch (error) {
         if (error.response.data.message === 'UnAuthorized..!') {
             localStorage.clear()
@@ -133,6 +147,9 @@ const searchSlice = createSlice({
         setCity(state, action) {
             state.searchParams.city[0] = action.payload
         },
+        setPlaceName(state, action) {
+            state.searchParams.search[0] = action.payload
+        },
     },
     extraReducers: {
         [vendorSearch.pending]: (state) => {
@@ -169,6 +186,17 @@ const searchSlice = createSlice({
             state.error = action.payload
             state.loading = false
         },
+        [getVendorsNames.pending]: (state) => {
+            state.loading = true
+        },
+        [getVendorsNames.fulfilled]: (state, action) => {
+            state.vendorsNames = action.payload.vendorNames
+            state.loading = false
+        },
+        [getVendorsNames.rejected]: (state, action) => {
+            state.error = action.payload
+            state.loading = false
+        },
     },
 })
 
@@ -182,5 +210,6 @@ export const {
     setCountry,
     setState,
     setCity,
+    setPlaceName,
 } = searchSlice.actions
 export default searchSlice.reducer

@@ -60,14 +60,11 @@ const FilterMenu = (props) => {
   const [expanded, setExpanded] = useState("");
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("");
-
+  const [rating, setRating] = useState([0, 5]);
   // Redux state
   const countries = useSelector((state) => state.location.countries);
   const states = useSelector((state) => state.location.states);
   const cities = useSelector((state) => state.location.cities);
-
-  const rating = useSelector((state) => state.search.searchParams.rating);
-
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
@@ -84,6 +81,7 @@ const FilterMenu = (props) => {
   };
 
   const handleRatingChange = (event, value) => {
+    setRating(value)
     dispatch(setFilters({ data: value, type: props.title }))
   }
 
@@ -119,7 +117,7 @@ const FilterMenu = (props) => {
           ) : props.title === "Rating" ? (
             <Slider
               getAriaLabel={() => 'Rating range'}
-              defaultValue={rating}
+              value={rating}
               min={0}
               max={5}
               step={1}

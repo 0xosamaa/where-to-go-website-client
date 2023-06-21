@@ -22,6 +22,7 @@ import registerIll from '../../assets/images/register/register-ill.png';
 import SecNavbar from '../../Components/SecNavbar/SecNavbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoggedIn } from '../../Redux/Slices/authSlice';
+import { setImage } from '../../Redux/Slices/profileSlice';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -96,6 +97,7 @@ const Login = () => {
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('userId', res.data.id);
                 localStorage.setItem('img', res.data.img);
+                dispatch(setImage(res.data.img));
                 navigate('/');
             } catch (err) {
                 setLoginError(true);

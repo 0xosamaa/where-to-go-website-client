@@ -51,31 +51,29 @@ const AllReviews = () => {
       >
         <DialogTitle id="scroll-dialog-title">All Reviews</DialogTitle>
         <DialogContent dividers={scroll === "paper"}>
-          <DialogContentText
+          <div
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
           >
             {reviews.map((review, index) => (
-                  <>
-                  <div className="review-card-all">
-                    <div className="review-user d-flex align-items-center mb-3">
-                      <img
-                          style={{ width: 48, borderRadius: '50%' }}
-                          alt="Profile Image"
-                          src={`http://localhost:8001/api/v1/images/customers/${review.userId.image}`}
-                      />
-                      <div className="ms-2">
-                        <Typography variant="h6" >{review.userId.firstName + ' ' + review.userId.lastName}</Typography>
-                        <Typography variant="body" color={"#9095A0"}>{formatDistanceToNow(new Date(review.timestamp), { addSuffix: true, includeSeconds: false })}</Typography>
-                      </div>
-                    </div>
-                    <Typography variant="body" className="description">{review.content}</Typography>
-                    <StyledRating size="small" defaultValue={review.rating} readOnly style={{ float: 'right'}} />
+              <div key={`Review_${index}`} className="review-card-all">
+                <div className="review-user d-flex align-items-center mb-3">
+                  <img
+                      style={{ width: 48, borderRadius: '50%' }}
+                      alt="Profile Image"
+                      src={`http://localhost:8001/api/v1/images/customers/${review.userId.image}`}
+                  />
+                  <div className="ms-2">
+                    <Typography variant="h6" >{review.userId.firstName + ' ' + review.userId.lastName}</Typography>
+                    <Typography variant="body" color={"#9095A0"}>{formatDistanceToNow(new Date(review.timestamp), { addSuffix: true, includeSeconds: false })}</Typography>
                   </div>
-                  </>
-              ))}
-          </DialogContentText>
+                </div>
+                <Typography variant="body" className="description">{review.content}</Typography>
+                <StyledRating size="small" defaultValue={review.rating} readOnly style={{ float: 'right'}} />
+              </div>
+            ))}
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>

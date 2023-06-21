@@ -6,6 +6,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import TagIcon from '@mui/icons-material/Tag';
 import { formatDistanceToNow } from "date-fns";
 
 import {
@@ -40,6 +41,7 @@ const SearchResults = () => {
     totalPages: 5,
   });
   const place = useSelector((state) => state.place.place);
+  const [tags, setTags] = useState([]);
   const [images, setImages] = useState([]);
   const [galleryVisible, setGalleryVisible] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -54,31 +56,15 @@ const SearchResults = () => {
   useEffect(() => {
     dispatch(getAllFavoriteVendors());
     dispatch(getPlace(id)).then((data) => {
+      setTags(data.payload.tags);
       dispatch(getReviews(id))
-      console.log(data);
       const _gallery = [];
       _gallery.push(data.payload.thumbnail);
-      _gallery.push(...data.payload.gallery);
+      _gallery.push(...data.payload.data.gallery);
       setImages(_gallery);
       setLoading(false);
     });
   }, []);
-
-    // const handlePageChange = (event, page) => {
-    //     setLoading(true);
-    //     dispatch(vendorSearch(`page=${page}`)).then((data) => {
-    //         const { currentPage, totalPages } = data.payload.pagination;
-    //         setPagination({ currentPage, totalPages });
-    //         setLoading(false);
-    //     });
-
-    //     setTimeout(() => {
-    //         window.scrollTo({
-    //             top: 0,
-    //             behavior: 'auto',
-    //         });
-    //     }, 0);
-    // };
 
     const handleSearchItemClick = (evnet, placeId) => {
         console.log(placeId);
@@ -193,7 +179,7 @@ const SearchResults = () => {
                 >
                   {images.map((img, index) => (
                     <img
-                      key={index}
+                      key={`img_${index}`}
                       className=""
                       src={`http://localhost:8001/api/v1/images/vendors/${img}`}
                       alt=""
@@ -245,8 +231,13 @@ const SearchResults = () => {
               <Typography variant="h2" className="mt-4 mb-0">
                 Tags
               </Typography>
-              {place.tagNames?.map((tag) => {
-                <Typography variant="h6">{tag}</Typography>
+              {tags.map((tag, index) => {
+                return (
+                  <div key={`tag_${index}`} className="d-flex align-items-center mb-2">
+                    <TagIcon color="primary" className="me-1" />
+                    <Typography variant="h6">{tag}</Typography>
+                  </div>
+                )
               })}
             </div>
           </div>
@@ -270,8 +261,7 @@ const SearchResults = () => {
             <div className="reviews-container">
               {reviews.map((review, index) => (
                 index < 4 ? (
-                  <>
-                  <div className="review-card">
+                  <div key={`review_${index}`} className="review-card">
                     <div className="review-user d-flex align-items-center mb-3">
                       <img
                           style={{ width: 48, borderRadius: '50%' }}
@@ -286,7 +276,6 @@ const SearchResults = () => {
                     <Typography variant="body" className="description">{review.content}</Typography>
                     <StyledRating size="small" defaultValue={review.rating} readOnly style={{ float: 'right'}} />
                   </div>
-                  </>
                 ) : ('')
               ))}
               { place.numberOfReviews > 4 ? (

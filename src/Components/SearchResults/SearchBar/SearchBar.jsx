@@ -1,22 +1,31 @@
 import "./SearchBar.css";
-import { Typography, useTheme } from "@mui/material";
+import { Autocomplete, Typography, useTheme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector, useDispatch } from "react-redux";
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import {
+  getVendorsNames,
   setKeyword,
   setPagination,
+  setPlaceName,
   setQueryString,
   vendorSearch,
 } from "../../../Redux/Slices/searchSlice";
+import { useEffect } from "react";
 
-const CssTextField = styled(TextField)({
+const CssAutocomplete = styled(Autocomplete)({
   "& label.Mui-focused": {
     color: "rgba(0, 0, 0, 0)",
   },
   "& .MuiInput-underline:after": {
     borderBottomColor: "rgba(0, 0, 0, 0)",
+  },
+  "& .MuiInputLabel-shrink": {
+    color: "rgba(0, 0, 0, 0)",
+  },
+  "& .MuiSvgIcon-root, .MuiAutocomplete-endAdornment": {
+    display: "none",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
@@ -36,6 +45,11 @@ const SearchBar = () => {
   const searchParams = useSelector((state) => state.search.searchParams);
   const dispatch = useDispatch();
   const pagination = useSelector((state) => state.search.pagination);
+  const vendorsNames = useSelector((state) => state.search.vendorsNames);
+
+  useEffect(() => {
+    dispatch(getVendorsNames())
+  }, [])
 
   const searchWithFilters = async () => {
     let queryString = "";
@@ -59,7 +73,7 @@ const SearchBar = () => {
     await dispatch(setPagination({ ...pagination, currentPage: 1 }));
     await dispatch(setQueryString(queryString));
     dispatch(vendorSearch());
-    console.log(queryString);
+    // console.log(queryString);
   };
 
   const handleChange = (event) => {
@@ -77,14 +91,21 @@ const SearchBar = () => {
       <SearchIcon
         className="search-icon"
         onClick={searchWithFilters}
-        style={{ backgroundColor: theme.palette.primary.main }}
+        style={{ backgroundColor: theme.palette.primary.main, zIndex: 1 }}
       />
-        <CssTextField 
-          placeholder="Enter place name or owner" 
-          style={{ width: 350 }} 
-          id="custom-css-outlined-input" 
-          onChange={handleChange}
-          onKeyPress={handleKeyPress}
+        <CssAutocomplete
+          style={{ 
+            width: '100%',
+            transform: 'translateY(3px)'
+          }}
+          className="mb-2"
+          options={vendorsNames}
+          size="small"
+          id="country-autocomplete"
+          onChange={(event, placeName) => {
+            dispatch(setPlaceName(placeName));
+          }}
+          renderInput={(params) => <TextField {...params} label="Enter place name" />}
         />
     </div>
   );

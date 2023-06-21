@@ -12,7 +12,6 @@ const initialState = {
     error: null,
 }
 
-
 export const getCustomer = createAsyncThunk('profile/getCustomer', async (id, thunkAPI) => {
     try {
         const token = localStorage.getItem('token')
@@ -142,15 +141,15 @@ export const changePassword = createAsyncThunk(
     },
 )
 
-
-
-
 const profileSlice = createSlice({
     name: 'profile',
     initialState,
     reducers: {
         setVendorId: (state, action) => {
             state.vendorId = action.payload
+        },
+        setImage: (state, action) => {
+            state.image = action.payload
         }
     },
     extraReducers: {
@@ -238,5 +237,5 @@ const profileSlice = createSlice({
     },
 })
 
-export const { setEmployee, clearEmployee, setVendorId } = profileSlice.actions
+export const { setEmployee, clearEmployee, setVendorId, setImage } = profileSlice.actions
 export default profileSlice.reducer
