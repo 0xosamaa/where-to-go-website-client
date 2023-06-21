@@ -12,7 +12,7 @@ import {
   setQueryString,
   vendorSearch,
 } from "../../../Redux/Slices/searchSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const CssAutocomplete = styled(Autocomplete)({
   "& label.Mui-focused": {
@@ -46,10 +46,16 @@ const SearchBar = () => {
   const dispatch = useDispatch();
   const pagination = useSelector((state) => state.search.pagination);
   const vendorsNames = useSelector((state) => state.search.vendorsNames);
+  const placeName = useSelector((state) => state.search.searchParams.search)
+  const [filteredOptions, setFilteredOptions] = useState([]);
 
   useEffect(() => {
     dispatch(getVendorsNames())
   }, [])
+
+  useEffect(() => {
+    searchWithFilters();
+  }, [placeName])
 
   const searchWithFilters = async () => {
     let queryString = "";
@@ -99,9 +105,12 @@ const SearchBar = () => {
             transform: 'translateY(3px)'
           }}
           className="mb-2"
-          options={vendorsNames}
+          options={filteredOptions}
           size="small"
           id="country-autocomplete"
+          onInputChange={(event, placeName) => {
+            setFilteredOptions(placeName ? vendorsNames : []);
+          }}
           onChange={(event, placeName) => {
             dispatch(setPlaceName(placeName));
           }}
