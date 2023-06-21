@@ -106,7 +106,7 @@ const SearchResults = () => {
   return (
     <>
       <SearchBar />
-      <Container className="d-flex flex-column-reverse gap-5 flex-md-row align-items-stretch align-items-md-start flex-fill mt-4">
+      <Container className="d-flex flex-column gap-5 flex-md-row align-items-stretch align-items-md-start flex-fill mt-4">
         <div className="filter-menu d-block">
           <FilterMenu title="Rating" />
           <FilterMenu
@@ -125,7 +125,7 @@ const SearchResults = () => {
           <FilterMenu title="Sort" />
           <Button variant="contained" fullWidth onClick={searchWithFilters}>Apply Filters</Button>
         </div>
-        {loading ? (
+        {loading || result[0] === 'Still Loading...' ? (
           <RiseLoader
             color={theme.palette.primary.main}
             loading={loading}

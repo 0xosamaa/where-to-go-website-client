@@ -3,7 +3,7 @@ import axiosInstance from '../../Axios'
 const URL = '/api/v1'
 
 const initialState = {
-    result: [],
+    result: ['Still Loading...'],
     pagination: {
         currentPage: 1,
         perPage: 5,

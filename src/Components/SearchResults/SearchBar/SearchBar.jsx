@@ -88,12 +88,13 @@ const SearchBar = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      searchWithFilters();
+      //searchWithFilters();
+      dispatch(setPlaceName(event.target.value));
     }
   }
 
   return (
-    <div className="search-bar-body">
+    <div className="search-bar-body my-4">
       <SearchIcon
         className="search-icon"
         onClick={searchWithFilters}
@@ -102,12 +103,11 @@ const SearchBar = () => {
         <CssAutocomplete
           style={{ 
             width: '100%',
-            transform: 'translateY(3px)'
-          }}
-          className="mb-2"
+          }}            
           options={filteredOptions}
           size="small"
           id="country-autocomplete"
+          onKeyUp={handleKeyPress}
           onInputChange={(event, placeName) => {
             setFilteredOptions(placeName ? vendorsNames : []);
           }}
