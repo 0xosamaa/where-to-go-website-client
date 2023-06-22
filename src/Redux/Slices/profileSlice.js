@@ -129,7 +129,7 @@ export const changePassword = createAsyncThunk(
     async (passwords, thunkAPI) => {
         try {
             const token = localStorage.getItem('token')
-            const response = await axios.put(`${URL}/changeMyPassaowrd`, passwords, {
+            const response = await axios.put(`${URL}/changeMyPassword`, passwords, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             console.log(response.data)
