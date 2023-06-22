@@ -39,11 +39,7 @@ const SearchResults = () => {
 
   useEffect(() => {
     // const queryParams = new URLSearchParams(location.search);
-    // let rating = queryParams.get('filters[rating]');
-    // if (rating) {
-    //   rating = rating.split(',').map(rate => parseInt(rate));
-    //   dispatch(setRating(rating));
-    // }
+    // let category = queryParams.get('category');
     dispatch(getAllFavoriteVendors());
     dispatch(getCategories());
     dispatch(getTags());

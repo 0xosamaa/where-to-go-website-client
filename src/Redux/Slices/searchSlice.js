@@ -31,12 +31,11 @@ const initialState = {
 
 export const vendorSearch = createAsyncThunk('search/vendorSearch', async (_, thunkAPI) => {
     try {
-        // const response = await axiosInstance.get(`${URL}/vendors?filters[isApproved]=true&${initialState.queryString}`)
         const { search } = thunkAPI.getState();
         const { currentPage, perPage } = search.pagination;
         const queryString = search.queryString;
 
-        const query = `${URL}/auth/search?page=${currentPage}&limit=${perPage}&${queryString}`
+        const query = `${URL}/auth/search?page=${currentPage}&limit=${perPage}&filters[isApproved]=true&${queryString}`
         console.log(query)
 
         const response = await axiosInstance.get(query)

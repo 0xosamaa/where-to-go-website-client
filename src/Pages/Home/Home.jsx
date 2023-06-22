@@ -107,7 +107,7 @@ const Home = () => {
                     </div>
                 </div>
             </Container>
-            <Slider />
+            {/* <Slider /> */}
             <Container maxWidth="lg" className="categories mb-5">
                 <div className="row">
                     <div className="col-12 text-center text-lg-start my-3">
@@ -118,7 +118,7 @@ const Home = () => {
                 </div>
                 <div className="row">
                     <div className="col-12 col-lg-4 mb-5 mb-lg-0 category">
-                        <Link>
+                        <Link to="/search">
                             <img src={hotels} alt="" />
                             <Typography variant="h4">Hotels</Typography>
                         </Link>
@@ -126,7 +126,7 @@ const Home = () => {
                     <div className="col-12 col-lg-4 d-flex flex-column justify-content-between">
                         <div className="row">
                             <div className="col-12 mb-5 mb-lg-0 category">
-                                <Link>
+                                <Link to="/search">
                                     <img src={restaurants} alt="" />
                                     <Typography variant="h4">
                                         Restaurants
@@ -136,7 +136,7 @@ const Home = () => {
                         </div>
                         <div className="row">
                             <div className="col-12 mb-5 mb-lg-0 category">
-                                <Link>
+                                <Link to="/search">
                                     <img src={openPlaces} alt="" />
                                     <Typography variant="h4">
                                         Open Places
@@ -146,7 +146,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="col-12 col-lg-4 mb-5 mb-lg-0 category">
-                        <Link>
+                        <Link to="/search">
                             <img src={parks} alt="" />
                             <Typography variant="h4">Parks</Typography>
                         </Link>
