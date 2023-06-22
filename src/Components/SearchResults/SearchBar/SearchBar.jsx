@@ -88,7 +88,6 @@ const SearchBar = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      //searchWithFilters();
       dispatch(setPlaceName(event.target.value));
     }
   }

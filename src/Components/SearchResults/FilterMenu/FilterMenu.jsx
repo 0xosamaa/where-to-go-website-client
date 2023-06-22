@@ -50,6 +50,12 @@ const AccordionSummary = styled((props) => (
   },
 }));
 
+const CssAutocomplete = styled(Autocomplete)({
+  "& .MuiSvgIcon-root, .MuiAutocomplete-endAdornment": {
+    display: "none",
+  },
+});
+
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   paddingTop: 0,
@@ -61,6 +67,10 @@ const FilterMenu = (props) => {
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const [rating, setRating] = useState([0, 5]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [filteredStates, setFilteredStates] = useState([]);
+  const [filteredCities, setFilteredCities] = useState([]);
+
   // Redux state
   const countries = useSelector((state) => state.location.countries);
   const states = useSelector((state) => state.location.states);
@@ -173,30 +183,48 @@ const FilterMenu = (props) => {
           ) : 
           props.title === "Location" && isLoggedIn ? (
             <>
-            <Autocomplete
+            <CssAutocomplete
               className="mb-2"
-              options={countries}
+              options={filteredCountries}
+              freeSolo
+              disableClearable 
               size="small"
               id="country-autocomplete"
+              onInputChange={(event, country) => {
+                setFilteredCountries(country ? countries : []);
+                dispatch(setCountry(country));
+              }}
               onChange={(event, newCountry) => {
                 dispatch(setCountry(newCountry));
               }}
               renderInput={(params) => <TextField {...params} label="Country" />}
             />
-            <Autocomplete
+            <CssAutocomplete
               className="mb-2"
-              options={states}
+              options={filteredStates}
+              freeSolo
+              disableClearable 
               size="small"
               id="state-autocomplete"
+              onInputChange={(event, state) => {
+                setFilteredStates(state ? states : []);
+                dispatch(setState(state));
+              }}
               onChange={(event, newState) => {
                 dispatch(setState(newState));
               }}
               renderInput={(params) => <TextField {...params} label="State" />}
             />
-            <Autocomplete
-              options={cities}
+            <CssAutocomplete
+              options={filteredCities}
+              freeSolo 
+              disableClearable 
               size="small"
               id="city-autocomplete"
+              onInputChange={(event, city) => {
+                setFilteredCities(city ? cities : []);
+                dispatch(setCity(city));
+              }}
               onChange={(event, newCity) => {
                 dispatch(setCity(newCity));
               }}
