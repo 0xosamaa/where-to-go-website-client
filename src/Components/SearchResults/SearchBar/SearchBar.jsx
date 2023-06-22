@@ -103,7 +103,9 @@ const SearchBar = () => {
         <CssAutocomplete
           style={{ 
             width: '100%',
-          }}            
+          }}
+          freeSolo
+          disableClearable 
           options={filteredOptions}
           size="small"
           id="country-autocomplete"

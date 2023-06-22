@@ -59,7 +59,7 @@ const SearchResults = () => {
       setTags(data.payload.tags);
       dispatch(getReviews(id))
       const _gallery = [];
-      _gallery.push(data.payload.thumbnail);
+      _gallery.push(data.payload.data.thumbnail);
       _gallery.push(...data.payload.data.gallery);
       setImages(_gallery);
       setLoading(false);
