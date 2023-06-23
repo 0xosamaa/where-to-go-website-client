@@ -41,6 +41,13 @@ const Login = () => {
     const theme = useTheme();
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
+    const handleEnter = (e) => {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            handleLogin()
+        }
+    }
+
     const handleLogin = async () => {
         setLoading(true);
         setLoginError(false);
@@ -174,6 +181,7 @@ const Login = () => {
                                                 email: e.target.value,
                                             })
                                         }
+                                        onKeyDown={handleEnter}
                                     />
                                     <small style={{ color: 'red' }}>
                                         {formErrors.email}
@@ -192,6 +200,7 @@ const Login = () => {
                                                 password: e.target.value,
                                             })
                                         }
+                                        onKeyDown={handleEnter}
                                     />
                                     <small style={{ color: 'red' }}>
                                         {formErrors.password}
@@ -235,6 +244,21 @@ const Login = () => {
                                             Sign in
                                         </Button>
                                     )}
+                                </div>
+                                <div className="mb-3 my-3 text-center">
+                                    <Typography variant="p">
+                                        Login as a Vendor?{' '}
+                                        <Link to="http://localhost:3000/vendor/login">
+                                            <Typography
+                                                variant="span"
+                                                color={
+                                                    theme.palette.primary.main
+                                                }
+                                            >
+                                                Sign in
+                                            </Typography>
+                                        </Link>
+                                    </Typography>
                                 </div>
                             </div>
                         </Container>
