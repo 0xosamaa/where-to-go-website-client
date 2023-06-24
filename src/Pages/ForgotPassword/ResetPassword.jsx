@@ -73,6 +73,7 @@ import {
           }
         } catch (err) {
           setResetPassError(true);
+          navigate('/500');
         }
       }
   

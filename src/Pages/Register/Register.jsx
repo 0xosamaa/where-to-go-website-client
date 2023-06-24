@@ -126,6 +126,7 @@ const Register = () => {
                 navigate('/login');
             } catch (err) {
                 setSignupError(true);
+                navigate('/500');
             }
         }
         setLoading(false);

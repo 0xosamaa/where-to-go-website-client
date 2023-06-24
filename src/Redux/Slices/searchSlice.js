@@ -36,7 +36,6 @@ export const vendorSearch = createAsyncThunk('search/vendorSearch', async (_, th
         const queryString = search.queryString;
 
         const query = `${URL}/auth/search?page=${currentPage}&limit=${perPage}&filters[isApproved]=true&${queryString}`
-        console.log(query)
 
         const response = await axiosInstance.get(query)
         return response.data

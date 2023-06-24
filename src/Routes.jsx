@@ -9,6 +9,7 @@ import React from 'react';
 import PlaceDetails from './Pages/PlaceDetails/PlaceDetails';
 import ContactUs from './Pages/ContactUs/ContactUs.jsx';
 import Page404 from './Pages/404/404.jsx';
+import Page500 from './Pages/500/500';
 import VendorRegister from './Pages/VendorRegister/VendorRegister';
 import AboutUs from './Pages/About/About';
 import Privacy from './Pages/Privacy/Privacy';
@@ -36,6 +37,7 @@ const AppRoutes = () => {
                     <Route path="/aboutus" element={<AboutUs />} />
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/terms" element={<Terms />} />
+                    <Route path="/500" element={<Page500 />} />
                     <Route path="*" element={<Page404 />} />
                 </Route>
             </Routes>

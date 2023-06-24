@@ -15,7 +15,7 @@ import {
 import { RiseLoader } from 'react-spinners';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../Axios';
+import { axiosInstance, isAxiosError } from '../../Axios';
 import mainLogo from '../../assets/logos/main_logo.svg';
 import secondaryLogo from '../../assets/logos/secondary_logo.svg';
 import registerIll from '../../assets/images/register/register-ill.png';
@@ -100,6 +100,11 @@ const Login = () => {
                     '/api/v1/auth/customer/login',
                     loginDetails
                 );
+
+                if (res.status === 500 || !res) {
+                    navigate('/500')
+                }
+
                 dispatch(setIsLoggedIn(true));
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('userId', res.data.id);
@@ -107,6 +112,19 @@ const Login = () => {
                 dispatch(setImage(res.data.img));
                 navigate('/');
             } catch (err) {
+                if (isAxiosError(err)) {
+                    // Handle axios errors separately
+                    if (err.response) {
+                        navigate('/500')
+                    } else if (err.request) {
+                        navigate('/500')
+                    } else {
+                        navigate('/500')
+                    }
+                } else {
+                    // Handle other types of errors
+                    navigate('/500')
+                }
                 setLoginError(true);
             }
         }

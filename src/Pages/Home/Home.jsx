@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from 'react';
 import './Home.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Typography, Container, useTheme } from '@mui/material';
 import Slider from '../../Components/Slider/Slider';
 import Header from '../../Components/Header/Header';
@@ -17,15 +17,15 @@ import axios from "axios";
 const Home = () => {
     const theme = useTheme();
     const [topRated, setTopRated] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get("http://localhost:8001/api/v1/auth/topRated")
             .then((res) => {
                 setTopRated(res.data.data);
-                console.log(res.data.data);
             })
             .catch((err) => {
-                console.log(err);
+                navigate('/500')
             })
     }, [])
 

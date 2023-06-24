@@ -56,6 +56,7 @@ const VerifyResetCode = () => {
                 }
             } catch (err) {
                 setResetCodeError(true);
+                navigate('/500');
             }
         }
         setLoading(false);

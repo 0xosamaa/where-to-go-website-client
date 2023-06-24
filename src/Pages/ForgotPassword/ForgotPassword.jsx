@@ -66,6 +66,7 @@ const ForgotPassword = () => {
                 }
             } catch (err) {
                 setForgotPassError(true);
+                navigate('/500');
             }
         }
         setLoading(false);
