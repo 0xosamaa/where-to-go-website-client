@@ -13,6 +13,9 @@ import VendorRegister from './Pages/VendorRegister/VendorRegister';
 import AboutUs from './Pages/About/About';
 import Privacy from './Pages/Privacy/Privacy';
 import Terms from './Pages/Terms/Terms';
+import ForgotPassword from './Pages/ForgotPassword/ForgotPassword';
+import VerifyResetCode from './Pages/ForgotPassword/VerifyResetCode';
+import ResetPassword from './Pages/ForgotPassword/ResetPassword';
 
 const AppRoutes = () => {
     return (
@@ -21,6 +24,9 @@ const AppRoutes = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/vendor/register" element={<VendorRegister />} />
+                <Route path="/vendor/forgotPassword" element={<ForgotPassword />} />
+                <Route path="/vendor/verifyResetCode" element={<VerifyResetCode />} />
+                <Route path="/vendor/resetPassword" element={<ResetPassword />} />
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="/search" element={<SearchResults />} />

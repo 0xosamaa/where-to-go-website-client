@@ -245,20 +245,36 @@ const Login = () => {
                                         </Button>
                                     )}
                                 </div>
-                                <div className="mb-3 my-3 text-center">
-                                    <Typography variant="p">
-                                        Login as a Vendor?{' '}
-                                        <Link to="http://localhost:3000/vendor/login">
-                                            <Typography
-                                                variant="span"
-                                                color={
-                                                    theme.palette.primary.main
-                                                }
-                                            >
-                                                Sign in
-                                            </Typography>
-                                        </Link>
-                                    </Typography>
+                                <div className='d-flex justify-content-between'>
+                                    <div className="mb-3 text-center">
+                                        <Typography variant="p">
+                                            Login as a Vendor?{' '}
+                                            <Link to="http://localhost:3000/vendor/login">
+                                                <Typography
+                                                    variant="span"
+                                                    color={
+                                                        theme.palette.primary.main
+                                                    }
+                                                >
+                                                    Sign in
+                                                </Typography>
+                                            </Link>
+                                        </Typography>
+                                    </div>
+                                    <div className="mb-3 text-center">
+                                        <Typography variant="p">
+                                            <Link to="/vendor/forgotPassword">
+                                                <Typography
+                                                    variant="span"
+                                                    color={
+                                                        theme.palette.primary.main
+                                                    }
+                                                >
+                                                    Forgot Password?
+                                                </Typography>
+                                            </Link>
+                                        </Typography>
+                                    </div>
                                 </div>
                             </div>
                         </Container>
