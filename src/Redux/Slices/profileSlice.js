@@ -6,11 +6,11 @@ const URL = 'http://localhost:8001/api/v1/customers'
 
 const initialState = {
     customer: {},
+    image: localStorage.getItem('img'),
     favoriteVendors: [],
     loading: false,
     error: null,
 }
-
 
 export const getCustomer = createAsyncThunk('profile/getCustomer', async (id, thunkAPI) => {
     try {
@@ -129,20 +129,15 @@ export const changePassword = createAsyncThunk(
     async (passwords, thunkAPI) => {
         try {
             const token = localStorage.getItem('token')
-            const response = await axios.put(`${URL}/changeMyPassaowrd`, passwords, {
+            const response = await axios.put(`${URL}/changeMyPassword`, passwords, {
                 headers: { Authorization: `Bearer ${token}` },
             })
-            console.log(response.data)
             return response.data
         } catch (error) {
-            console.log(error.response.data)
             return thunkAPI.rejectWithValue(error.response.data)
         }
     },
 )
-
-
-
 
 const profileSlice = createSlice({
     name: 'profile',
@@ -150,6 +145,9 @@ const profileSlice = createSlice({
     reducers: {
         setVendorId: (state, action) => {
             state.vendorId = action.payload
+        },
+        setImage: (state, action) => {
+            state.image = action.payload
         }
     },
     extraReducers: {
@@ -169,6 +167,8 @@ const profileSlice = createSlice({
         },
         [updateCustomer.fulfilled]: (state, action) => {
             state.customer = action.payload
+            localStorage.setItem('img', action.payload.image)
+            state.image = action.payload.image
             state.loading = false
         },
         [updateCustomer.rejected]: (state, action) => {
@@ -235,5 +235,5 @@ const profileSlice = createSlice({
     },
 })
 
-export const { setEmployee, clearEmployee, setVendorId } = profileSlice.actions
+export const { setEmployee, clearEmployee, setVendorId, setImage } = profileSlice.actions
 export default profileSlice.reducer

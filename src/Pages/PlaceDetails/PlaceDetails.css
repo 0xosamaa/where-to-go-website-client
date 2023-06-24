@@ -124,6 +124,11 @@
   width: 50%;
 }
 
+.review-card-all {
+  width: 100%;
+  padding: 1rem;
+}
+
 .description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -132,4 +137,11 @@
   text-align: justify;
   -webkit-line-clamp: 2;
   max-height: 3.0em;
+}
+
+@media screen and (max-width: 768px) {
+  .review-card {
+    width: 100%;
+    padding: 1rem;
+  }
 }

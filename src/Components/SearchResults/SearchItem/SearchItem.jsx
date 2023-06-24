@@ -19,7 +19,6 @@ const SearchItem = ({ place, onClick }) => {
                         <Typography className="card-text" variant="body">{place.category ? place.category.name : 'Place'} 
                             {place.address?.country ? ` in ${place.address?.country}` : ''}
                             {place.address?.city ? `, ${place.address?.city}` : ''} 
-                            {console.log(place)}
                         </Typography>
                         <Typography variant="h4">{place.placeName}</Typography>
                         <hr style={{ width: 56, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>

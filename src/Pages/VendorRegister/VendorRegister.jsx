@@ -290,8 +290,6 @@ const VendorRegister = () => {
         if (isValid) {
             try {
                 const data = new FormData(e.target);
-                console.log(data.get('thumbnail'));
-                console.log(data.get('gallery'));
                 await axiosInstanceFormData.post(
                     '/api/v1/auth/vendor/register',
                     data

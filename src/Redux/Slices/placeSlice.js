@@ -11,7 +11,7 @@ const initialState = {
 export const getPlace = createAsyncThunk('place/getPlace', async (id, thunkAPI) => {
     try {
         const response = await axiosInstance.get(`${URL}/${id}`)
-        return response.data.data
+        return response.data
     } catch (error) {
         if (error.response.data.message === 'UnAuthorized..!') {
             localStorage.clear()
@@ -30,8 +30,7 @@ const placeSlice = createSlice({
             state.loading = true
         },
         [getPlace.fulfilled]: (state, action) => {
-            state.place = action.payload
-            console.log(state.place)
+            state.place = action.payload.data
             state.loading = false
         },
         [getPlace.rejected]: (state, action) => {

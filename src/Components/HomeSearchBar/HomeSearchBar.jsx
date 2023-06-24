@@ -1,4 +1,4 @@
-import "./SearchBar.css";
+import "./HomeSearchBar.css";
 import { Autocomplete, Typography, useTheme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,9 +11,9 @@ import {
   setPlaceName,
   setQueryString,
   vendorSearch,
-} from "../../../Redux/Slices/searchSlice";
+} from "../../Redux/Slices/searchSlice";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CssAutocomplete = styled(Autocomplete)({
   "& label.Mui-focused": {
@@ -41,8 +41,8 @@ const CssAutocomplete = styled(Autocomplete)({
   },
 });
 
-const SearchBar = () => {
-  const location = useLocation();
+const HomeSearchBar = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const searchParams = useSelector((state) => state.search.searchParams);
   const dispatch = useDispatch();
@@ -52,8 +52,6 @@ const SearchBar = () => {
   const [filteredOptions, setFilteredOptions] = useState([]);
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    let placeName = queryParams.get('category');
     dispatch(getVendorsNames())
   }, [])
 
@@ -93,13 +91,14 @@ const SearchBar = () => {
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       dispatch(setPlaceName(event.target.value));
+      navigate('/search');
     }
   }
 
   return (
-    <div className="search-bar-body my-4">
+    <div className="home-search-bar-body my-4">
       <SearchIcon
-        className="search-icon"
+        className="home-search-icon"
         onClick={searchWithFilters}
         style={{ backgroundColor: theme.palette.primary.main, zIndex: 1 }}
       />
@@ -125,4 +124,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default HomeSearchBar;

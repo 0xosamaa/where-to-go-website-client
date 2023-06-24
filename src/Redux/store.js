@@ -5,6 +5,7 @@ import placeReducer from "./Slices/placeSlice";
 import reviewReducer from "./Slices/reviewSlice.js"
 import authReducer from "./Slices/authSlice.js";
 import locationReducer from "./Slices/locationSlice.js";
+import scrollReducer from "./Slices/scrollSlice";
 
 const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
         review: reviewReducer,
         auth: authReducer,
         location: locationReducer,
+        scroll: scrollReducer,
     }
 })
 

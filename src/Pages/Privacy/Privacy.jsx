@@ -9,7 +9,7 @@ const Privacy = () => {
     return (
         <Container className="my-0 my-lg-5 justify-content-center align-items-center">
             <div className="mx-auto col-12 d-flex">
-                <img className="w-100" src={privacyImg}/>
+                <img className="w-75 mx-auto" src={privacyImg}/>
             </div>
             <div className="mx-auto col-12 col-lg-8">
                 <Typography variant="h1" className="text-start mb-3">Privacy</Typography>

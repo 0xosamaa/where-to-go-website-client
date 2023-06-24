@@ -3,6 +3,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import AppRoutes from './Routes';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 const getTheme = (isLoggedIn) => {
     const primary = {};
@@ -97,9 +98,17 @@ function App() {
     const theme = getTheme(isLoggedIn);
 
     return (
+        <>
+        <Helmet>
+        <link
+            rel="icon"
+            href={isLoggedIn ? 'src/assets/logos/favicon.ico' : 'src/assets/logos/favicon_blue.ico'}
+        />
+        </Helmet>
         <ThemeProvider theme={theme}>
             <AppRoutes />
         </ThemeProvider>
+        </>
     );
 }
 

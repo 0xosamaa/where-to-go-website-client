@@ -13,7 +13,7 @@ const SubmitRating = () => {
     const [content, setContent] = useState('');
     const [alert, setAlert] = useState({
         visible: false,
-        severity: '',
+        severity: 'success',
         message: '',
     });
 
@@ -30,7 +30,7 @@ const SubmitRating = () => {
                 if (data.payload.success) {
                     setAlert({ visible: true, severity: 'success', message: 'Review is submitted successfully' });
                     dispatch(getPlace(id));
-                    dispatch(getReviews());
+                    dispatch(getReviews(id));
                 }
                 else {
                     setAlert({ visible: true, severity: 'error', message: data.payload.error });
@@ -61,7 +61,7 @@ const SubmitRating = () => {
     return (
         <>
         <StyledRating
-            value={rating}
+            defaultValue={rating}
             onChange={(e, newValue) => {
                 setRating(newValue);
             }}

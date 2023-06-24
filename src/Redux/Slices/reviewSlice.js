@@ -4,6 +4,7 @@ const URL = '/api/v1/reviews'
 
 const initialState = {
     reviews: [],
+    reviewsVisible: false,
 };
 
 export const addReview = createAsyncThunk('reviews/addReview', async (data, thunkAPI) => {
@@ -35,7 +36,11 @@ export const getReviews = createAsyncThunk('reviews/getReviews', async (id, thun
 const reviewSlice = createSlice({
     name: 'review',
     initialState,
-    reducers: {},
+    reducers: {
+        setReviewsVisible: (state, action) => {
+            state.reviewsVisible = action.payload
+        }
+    },
     extraReducers: {
         [addReview.fulfilled]: (state, action) => {},
         [getReviews.fulfilled]: (state, action) => {
@@ -44,5 +49,5 @@ const reviewSlice = createSlice({
     },
 })
 
-// export const { } = reviewSlice.actions
+export const { setReviewsVisible } = reviewSlice.actions
 export default reviewSlice.reducer

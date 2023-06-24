@@ -15,13 +15,14 @@ import {
 import { RiseLoader } from 'react-spinners';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../Axios';
+import { axiosInstance, isAxiosError } from '../../Axios';
 import mainLogo from '../../assets/logos/main_logo.svg';
 import secondaryLogo from '../../assets/logos/secondary_logo.svg';
 import registerIll from '../../assets/images/register/register-ill.png';
 import SecNavbar from '../../Components/SecNavbar/SecNavbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoggedIn } from '../../Redux/Slices/authSlice';
+import { setImage } from '../../Redux/Slices/profileSlice';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -39,6 +40,13 @@ const Login = () => {
     const navigate = useNavigate();
     const theme = useTheme();
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+    const handleEnter = (e) => {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            handleLogin()
+        }
+    }
 
     const handleLogin = async () => {
         setLoading(true);
@@ -92,12 +100,31 @@ const Login = () => {
                     '/api/v1/auth/customer/login',
                     loginDetails
                 );
+
+                if (res.status === 500 || !res) {
+                    navigate('/500')
+                }
+
                 dispatch(setIsLoggedIn(true));
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('userId', res.data.id);
                 localStorage.setItem('img', res.data.img);
+                dispatch(setImage(res.data.img));
                 navigate('/');
             } catch (err) {
+                if (isAxiosError(err)) {
+                    // Handle axios errors separately
+                    if (err.response) {
+                        navigate('/500')
+                    } else if (err.request) {
+                        navigate('/500')
+                    } else {
+                        navigate('/500')
+                    }
+                } else {
+                    // Handle other types of errors
+                    navigate('/500')
+                }
                 setLoginError(true);
             }
         }
@@ -172,6 +199,7 @@ const Login = () => {
                                                 email: e.target.value,
                                             })
                                         }
+                                        onKeyDown={handleEnter}
                                     />
                                     <small style={{ color: 'red' }}>
                                         {formErrors.email}
@@ -190,6 +218,7 @@ const Login = () => {
                                                 password: e.target.value,
                                             })
                                         }
+                                        onKeyDown={handleEnter}
                                     />
                                     <small style={{ color: 'red' }}>
                                         {formErrors.password}
@@ -233,6 +262,37 @@ const Login = () => {
                                             Sign in
                                         </Button>
                                     )}
+                                </div>
+                                <div className='d-flex justify-content-between'>
+                                    <div className="mb-3 text-center">
+                                        <Typography variant="p">
+                                            Login as a Vendor?{' '}
+                                            <Link to="http://localhost:3000/vendor/login">
+                                                <Typography
+                                                    variant="span"
+                                                    color={
+                                                        theme.palette.primary.main
+                                                    }
+                                                >
+                                                    Sign in
+                                                </Typography>
+                                            </Link>
+                                        </Typography>
+                                    </div>
+                                    <div className="mb-3 text-center">
+                                        <Typography variant="p">
+                                            <Link to="/vendor/forgotPassword">
+                                                <Typography
+                                                    variant="span"
+                                                    color={
+                                                        theme.palette.primary.main
+                                                    }
+                                                >
+                                                    Forgot Password?
+                                                </Typography>
+                                            </Link>
+                                        </Typography>
+                                    </div>
                                 </div>
                             </div>
                         </Container>

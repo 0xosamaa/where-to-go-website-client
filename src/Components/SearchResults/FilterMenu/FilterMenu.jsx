@@ -9,7 +9,7 @@ import { Autocomplete, Button, FormControl, FormControlLabel, InputLabel, MenuIt
 import CustomizedCheckbox from "../CustomizedCheckbox/CustomizedCheckbox";
 import CustomizedRadio from "../CustomizedRadio/CustomizedRadio";
 import { useDispatch, useSelector } from "react-redux";
-import { setCountry, setFilters } from "../../../Redux/Slices/searchSlice";
+import { setCity, setCountry, setFilters, setState } from "../../../Redux/Slices/searchSlice";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getCities, getCountries, getStates } from "../../../Redux/Slices/locationSlice";
@@ -50,6 +50,12 @@ const AccordionSummary = styled((props) => (
   },
 }));
 
+const CssAutocomplete = styled(Autocomplete)({
+  "& .MuiSvgIcon-root, .MuiAutocomplete-endAdornment": {
+    display: "none",
+  },
+});
+
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   paddingTop: 0,
@@ -60,14 +66,15 @@ const FilterMenu = (props) => {
   const [expanded, setExpanded] = useState("");
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  const [rating, setRating] = useState([0, 5]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [filteredStates, setFilteredStates] = useState([]);
+  const [filteredCities, setFilteredCities] = useState([]);
 
   // Redux state
   const countries = useSelector((state) => state.location.countries);
   const states = useSelector((state) => state.location.states);
   const cities = useSelector((state) => state.location.cities);
-
-  const rating = useSelector((state) => state.search.searchParams.rating);
-
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
@@ -84,6 +91,7 @@ const FilterMenu = (props) => {
   };
 
   const handleRatingChange = (event, value) => {
+    setRating(value)
     dispatch(setFilters({ data: value, type: props.title }))
   }
 
@@ -119,7 +127,7 @@ const FilterMenu = (props) => {
           ) : props.title === "Rating" ? (
             <Slider
               getAriaLabel={() => 'Rating range'}
-              defaultValue={rating}
+              value={rating}
               min={0}
               max={5}
               step={1}
@@ -128,7 +136,7 @@ const FilterMenu = (props) => {
             />
           ) : props.title === "Sort" ? (
             <>
-            <FormControl sx={{ m: 1, minWidth: 120 }} fullWidth size="small">
+            <FormControl sx={{ m: 0, minWidth: 120 }} className="mb-2" fullWidth size="small">
               <InputLabel id="sort-field-label">Field</InputLabel>
               <Select
                 labelId="sort-field-label"
@@ -146,7 +154,7 @@ const FilterMenu = (props) => {
                 <MenuItem value={"numberOfReviews"}>Reviews Number</MenuItem>
               </Select>
             </FormControl>
-            <FormControl sx={{ m: 1, minWidth: 120 }} fullWidth size="small">
+            <FormControl sx={{ m: 0, minWidth: 120 }} fullWidth size="small">
               <InputLabel id="sort-order-label">Order</InputLabel>
               <Select
                 labelId="sort-order-label"
@@ -174,14 +182,55 @@ const FilterMenu = (props) => {
             ))
           ) : 
           props.title === "Location" && isLoggedIn ? (
-            <Autocomplete
-              options={countries}
+            <>
+            <CssAutocomplete
+              className="mb-2"
+              options={filteredCountries}
+              freeSolo
+              disableClearable 
+              size="small"
               id="country-autocomplete"
+              onInputChange={(event, country) => {
+                setFilteredCountries(country ? countries : []);
+                dispatch(setCountry(country));
+              }}
               onChange={(event, newCountry) => {
                 dispatch(setCountry(newCountry));
               }}
               renderInput={(params) => <TextField {...params} label="Country" />}
             />
+            <CssAutocomplete
+              className="mb-2"
+              options={filteredStates}
+              freeSolo
+              disableClearable 
+              size="small"
+              id="state-autocomplete"
+              onInputChange={(event, state) => {
+                setFilteredStates(state ? states : []);
+                dispatch(setState(state));
+              }}
+              onChange={(event, newState) => {
+                dispatch(setState(newState));
+              }}
+              renderInput={(params) => <TextField {...params} label="State" />}
+            />
+            <CssAutocomplete
+              options={filteredCities}
+              freeSolo 
+              disableClearable 
+              size="small"
+              id="city-autocomplete"
+              onInputChange={(event, city) => {
+                setFilteredCities(city ? cities : []);
+                dispatch(setCity(city));
+              }}
+              onChange={(event, newCity) => {
+                dispatch(setCity(newCity));
+              }}
+              renderInput={(params) => <TextField {...params} label="City" />}
+            />
+            </>
           ) : (
             <Link to="/login">
               <Button 

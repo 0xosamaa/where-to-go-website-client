@@ -32,6 +32,7 @@ function Navbar() {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const image = useSelector((state) => state.profile.image);
 
     const navigate = useNavigate();
 
@@ -78,7 +79,7 @@ function Navbar() {
                         >
                             <img
                                 src={
-                                    localStorage.getItem('token')
+                                    isLoggedIn
                                         ? mainLogo
                                         : secondaryLogo
                                 }
@@ -104,7 +105,7 @@ function Navbar() {
                         >
                             <img
                                 src={
-                                    localStorage.getItem('token')
+                                    isLoggedIn
                                         ? mainLogo
                                         : secondaryLogo
                                 }
@@ -181,12 +182,10 @@ function Navbar() {
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
-                                {localStorage.getItem('token') ? (
+                                {isLoggedIn ? (
                                     <Avatar
                                         alt="Profile Image"
-                                        src={`http://localhost:8001/api/v1/images/customers/${localStorage.getItem(
-                                            'img'
-                                        )}`}
+                                        src={`http://localhost:8001/api/v1/images/customers/${image}`}
                                     />
                                 ) : (
                                     <AccountCircleIcon
