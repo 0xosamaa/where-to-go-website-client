@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:8001',
@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
     Authorization: `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json',
   },
-})
+});
 
 const axiosInstanceFormData = axios.create({
   baseURL: 'http://localhost:8001',
@@ -14,7 +14,12 @@ const axiosInstanceFormData = axios.create({
     Authorization: `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'multipart/form-data',
   },
-})
+});
 
-export { axiosInstance, axiosInstanceFormData }
-export default axiosInstance
+// Function to check if the error is from axios
+const isAxiosError = (error) => {
+  return axios.isAxiosError(error);
+};
+
+export { axiosInstance, axiosInstanceFormData, isAxiosError };
+export default axiosInstance;

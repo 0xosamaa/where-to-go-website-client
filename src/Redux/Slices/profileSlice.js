@@ -125,20 +125,18 @@ export const updateCustomer = createAsyncThunk(
 )
 
 export const changePassword = createAsyncThunk(
-  'profile/changePassword',
-  async (passwords, thunkAPI) => {
-    try {
-      const token = localStorage.getItem('token')
-      const response = await axios.put(`${URL}/changeMyPassaowrd`, passwords, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      console.log(response.data)
-      return response.data
-    } catch (error) {
-      console.log(error.response.data)
-      return thunkAPI.rejectWithValue(error.response.data)
-    }
-  },
+    'profile/changePassword',
+    async (passwords, thunkAPI) => {
+        try {
+            const token = localStorage.getItem('token')
+            const response = await axios.put(`${URL}/changeMyPassword`, passwords, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            return response.data
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+        }
+    },
 )
 
 const profileSlice = createSlice({

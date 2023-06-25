@@ -126,6 +126,7 @@ const Register = () => {
                 navigate('/login');
             } catch (err) {
                 setSignupError(true);
+                navigate('/500');
             }
         }
         setLoading(false);
@@ -290,6 +291,21 @@ const Register = () => {
                                             Sign up
                                         </Button>
                                     )}
+                                </div>
+                                <div className="mb-3 text-center">
+                                    <Typography variant="p">
+                                        Sign up as a Vendor?{' '}
+                                        <Link to="/vendor/register">
+                                            <Typography
+                                                variant="span"
+                                                color={
+                                                    theme.palette.primary.main
+                                                }
+                                            >
+                                                Sign up
+                                            </Typography>
+                                        </Link>
+                                    </Typography>
                                 </div>
                             </div>
                         </Container>

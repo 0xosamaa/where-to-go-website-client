@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import contactusImage from "../../assets/contactus.jpeg";
 import {useState} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 const ContactUs = () => {
@@ -12,6 +13,7 @@ const ContactUs = () => {
         mssg: "",
         status: ""
     });
+    const navigate = useNavigate()
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -42,6 +44,7 @@ const ContactUs = () => {
                     status: "error"
                 })
                 setOpen(true);
+                navigate('/500')
             })
     }
 
