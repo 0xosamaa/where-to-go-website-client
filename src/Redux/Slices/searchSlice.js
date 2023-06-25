@@ -123,6 +123,7 @@ const searchSlice = createSlice({
             Object.values(state.searchParams).forEach((filterArray) => {
                 filterArray.length = 0
             })
+            state.searchParams.rating = [0, 5]
         },
         setPagination(state, action) {
             state.pagination = action.payload
