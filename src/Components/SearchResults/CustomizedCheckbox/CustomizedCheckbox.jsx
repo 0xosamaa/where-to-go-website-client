@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
 import PropTypes from "prop-types";
 import { setFilters } from "../../../Redux/Slices/searchSlice.js"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const BpIcon = styled('span')(({ theme }) => ({
   borderRadius: 3,
@@ -61,9 +61,10 @@ function BpCheckbox(props) {
 
 const CustomizedCheckbox = ({ data, type }) => {
   const dispatch = useDispatch();
+  const tags = useSelector((state) => state.search.searchParams.tags);
 
   return (
-    <BpCheckbox onChange={
+    <BpCheckbox checked={tags.includes(data.id)} onChange={
       () => dispatch(setFilters({ data, type }))
     } />
   );
