@@ -7,10 +7,12 @@ import Favorite from "@mui/icons-material/Favorite.js";
 import {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {deleteFavoriteVendor, getFavoriteVendors} from "../../../Redux/Slices/profileSlice.js";
+import {useNavigate} from "react-router-dom";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const Card = ({place,page}) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [checked,setChecked] = useState(true)
     const customer = useSelector(state => state.profile.customer);
@@ -29,15 +31,15 @@ const Card = ({place,page}) => {
     }
 
     return (
-        <div className="d-flex flex-column flex-lg-row col-12">
-            <img className="card-image flex-fill" src="https://picsum.photos/600/400" alt="demo" />
+        <div key={place._id} onClick={()=> navigate(`/place/${place._id}`)} className="d-flex flex-column flex-lg-row col-12">
+            <img className="card-image flex-fill" src={place.thumbnail ? `http://localhost:8001/api/v1/images/vendors/${place.thumbnail}` : 'https://picsum.photos/600/400'} alt="demo" />
             <div className="card-body d-flex flex-fill justify-content-between mt-3 mt-lg-0">
                 <div className="content d-flex flex-column justify-content-between">
                     <div className="card-details">
                         <Typography className="card-text" variant="body">{`${place.category[0]?.name} in ${place.address?.city || 'NoWhere'} - ${place.address?.country || 'NoWhere'}`}</Typography>
                         <Typography variant="h4">{place.placeName}</Typography>
                         <hr style={{ width: 90, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>
-                        <Typography className="card-text" variant="body">{place.description}</Typography>
+                        <Typography className="card-text description" variant="body">{place.description}</Typography>
                         <hr style={{ width: 70, color: '#9095A0', borderWidth: 2, margin: '10px 0' }}/>
                         <Typography className="card-text" variant="body">Owner :  {`${place.firstName} ${place.lastName}`}</Typography>
                     </div>

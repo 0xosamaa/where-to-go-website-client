@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { Typography, Container, useTheme } from '@mui/material';
 import axios from 'axios';
 // import Slider from '../../Components/Slider/Slider';
 import { useDispatch, useSelector } from 'react-redux';
+import { Typography, Container, useTheme, Rating, styled } from '@mui/material';
+import Slider from '../../Components/Slider/Slider';
 import Header from '../../Components/Header/Header';
 import top1 from '../../assets/images/places/top-rated/top-rated-1.jpeg';
 import top2 from '../../assets/images/places/top-rated/top-rated-2.jpeg';
@@ -14,19 +15,33 @@ import hotels from '../../assets/images/places/categories/hotels.jpeg';
 import restaurants from '../../assets/images/places/categories/restaurants.jpeg';
 import openPlaces from '../../assets/images/places/categories/open-places.jpeg';
 import parks from '../../assets/images/places/categories/parks.jpeg';
+import FavouriteIcon from '../../Components/FavouriteIcon/FavouriteIcon';
 
 const Home = () => {
     const theme = useTheme();
+    const favoriteVendors = useSelector(
+        (state) => state.profile.favoriteVendors
+    );
     const [topRated, setTopRated] = useState([]);
     const [nearby, setNearby] = useState([]);
     const navigate = useNavigate();
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+    const StyledRating = styled(Rating)({
+        '& .MuiRating-iconFilled': {
+            color: theme.palette.primary.main,
+        },
+        '& .MuiRating-iconHover': {
+            color: '#ff3d47',
+        },
+    });
 
     useEffect(() => {
         axios
             .get('http://localhost:8001/api/v1/auth/topRated')
             .then((res) => {
                 setTopRated(res.data.data);
+                console.log(res.data.data);
             })
             .catch((err) => {
                 navigate('/500');
@@ -49,10 +64,12 @@ const Home = () => {
 
             setNearby(
                 topRated.filter((place) => {
-                    return place.address.city.toLowerCase() === user.address.city.toLowerCase();
+                    return (
+                        place.address.city.toLowerCase() ===
+                        user.address.city.toLowerCase()
+                    );
                 })
             );
-
         })();
     }, [isLoggedIn, topRated]);
 
@@ -71,7 +88,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-12 col-lg-3 mb-5">
+                    {/* <div className="col-12 col-lg-3 mb-5">
                         <Link to={`/place/${topRated[0]?._id}`}>
                             <div className="row">
                                 <div className="col-12">
@@ -182,7 +199,68 @@ const Home = () => {
                                 </div>
                             </div>
                         </Link>
-                    </div>
+                    </div> */}
+
+                    {topRated.map((place) => {
+                        return (
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <Link to={`/place/${place?._id}`}>
+                                    <img
+                                        src={
+                                            place?.thumbnail
+                                                ? `http://localhost:8001/api/v1/images/vendors/${place.thumbnail}`
+                                                : top1
+                                        }
+                                        alt=""
+                                        className="mb-2"
+                                    />
+                                    <div className="px-2 d-flex flex-column align-items-start">
+                                        <Typography
+                                            color="primary"
+                                            variant="h3"
+                                            fontWeight={'bold'}
+                                            style={{ paddingBottom: 0 }}
+                                        >
+                                            {place?.placeName}
+                                        </Typography>
+                                        <Typography
+                                            color="GrayText"
+                                            variant="h5"
+                                            fontWeight={'bold'}
+                                        >
+                                            {place?.category[0].name}
+                                        </Typography>
+                                    </div>
+                                </Link>
+                                <div className="d-flex justify-content-between align-items-center p-2">
+                                    <div className="d-flex">
+                                        <StyledRating
+                                            size="small"
+                                            name="half-rating"
+                                            defaultValue={place?.avgRate}
+                                            precision={0.5}
+                                            readOnly
+                                        />
+                                        <span className="ms-2">
+                                            {place?.avgRate?.toFixed(1)}
+                                        </span>
+                                    </div>
+                                    {isLoggedIn && (
+                                        <FavouriteIcon
+                                            vendorId={place?._id}
+                                            checked={
+                                                favoriteVendors.filter(
+                                                    (vendor) =>
+                                                        vendor._id ===
+                                                        place?._id
+                                                ).length > 0
+                                            }
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </Container>
             {/* <Slider /> */}

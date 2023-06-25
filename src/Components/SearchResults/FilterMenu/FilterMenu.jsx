@@ -64,17 +64,25 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 const FilterMenu = (props) => {
   // Local state
   const [expanded, setExpanded] = useState("");
-  const [sortField, setSortField] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
-  const [rating, setRating] = useState([0, 5]);
+  // const [sortField, setSortField] = useState("");
+  // const [sortOrder, setSortOrder] = useState("");
+  // const [rating, setRating] = useState([1, 4]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [filteredStates, setFilteredStates] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
-
+  
+  
   // Redux state
+  const rating = useSelector((state) => state.search.searchParams.rating);
+  const category = useSelector((state) => state.search.searchParams.category);
   const countries = useSelector((state) => state.location.countries);
+  const country = useSelector((state) => state.search.searchParams.country[0]);
   const states = useSelector((state) => state.location.states);
+  const state = useSelector((state) => state.search.searchParams.state[0]);
   const cities = useSelector((state) => state.location.cities);
+  const city = useSelector((state) => state.search.searchParams.city[0]);
+  const sortField = useSelector((state) => state.search.searchParams.sortField[0]);
+  const sortOrder = useSelector((state) => state.search.searchParams.sortOrder[0]);
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
@@ -91,17 +99,17 @@ const FilterMenu = (props) => {
   };
 
   const handleRatingChange = (event, value) => {
-    setRating(value)
+    // setRating(value)
     dispatch(setFilters({ data: value, type: props.title }))
   }
 
   const handleSortFieldChange = (event) => {
-    setSortField(event.target.value)
+    // setSortField(event.target.value)
     dispatch(setFilters({ data: { sortField: event.target.value, sortOrder }, type: props.title }))
   }
 
   const handleSortOrderChange = (event) => {
-    setSortOrder(event.target.value)
+    // setSortOrder(event.target.value)
     dispatch(setFilters({ data: { sortField, sortOrder: event.target.value }, type: props.title }))
   }
 
@@ -117,6 +125,8 @@ const FilterMenu = (props) => {
         <AccordionDetails>
           {props.title === "Categories" && isLoggedIn ? (
             <RadioGroup
+              value={category}
+              onChange={() => dispatch(setFilters({ data: category, type: props.title }))}
               name="categories-group"
             >
               <CustomizedRadio data={{ id: "", name: "All"}} type={props.title} />
@@ -141,13 +151,13 @@ const FilterMenu = (props) => {
               <Select
                 labelId="sort-field-label"
                 id="sort-field"
-                value={sortField}
+                value={sortField ? sortField : ""}
                 label="Field"
                 onChange={handleSortFieldChange}
               >
                 <MenuItem value="">
                   <em>None</em>
-                </MenuItem>
+                </MenuItem>  
                 <MenuItem value={"placeName"}>Place Name</MenuItem>
                 <MenuItem value={"category"}>Category</MenuItem>
                 <MenuItem value={"avgRate"}>Rating</MenuItem>
@@ -159,10 +169,15 @@ const FilterMenu = (props) => {
               <Select
                 labelId="sort-order-label"
                 id="sort-order"
-                value={sortOrder}
+                value={sortOrder ? sortOrder : ""}
                 label="Order"
                 onChange={handleSortOrderChange}
               >
+                {!sortOrder && (
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                )}
                 <MenuItem value="asc">Ascending</MenuItem>
                 <MenuItem value="desc">Descending</MenuItem>
               </Select>
@@ -189,6 +204,7 @@ const FilterMenu = (props) => {
               freeSolo
               disableClearable 
               size="small"
+              value={country ? country : ""}
               id="country-autocomplete"
               onInputChange={(event, country) => {
                 setFilteredCountries(country ? countries : []);
@@ -205,6 +221,7 @@ const FilterMenu = (props) => {
               freeSolo
               disableClearable 
               size="small"
+              value={state ? state : ""}
               id="state-autocomplete"
               onInputChange={(event, state) => {
                 setFilteredStates(state ? states : []);
@@ -220,6 +237,7 @@ const FilterMenu = (props) => {
               freeSolo 
               disableClearable 
               size="small"
+              value={city ? city : ""}
               id="city-autocomplete"
               onInputChange={(event, city) => {
                 setFilteredCities(city ? cities : []);
