@@ -190,7 +190,7 @@ const SearchResults = () => {
             </>
           )}
           <div className="d-flex flex-column flex-md-row">
-            <div className="overview flex-grow-1">
+            <div className="overview flex-grow-1 col-12 col-md-8">
               <Typography variant="h2" className="mt-4 mb-0">
                 Overview
               </Typography>
@@ -226,7 +226,7 @@ const SearchResults = () => {
               </div>
               <Typography variant="body">{place.description}</Typography>
             </div>
-            <div className="tags flex-grow-1">
+            <div className="tags flex-grow-1 col-12 col-md-4">
               <Typography variant="h2" className="mt-4 mb-0">
                 Tags
               </Typography>
@@ -277,19 +277,20 @@ const SearchResults = () => {
                   </div>
                 ) : ('')
               ))}
-              { place.numberOfReviews > 4 ? (
-              <>
-              <Button
-                variant="contained"
-                color="info"
-                onClick={() => dispatch(setReviewsVisible(true))}
-              >
-                Show all reviews
-              </Button>
-              <AllReviews />
-              </>
-              ) : ('')}
             </div>
+            { place.numberOfReviews > 0 ? (
+            <>
+            <Button
+              variant="contained"
+              color="info"
+              style={{ width: "fit-content" }}
+              onClick={() => dispatch(setReviewsVisible(true))}
+            >
+              Show all reviews
+            </Button>
+            <AllReviews />
+            </>
+            ) : ('')}
             </>
           ) : (
             ''

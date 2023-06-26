@@ -326,7 +326,7 @@ const Home = () => {
                 </div>
                 <div className="row">
                     <div className="col-12 col-lg-4 mb-5 mb-lg-0 category">
-                        <Link to="/search">
+                        <Link to="/search?category=6493eb34c5cc45a283457272">
                             <img src={hotels} alt="" />
                             <Typography variant="h4">Hotels</Typography>
                         </Link>
@@ -334,7 +334,7 @@ const Home = () => {
                     <div className="col-12 col-lg-4 d-flex flex-column justify-content-between">
                         <div className="row">
                             <div className="col-12 mb-5 mb-lg-0 category">
-                                <Link to="/search">
+                                <Link to="/search?category=6493eb28c5cc45a283457270">
                                     <img src={restaurants} alt="" />
                                     <Typography variant="h4">
                                         Restaurants
@@ -344,17 +344,17 @@ const Home = () => {
                         </div>
                         <div className="row">
                             <div className="col-12 mb-5 mb-lg-0 category">
-                                <Link to="/search">
+                                <Link to="/search?category=6486712c37188049f87c1746">
                                     <img src={openPlaces} alt="" />
                                     <Typography variant="h4">
-                                        Open Places
+                                        Out Door
                                     </Typography>
                                 </Link>
                             </div>
                         </div>
                     </div>
                     <div className="col-12 col-lg-4 mb-5 mb-lg-0 category">
-                        <Link to="/search">
+                        <Link to="/search?category=6493eb5ac5cc45a283457276">
                             <img src={parks} alt="" />
                             <Typography variant="h4">Parks</Typography>
                         </Link>

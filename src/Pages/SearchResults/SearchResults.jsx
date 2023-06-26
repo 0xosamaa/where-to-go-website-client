@@ -8,6 +8,7 @@ import {
   clearFilters,
   getCategories,
   getTags,
+  setFilters,
   setPagination,
   setQueryString,
   setRating,
@@ -38,13 +39,25 @@ const SearchResults = () => {
   };
 
   useEffect(() => {
-    // const queryParams = new URLSearchParams(location.search);
-    // let category = queryParams.get('category');
+    const queryParams = new URLSearchParams(location.search);
+    let _category = queryParams.get('category');
+    // setCategory(_category);
+    // console.log(category);
+
+    if (_category) {
+      dispatch(setFilters({ data: { id: _category }, type: "Categories" }));
+    } else {
+      searchWithFilters();
+    }
+    
     dispatch(getAllFavoriteVendors());
     dispatch(getCategories());
     dispatch(getTags());
-    dispatch(vendorSearch());
   }, []);
+
+  useEffect(() => {
+    searchWithFilters();
+  }, [_categories]);
 
   const handlePageChange = async (event, page) => {
     await dispatch(
@@ -69,6 +82,13 @@ const SearchResults = () => {
   };
 
   const searchWithFilters = async () => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
+    }, 0);
+
     let queryString = "";
     Object.entries(searchParams).forEach(([key, value]) => {
       if (value.length > 0) {
@@ -97,6 +117,13 @@ const SearchResults = () => {
   };
 
   const clearAllFilters = async () => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
+    }, 0);
+
     await dispatch(clearFilters());
     await dispatch(setPagination({ ...pagination, currentPage: 1 }));
     await dispatch(setQueryString(""));

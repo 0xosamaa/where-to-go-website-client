@@ -11,7 +11,7 @@ import { Rating, Typography, styled, useTheme } from "@mui/material";
 import { formatDistanceToNow } from "date-fns";
 
 const AllReviews = () => {
-    const theme = useTheme();
+  const theme = useTheme();
   const [scroll, setScroll] = React.useState("body");
   const reviewsVisible = useSelector((state) => state.review.reviewsVisible);
   const reviews = useSelector((state) => state.review.reviews);
@@ -69,7 +69,7 @@ const AllReviews = () => {
                     <Typography variant="body" color={"#9095A0"}>{formatDistanceToNow(new Date(review.timestamp), { addSuffix: true, includeSeconds: false })}</Typography>
                   </div>
                 </div>
-                <Typography variant="body" className="description">{review.content}</Typography>
+                <Typography variant="body">{review.content}</Typography>
                 <StyledRating size="small" defaultValue={review.rating} readOnly style={{ float: 'right'}} />
               </div>
             ))}
