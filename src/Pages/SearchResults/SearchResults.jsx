@@ -46,9 +46,8 @@ const SearchResults = () => {
 
     if (_category) {
       dispatch(setFilters({ data: { id: _category }, type: "Categories" }));
-    } else {
-      searchWithFilters();
     }
+    //searchWithFilters();
     
     dispatch(getAllFavoriteVendors());
     dispatch(getCategories());
@@ -57,7 +56,7 @@ const SearchResults = () => {
 
   useEffect(() => {
     searchWithFilters();
-  }, [_categories]);
+  }, [searchParams.category]);
 
   const handlePageChange = async (event, page) => {
     await dispatch(
