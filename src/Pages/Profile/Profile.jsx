@@ -29,7 +29,7 @@ const Profile = () => {
             navigate('/login');
         }
         dispatch(getCustomer()).then((res) => {
-            console.log(res);
+            //console.log(res);
         });
     }, []);
 

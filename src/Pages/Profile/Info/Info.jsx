@@ -77,7 +77,7 @@ const Info = ({handleClickOpen}) => {
                                 <Typography variant="h4" >Date Of Birth</Typography>
                             </div>
                             <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.dateOfBirth || 'BirthDay Not Set Yet'}</Typography>
+                                <Typography variant="p" >{customer.dateOfBirth ? (new Date(customer?.dateOfBirth).toISOString().split('T')[0]) : 'BirthDay Not Set Yet'}</Typography>
                             </div>
                             <hr/>
                         </div>
