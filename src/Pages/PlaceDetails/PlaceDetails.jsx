@@ -277,19 +277,20 @@ const SearchResults = () => {
                   </div>
                 ) : ('')
               ))}
-              { place.numberOfReviews > 4 ? (
-              <>
-              <Button
-                variant="contained"
-                color="info"
-                onClick={() => dispatch(setReviewsVisible(true))}
-              >
-                Show all reviews
-              </Button>
-              <AllReviews />
-              </>
-              ) : ('')}
             </div>
+            { place.numberOfReviews > 0 ? (
+            <>
+            <Button
+              variant="contained"
+              color="info"
+              style={{ width: "fit-content" }}
+              onClick={() => dispatch(setReviewsVisible(true))}
+            >
+              Show all reviews
+            </Button>
+            <AllReviews />
+            </>
+            ) : ('')}
             </>
           ) : (
             ''
