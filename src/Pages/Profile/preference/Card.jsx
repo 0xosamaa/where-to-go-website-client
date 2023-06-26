@@ -31,7 +31,7 @@ const Card = ({place,page}) => {
     }
 
     return (
-        <div key={place._id} onClick={()=> navigate(`/place/${place._id}`)} className="d-flex flex-column flex-lg-row col-12">
+        <div onClick={()=> navigate(`/place/${place._id}`)} className="d-flex flex-column flex-lg-row col-12">
             <img className="card-image flex-fill" src={place.thumbnail ? `http://localhost:8001/api/v1/images/vendors/${place.thumbnail}` : 'https://picsum.photos/600/400'} alt="demo" />
             <div className="card-body d-flex flex-fill justify-content-between mt-3 mt-lg-0">
                 <div className="content d-flex flex-column justify-content-between">
@@ -45,7 +45,7 @@ const Card = ({place,page}) => {
                     </div>
                     <div className="card-rating d-flex">
                         <StarIcon fontSize="small" color="primary" className="me-2" />
-                        <Typography variant="body"><b>4.84</b> &nbsp;<span className="text-muted">(324 reviews)</span></Typography>
+                        <Typography variant="body"><b>{place.avgRate}</b> &nbsp;<span className="text-muted">({place.numberOfReviews} reviews)</span></Typography>
                     </div>
                 </div>
                 <div className="love-icon">
