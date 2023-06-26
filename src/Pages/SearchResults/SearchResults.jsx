@@ -32,7 +32,6 @@ const SearchResults = () => {
   const searchParams = useSelector((state) => state.search.searchParams);
   const location = useLocation();
   const favoriteVendors = useSelector((state) => state.profile.favoriteVendors);
-  const [category, setCategory] = useState("");
 
   const override = {
     display: "block",
@@ -41,29 +40,24 @@ const SearchResults = () => {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    let category = queryParams.get('category');
-    console.log(category);
+    let _category = queryParams.get('category');
+    // setCategory(_category);
+    // console.log(category);
 
-    if (category) {
-      (async () => {
-        await dispatch(setFilters({ data: { id: category }, type: "Categories" }));
-        dispatch(vendorSearch());
-      })()
-      // dispatch(setFilters({ data: { id: category }, type: "Categories" }))
-      // setCategory(category);
+    if (_category) {
+      dispatch(setFilters({ data: { id: _category }, type: "Categories" }));
     } else {
-      dispatch(vendorSearch());
+      searchWithFilters();
     }
     
     dispatch(getAllFavoriteVendors());
     dispatch(getCategories());
     dispatch(getTags());
-    // dispatch(vendorSearch());
   }, []);
 
   useEffect(() => {
-    dispatch(vendorSearch());
-  }, [category]);
+    searchWithFilters();
+  }, [_categories]);
 
   const handlePageChange = async (event, page) => {
     await dispatch(
