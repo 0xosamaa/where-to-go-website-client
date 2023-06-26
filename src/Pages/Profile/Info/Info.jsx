@@ -68,7 +68,7 @@ const Info = ({handleClickOpen}) => {
                                 <Typography variant="h4" >Gender</Typography>
                             </div>
                             <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.gender}</Typography>
+                                <Typography variant="p" >{customer.gender || 'Gender Not Set Uet'}</Typography>
                             </div>
                             <hr/>
                         </div>
@@ -77,7 +77,7 @@ const Info = ({handleClickOpen}) => {
                                 <Typography variant="h4" >Date Of Birth</Typography>
                             </div>
                             <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.dateOfBirth}</Typography>
+                                <Typography variant="p" >{customer.dateOfBirth || 'BirthDay Not Set Yet'}</Typography>
                             </div>
                             <hr/>
                         </div>
@@ -86,7 +86,7 @@ const Info = ({handleClickOpen}) => {
                                 <Typography variant="h4" >Phone Number</Typography>
                             </div>
                             <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.phoneNumber}</Typography>
+                                <Typography variant="p" >{customer.phoneNumber || 'Phone Number Nit Set Yet'}</Typography>
                             </div>
                             <hr/>
                         </div>
@@ -95,7 +95,7 @@ const Info = ({handleClickOpen}) => {
                                 <Typography variant="h4" >Country</Typography>
                             </div>
                             <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.address?.country || 'None'}</Typography>
+                                <Typography variant="p" >{customer.address?.country || 'Address Not Set Yet'}</Typography>
                             </div>
                             <hr/>
                         </div>
@@ -104,7 +104,7 @@ const Info = ({handleClickOpen}) => {
                                 <Typography variant="h4" >State</Typography>
                             </div>
                             <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.address?.state || 'None'}</Typography>
+                                <Typography variant="p" >{customer.address?.state || 'Address Not Set Yet'}</Typography>
                             </div>
                             <hr/>
                         </div>
@@ -113,7 +113,7 @@ const Info = ({handleClickOpen}) => {
                                 <Typography variant="h4" >City</Typography>
                             </div>
                             <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.address?.city || 'None'}</Typography>
+                                <Typography variant="p" >{customer.address?.city || 'Address Not Set Yet'}</Typography>
                             </div>
                             <hr/>
                         </div>
@@ -122,25 +122,7 @@ const Info = ({handleClickOpen}) => {
                                 <Typography variant="h4" >Street</Typography>
                             </div>
                             <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.address?.street || 'None'}</Typography>
-                            </div>
-                            <hr/>
-                        </div>
-                        <div className="info-content-item col-11 col-md-6">
-                            <div className="info-content-item-title">
-                                <Typography variant="h4" >Active</Typography>
-                            </div>
-                            <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.deactivatedAt == null ? 'True' : 'False'}</Typography>
-                            </div>
-                            <hr/>
-                        </div>
-                        <div className="info-content-item col-11 col-md-6">
-                            <div className="info-content-item-title">
-                                <Typography variant="h4" >Banned</Typography>
-                            </div>
-                            <div className="info-content-item-content">
-                                <Typography variant="p" >{customer.bannedAt == null ? 'False' : 'True'}</Typography>
+                                <Typography variant="p" >{customer.address?.street || 'Address Not Set Yet'}</Typography>
                             </div>
                             <hr/>
                         </div>

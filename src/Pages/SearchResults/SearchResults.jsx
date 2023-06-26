@@ -43,10 +43,7 @@ const SearchResults = () => {
     dispatch(getAllFavoriteVendors());
     dispatch(getCategories());
     dispatch(getTags());
-    (async function fetchData() {
-      await dispatch(clearFilters());
-      dispatch(vendorSearch());
-    })();
+    dispatch(vendorSearch());
   }, []);
 
   const handlePageChange = async (event, page) => {
@@ -99,6 +96,13 @@ const SearchResults = () => {
     dispatch(vendorSearch());
   };
 
+  const clearAllFilters = async () => {
+    await dispatch(clearFilters());
+    await dispatch(setPagination({ ...pagination, currentPage: 1 }));
+    await dispatch(setQueryString(""));
+    dispatch(vendorSearch());
+  }
+
   return (
     <>
       <SearchBar />
@@ -119,7 +123,8 @@ const SearchResults = () => {
           />
           <FilterMenu title="Location" />
           <FilterMenu title="Sort" />
-          <Button variant="contained" fullWidth onClick={searchWithFilters}>Apply Filters</Button>
+          <Button variant="contained" className="mb-2" fullWidth onClick={searchWithFilters}>Apply Filters</Button>
+          <Button variant="outlined" fullWidth onClick={clearAllFilters}>Clear Filters</Button>
         </div>
         {loading || result[0] === 'Still Loading...' ? (
           <RiseLoader
