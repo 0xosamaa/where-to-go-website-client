@@ -32,7 +32,7 @@ const Preference = () => {
             totalPages: totalPages,
         })
         dispatch(getFavoriteVendors(pagination.currentPage)).then((res) => {
-            console.log(res);
+            //console.log(res);
         });
     },[]);
 
@@ -81,10 +81,10 @@ const Preference = () => {
                     <div style={{paddingTop:"150px"}} className="img-container w-100 d-flex flex-column justify-content-between align-items-start">
                         {Places.map((place) => {
                             return (
-                                <>
-                                    <Card key={place._id} page={pagination.currentPage} place={place} />
+                                <div key={place._id}>
+                                    <Card page={pagination.currentPage} place={place} />
                                     <hr style={{ width: '100%', color: '#9095A0', borderWidth: 2, margin: '24px 0' }}/>
-                                </>
+                                </div>
                             )
                         })
                         }
