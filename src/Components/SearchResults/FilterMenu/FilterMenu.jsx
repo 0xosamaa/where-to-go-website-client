@@ -99,17 +99,18 @@ const FilterMenu = (props) => {
   };
 
   const handleRatingChange = (event, value) => {
-    // setRating(value)
     dispatch(setFilters({ data: value, type: props.title }))
   }
 
+  const handleCategoryChange = (event) => {
+    dispatch(setFilters({ data: { id: event.target.value }, type: props.title }))
+  }
+
   const handleSortFieldChange = (event) => {
-    // setSortField(event.target.value)
     dispatch(setFilters({ data: { sortField: event.target.value, sortOrder }, type: props.title }))
   }
 
   const handleSortOrderChange = (event) => {
-    // setSortOrder(event.target.value)
     dispatch(setFilters({ data: { sortField, sortOrder: event.target.value }, type: props.title }))
   }
 
@@ -124,16 +125,24 @@ const FilterMenu = (props) => {
         </AccordionSummary>
         <AccordionDetails>
           {props.title === "Categories" && isLoggedIn ? (
-            <RadioGroup
-              value={category}
-              onChange={() => dispatch(setFilters({ data: category, type: props.title }))}
-              name="categories-group"
+            <>
+            <Select
+              labelId="category-field-label"
+              id="category-field"
+              value={category ? category : ""}
+              label=""
+              fullWidth
+              size="small"
+              onChange={handleCategoryChange}
             >
-              <CustomizedRadio data={{ id: "", name: "All"}} type={props.title} />
+              <MenuItem value="">
+                <em>All</em>
+              </MenuItem>
               {props.options.map((option) => (
-                <CustomizedRadio data={option} type={props.title} key={option.id} />
+                <MenuItem key={option.id} value={option.id}>{option.name}</MenuItem>
               ))}
-            </RadioGroup>
+            </Select>
+            </>
           ) : props.title === "Rating" ? (
             <Slider
               getAriaLabel={() => 'Rating range'}

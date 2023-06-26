@@ -8,6 +8,7 @@ import {
   clearFilters,
   getCategories,
   getTags,
+  setFilters,
   setPagination,
   setQueryString,
   setRating,
@@ -31,6 +32,7 @@ const SearchResults = () => {
   const searchParams = useSelector((state) => state.search.searchParams);
   const location = useLocation();
   const favoriteVendors = useSelector((state) => state.profile.favoriteVendors);
+  const [category, setCategory] = useState("");
 
   const override = {
     display: "block",
@@ -38,13 +40,30 @@ const SearchResults = () => {
   };
 
   useEffect(() => {
-    // const queryParams = new URLSearchParams(location.search);
-    // let category = queryParams.get('category');
+    const queryParams = new URLSearchParams(location.search);
+    let category = queryParams.get('category');
+    console.log(category);
+
+    if (category) {
+      (async () => {
+        await dispatch(setFilters({ data: { id: category }, type: "Categories" }));
+        dispatch(vendorSearch());
+      })()
+      // dispatch(setFilters({ data: { id: category }, type: "Categories" }))
+      // setCategory(category);
+    } else {
+      dispatch(vendorSearch());
+    }
+    
     dispatch(getAllFavoriteVendors());
     dispatch(getCategories());
     dispatch(getTags());
-    dispatch(vendorSearch());
+    // dispatch(vendorSearch());
   }, []);
+
+  useEffect(() => {
+    dispatch(vendorSearch());
+  }, [category]);
 
   const handlePageChange = async (event, page) => {
     await dispatch(
@@ -69,6 +88,13 @@ const SearchResults = () => {
   };
 
   const searchWithFilters = async () => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
+    }, 0);
+
     let queryString = "";
     Object.entries(searchParams).forEach(([key, value]) => {
       if (value.length > 0) {
@@ -97,6 +123,13 @@ const SearchResults = () => {
   };
 
   const clearAllFilters = async () => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
+    }, 0);
+
     await dispatch(clearFilters());
     await dispatch(setPagination({ ...pagination, currentPage: 1 }));
     await dispatch(setQueryString(""));
