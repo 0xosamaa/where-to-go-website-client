@@ -115,9 +115,9 @@ const Login = () => {
                 if (isAxiosError(err)) {
                     // Handle axios errors separately
                     if (err.response) {
-                        navigate('/500')
+                        navigate('/login')
                     } else if (err.request) {
-                        navigate('/500')
+                        navigate('/login')
                     } else {
                         navigate('/500')
                     }
